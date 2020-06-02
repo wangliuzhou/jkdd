@@ -1,0 +1,471 @@
+{
+  "id": "1808552",
+  "name": "bbc小程序",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "14899212",
+      "name": "拼团",
+      "font_class": "pintuan1",
+      "unicode": "e714",
+      "unicode_decimal": 59156
+    },
+    {
+      "icon_id": "14898966",
+      "name": "客服聊天",
+      "font_class": "kefuliaotian1",
+      "unicode": "e71e",
+      "unicode_decimal": 59166
+    },
+    {
+      "icon_id": "14898761",
+      "name": "账号与安全",
+      "font_class": "zhanghaoyuanquan",
+      "unicode": "e71d",
+      "unicode_decimal": 59165
+    },
+    {
+      "icon_id": "14898670",
+      "name": "我的门店",
+      "font_class": "wodemendian",
+      "unicode": "e71c",
+      "unicode_decimal": 59164
+    },
+    {
+      "icon_id": "14898603",
+      "name": "预约",
+      "font_class": "yuyue",
+      "unicode": "e71b",
+      "unicode_decimal": 59163
+    },
+    {
+      "icon_id": "14898536",
+      "name": "收藏",
+      "font_class": "shoucang",
+      "unicode": "e71a",
+      "unicode_decimal": 59162
+    },
+    {
+      "icon_id": "14898197",
+      "name": "赠品",
+      "font_class": "zengpin",
+      "unicode": "e715",
+      "unicode_decimal": 59157
+    },
+    {
+      "icon_id": "14897929",
+      "name": "砍价",
+      "font_class": "kanjia1",
+      "unicode": "e719",
+      "unicode_decimal": 59161
+    },
+    {
+      "icon_id": "14897743",
+      "name": "人人分销",
+      "font_class": "renrenfenxiao",
+      "unicode": "e716",
+      "unicode_decimal": 59158
+    },
+    {
+      "icon_id": "14889670",
+      "name": "会员星标",
+      "font_class": "huiyuanxingbiao",
+      "unicode": "e713",
+      "unicode_decimal": 59155
+    },
+    {
+      "icon_id": "551962",
+      "name": "箭头",
+      "font_class": "right",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "14888680",
+      "name": "会员码",
+      "font_class": "huiyuanma",
+      "unicode": "e712",
+      "unicode_decimal": 59154
+    },
+    {
+      "icon_id": "14875512",
+      "name": "首页",
+      "font_class": "shouye",
+      "unicode": "e70e",
+      "unicode_decimal": 59150
+    },
+    {
+      "icon_id": "14875513",
+      "name": "分类",
+      "font_class": "fenlei",
+      "unicode": "e70f",
+      "unicode_decimal": 59151
+    },
+    {
+      "icon_id": "14875514",
+      "name": "我的",
+      "font_class": "wode",
+      "unicode": "e711",
+      "unicode_decimal": 59153
+    },
+    {
+      "icon_id": "14874405",
+      "name": "购物车",
+      "font_class": "gouwuche",
+      "unicode": "e710",
+      "unicode_decimal": 59152
+    },
+    {
+      "icon_id": "14869432",
+      "name": "待发货",
+      "font_class": "daifahuo",
+      "unicode": "e709",
+      "unicode_decimal": 59145
+    },
+    {
+      "icon_id": "14869433",
+      "name": "待付款",
+      "font_class": "daifukuan",
+      "unicode": "e70a",
+      "unicode_decimal": 59146
+    },
+    {
+      "icon_id": "14869434",
+      "name": "退款",
+      "font_class": "tuikuan",
+      "unicode": "e70b",
+      "unicode_decimal": 59147
+    },
+    {
+      "icon_id": "14869435",
+      "name": "待收货",
+      "font_class": "daishouhuo",
+      "unicode": "e70c",
+      "unicode_decimal": 59148
+    },
+    {
+      "icon_id": "14869436",
+      "name": "评价",
+      "font_class": "pingjia",
+      "unicode": "e70d",
+      "unicode_decimal": 59149
+    },
+    {
+      "icon_id": "14861156",
+      "name": "积分倍率-金卡",
+      "font_class": "jifenbeishuai-jinka",
+      "unicode": "e6ed",
+      "unicode_decimal": 59117
+    },
+    {
+      "icon_id": "14861157",
+      "name": "送赠品-金卡",
+      "font_class": "songzengpin-jinka",
+      "unicode": "e6f2",
+      "unicode_decimal": 59122
+    },
+    {
+      "icon_id": "14861158",
+      "name": "积分倍率-钻石卡",
+      "font_class": "jifenbeishuai-zuanshika",
+      "unicode": "e6f3",
+      "unicode_decimal": 59123
+    },
+    {
+      "icon_id": "14861159",
+      "name": "积分倍率",
+      "font_class": "jifenbeishuai",
+      "unicode": "e6f8",
+      "unicode_decimal": 59128
+    },
+    {
+      "icon_id": "14861160",
+      "name": "送赠品-钻石卡",
+      "font_class": "songzengpin-zuanshika",
+      "unicode": "e6fe",
+      "unicode_decimal": 59134
+    },
+    {
+      "icon_id": "14861161",
+      "name": "送赠品",
+      "font_class": "songzengpin",
+      "unicode": "e700",
+      "unicode_decimal": 59136
+    },
+    {
+      "icon_id": "14861162",
+      "name": "积分倍率-银卡",
+      "font_class": "jifenbeishuai-yinka",
+      "unicode": "e707",
+      "unicode_decimal": 59143
+    },
+    {
+      "icon_id": "14861163",
+      "name": "送赠品-银卡",
+      "font_class": "songzengpin-yinka",
+      "unicode": "e708",
+      "unicode_decimal": 59144
+    },
+    {
+      "icon_id": "14860366",
+      "name": "送积分-钻石卡",
+      "font_class": "songjifen-zuanshika",
+      "unicode": "e6fd",
+      "unicode_decimal": 59133
+    },
+    {
+      "icon_id": "14860368",
+      "name": "极速客服-钻石卡",
+      "font_class": "jisukefu-zuanshika",
+      "unicode": "e6ff",
+      "unicode_decimal": 59135
+    },
+    {
+      "icon_id": "14860370",
+      "name": "包邮-钻石卡",
+      "font_class": "baoyou-zuanshika",
+      "unicode": "e701",
+      "unicode_decimal": 59137
+    },
+    {
+      "icon_id": "14860371",
+      "name": "送优惠券-钻石卡",
+      "font_class": "songyouhuiquan-zuanshika",
+      "unicode": "e702",
+      "unicode_decimal": 59138
+    },
+    {
+      "icon_id": "14860372",
+      "name": "优先发货-钻石卡",
+      "font_class": "youxianfahuo-zuanshika",
+      "unicode": "e703",
+      "unicode_decimal": 59139
+    },
+    {
+      "icon_id": "14860373",
+      "name": "送好友体验卡-钻石卡",
+      "font_class": "songhaoyoutiyanka-zuanshika",
+      "unicode": "e704",
+      "unicode_decimal": 59140
+    },
+    {
+      "icon_id": "14860374",
+      "name": "极速售后-钻石卡",
+      "font_class": "jisushouhou-zuanshika",
+      "unicode": "e705",
+      "unicode_decimal": 59141
+    },
+    {
+      "icon_id": "14860375",
+      "name": "打折-钻石卡",
+      "font_class": "dazhe-zuanshika",
+      "unicode": "e706",
+      "unicode_decimal": 59142
+    },
+    {
+      "icon_id": "14860089",
+      "name": "送积分-银卡",
+      "font_class": "songjifen-yinka",
+      "unicode": "e6f4",
+      "unicode_decimal": 59124
+    },
+    {
+      "icon_id": "14860090",
+      "name": "送好友体验卡-银卡",
+      "font_class": "songhaoyoutiyanka-yinka",
+      "unicode": "e6f5",
+      "unicode_decimal": 59125
+    },
+    {
+      "icon_id": "14860091",
+      "name": "优先发货-银卡",
+      "font_class": "youxianfahuo-yinka",
+      "unicode": "e6f6",
+      "unicode_decimal": 59126
+    },
+    {
+      "icon_id": "14860092",
+      "name": "送优惠券-银卡",
+      "font_class": "songyouhuiquan-yinka",
+      "unicode": "e6f7",
+      "unicode_decimal": 59127
+    },
+    {
+      "icon_id": "14860094",
+      "name": "包邮-银卡",
+      "font_class": "baoyou-yinka",
+      "unicode": "e6f9",
+      "unicode_decimal": 59129
+    },
+    {
+      "icon_id": "14860095",
+      "name": "极速售后-银卡",
+      "font_class": "jisushouhou-yinka",
+      "unicode": "e6fa",
+      "unicode_decimal": 59130
+    },
+    {
+      "icon_id": "14860096",
+      "name": "打折-银卡",
+      "font_class": "dazhe-yinka",
+      "unicode": "e6fb",
+      "unicode_decimal": 59131
+    },
+    {
+      "icon_id": "14860097",
+      "name": "极速客服-银卡",
+      "font_class": "jisukefu-yinka",
+      "unicode": "e6fc",
+      "unicode_decimal": 59132
+    },
+    {
+      "icon_id": "14859326",
+      "name": "极速售后-金卡",
+      "font_class": "jisushouhou-jinka",
+      "unicode": "e6e9",
+      "unicode_decimal": 59113
+    },
+    {
+      "icon_id": "14859327",
+      "name": "极速客服-金卡",
+      "font_class": "jisukefu-jinka",
+      "unicode": "e6ea",
+      "unicode_decimal": 59114
+    },
+    {
+      "icon_id": "14859328",
+      "name": "送好友体验卡-金卡",
+      "font_class": "songhaoyoutiyanka-jinka",
+      "unicode": "e6eb",
+      "unicode_decimal": 59115
+    },
+    {
+      "icon_id": "14859329",
+      "name": "打折-金卡",
+      "font_class": "dazhe-jinka",
+      "unicode": "e6ec",
+      "unicode_decimal": 59116
+    },
+    {
+      "icon_id": "14859331",
+      "name": "优先发货-金卡",
+      "font_class": "youxianfahuo-jinka",
+      "unicode": "e6ee",
+      "unicode_decimal": 59118
+    },
+    {
+      "icon_id": "14859332",
+      "name": "送积分-金卡",
+      "font_class": "songjifen-jinka",
+      "unicode": "e6ef",
+      "unicode_decimal": 59119
+    },
+    {
+      "icon_id": "14859333",
+      "name": "包邮-金卡",
+      "font_class": "baoyou-jinka",
+      "unicode": "e6f0",
+      "unicode_decimal": 59120
+    },
+    {
+      "icon_id": "14859334",
+      "name": "送优惠券-金卡",
+      "font_class": "songyouhuiquan-jinka",
+      "unicode": "e6f1",
+      "unicode_decimal": 59121
+    },
+    {
+      "icon_id": "14858160",
+      "name": "送优惠券",
+      "font_class": "songyouhuiquan",
+      "unicode": "e6e5",
+      "unicode_decimal": 59109
+    },
+    {
+      "icon_id": "14857817",
+      "name": "送积分",
+      "font_class": "songjifen",
+      "unicode": "e6df",
+      "unicode_decimal": 59103
+    },
+    {
+      "icon_id": "14857818",
+      "name": "包邮",
+      "font_class": "baoyou",
+      "unicode": "e6e0",
+      "unicode_decimal": 59104
+    },
+    {
+      "icon_id": "14857819",
+      "name": "打折",
+      "font_class": "dazhe",
+      "unicode": "e6e1",
+      "unicode_decimal": 59105
+    },
+    {
+      "icon_id": "14857820",
+      "name": "优先发货",
+      "font_class": "youxianfahuo",
+      "unicode": "e6e2",
+      "unicode_decimal": 59106
+    },
+    {
+      "icon_id": "14857821",
+      "name": "极速客服",
+      "font_class": "jisukefu",
+      "unicode": "e6e3",
+      "unicode_decimal": 59107
+    },
+    {
+      "icon_id": "14857825",
+      "name": "送好友体验卡",
+      "font_class": "songhaoyoutiyanka",
+      "unicode": "e6e7",
+      "unicode_decimal": 59111
+    },
+    {
+      "icon_id": "14857826",
+      "name": "极速售后",
+      "font_class": "jisushouhou",
+      "unicode": "e6e8",
+      "unicode_decimal": 59112
+    },
+    {
+      "icon_id": "14597838",
+      "name": "公告",
+      "font_class": "gonggao",
+      "unicode": "e6b1",
+      "unicode_decimal": 59057
+    },
+    {
+      "icon_id": "14597546",
+      "name": "weixin",
+      "font_class": "weixin",
+      "unicode": "e6b0",
+      "unicode_decimal": 59056
+    },
+    {
+      "icon_id": "14597284",
+      "name": "选中",
+      "font_class": "xuanzhong",
+      "unicode": "e6af",
+      "unicode_decimal": 59055
+    },
+    {
+      "icon_id": "14597203",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e6ad",
+      "unicode_decimal": 59053
+    },
+    {
+      "icon_id": "14597199",
+      "name": "加购物袋",
+      "font_class": "jiagouwudai",
+      "unicode": "e6ac",
+      "unicode_decimal": 59052
+    }
+  ]
+}

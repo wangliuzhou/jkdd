@@ -1,21 +1,15 @@
 const routes = [
   {
-    path: "/introduce",
-    name: "Introduce",
-    meta: {
-      needLogin: true
-    },
-    component: () =>
-      import(/* webpackChunkName: "Introduce" */ "@/views/Introduce.vue")
+    path: "/",
+    redirect: "/index"
   },
   {
-    path: "/businessCard",
-    name: "BusinessCard",
+    path: "/index",
+    name: "Index",
     meta: {
-      needLogin: true
+      needLogin: false
     },
-    component: () =>
-      import(/* webpackChunkName: "BusinessCard" */ "@/views/BusinessCard.vue")
+    component: () => import(/* webpackChunkName: "Index" */ "@/views/Index.vue")
   },
   {
     path: "/loginError",

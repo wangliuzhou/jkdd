@@ -2,29 +2,28 @@ const { VUE_APP_API_ENV } = process.env;
 const CONFIG = {
   dev: {
     url_map: {
-      "/ThirdPartyDocking/Wechat/": ["http://third.xzintl.com"],
-      "/oss/": ["http://oss.xzintl.com"],
-      // "/salesmanInfo/": ["http://192.168.1.8:8081"]
-      "/salesmanInfo/": ["http://agent.xzintl.com/api"]
-      // "/salesmanInfo/": ["http://oss.xzintl.com"]
+      "/store/": ["http://192.168.100.114:8080"],
+      "/oss/": ["http://192.168.100.114:8081"],
+      "/shop/": ["http://192.168.100.114:8080"],
+      "/sysBackendCategoryAttr/": ["http://192.168.100.142:8080"],
+      "/brand/": ["http://192.168.1.8:8080"],
+      "/tenantUnit/": ["http://192.168.100.142:8080"],
+      "/tenantBackCate/": ["http://192.168.1.8:8080"],
+      "/frontBackCate/": ["http://192.168.1.8:8080"],
+      "/tenantFrontCate/": ["http://192.168.1.8:8080"],
+      "/tenantProduct/": ["http://192.168.1.8:8080"],
+      "/sysAccount/": ["http://192.168.100.142:8088"],
+      "/storesysBaseInfo/": ["http://192.168.1.8:8088"],
+      "/client/": ["http://192.168.100.114:8083"],
+      "/sysWechatappLiveroom/": ["http://192.168.100.142:8080"],
+      "/tenantMemberLevel/": ["http://192.168.100.142:8080"],
+      "/tenantProductUserLabel": ["http://192.168.100.142:8080"],
+      "/sysWechatThirdAuth": ["http://192.168.100.142:8088"]
     }
   },
-  beta: {
-    url_map: {
-      "/ThirdPartyDocking/Wechat/": ["http://third.xzintl.com"],
-      "/oss/": ["http://oss.xzintl.com"],
-      "/salesmanInfo/": ["http://agent.xzintl.com/api"]
-    }
-  },
-  pro: {
-    url_map: {
-      "/ThirdPartyDocking/Wechat/": ["http://third.xzintl.com"],
-      "/oss/": ["http://oss.xzintl.com"],
-      "/salesmanInfo/": ["http://agent.xzintl.com/api"]
-    }
-  }
+  beta: {},
+  pro: {}
 };
-
 let config = "";
 if (["beta", "pro"].indexOf(VUE_APP_API_ENV) > -1) {
   config = CONFIG[VUE_APP_API_ENV];

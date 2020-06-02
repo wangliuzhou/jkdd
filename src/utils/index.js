@@ -30,3 +30,7 @@ export const dataURItoBlob = dataurl => {
   }
   return new Blob([u8arr], { type: mime });
 };
+
+export const px2rem = val => {
+  return `${val / 37.5}rem`;
+};

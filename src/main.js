@@ -13,18 +13,19 @@ import request from "@/config/request";
 
 import { Toast, Switch, Loading, Dialog } from "vant";
 
-import * as fundebug from "fundebug-javascript";
-import fundebugVue from "fundebug-vue";
+// import * as fundebug from "fundebug-javascript";
+// import fundebugVue from "fundebug-vue";
 
-fundebug.init({
-  apikey: "11c1749d557dd3d3ab98a2c644ce800cf5c0a1bbf8ace35571558d97d9b0484f"
-});
-fundebugVue(fundebug, Vue);
+// fundebug.init({
+//   apikey: "11c1749d557dd3d3ab98a2c644ce800cf5c0a1bbf8ace35571558d97d9b0484f"
+// });
+// fundebugVue(fundebug, Vue);
 
 //全局样式
 import "normalize.css";
 import "swiper/css/swiper.css";
 import "@/assets/style/index.less";
+import "@/assets/iconfont/iconfont.css";
 
 //开发环境显示vconsole按钮
 if (process.env.VUE_APP_API_ENV === "dev") {
