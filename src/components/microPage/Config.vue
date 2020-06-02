@@ -9,7 +9,7 @@ export default {
   },
   methods: {
     setTitle() {
-      let { item } = this.data;
+      let { item } = this;
       document.title = item.title;
     }
   }

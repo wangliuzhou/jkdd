@@ -12,6 +12,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "Index" */ "@/views/Index.vue")
   },
   {
+    path: "/test",
+    name: "Test",
+    meta: {
+      needLogin: false
+    },
+    component: () => import(/* webpackChunkName: "Test" */ "@/views/Test.vue")
+  },
+  {
     path: "/loginError",
     name: "LoginError",
     component: () =>
