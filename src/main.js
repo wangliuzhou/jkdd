@@ -11,7 +11,15 @@ import "lib-flexible/flexible.js";
 //axios
 import request from "@/config/request";
 
-import { Toast, Switch, Loading, Dialog } from "vant";
+import {
+  Toast,
+  Switch,
+  Loading,
+  Dialog,
+  NoticeBar,
+  Tabbar,
+  TabbarItem
+} from "vant";
 
 // import * as fundebug from "fundebug-javascript";
 // import fundebugVue from "fundebug-vue";
@@ -25,7 +33,7 @@ import { Toast, Switch, Loading, Dialog } from "vant";
 import "normalize.css";
 import "swiper/css/swiper.css";
 import "@/assets/style/index.less";
-import "@/assets/iconfont/iconfont.css";
+import "@/assets/iconfont/iconfont.less";
 
 //开发环境显示vconsole按钮
 if (process.env.VUE_APP_API_ENV === "dev") {
@@ -44,6 +52,9 @@ Vue.use(Toast);
 Vue.use(Switch);
 Vue.use(Loading);
 Vue.use(Dialog);
+Vue.use(NoticeBar);
+Vue.use(Tabbar);
+Vue.use(TabbarItem);
 
 // FastClick.attach(document.body);
 

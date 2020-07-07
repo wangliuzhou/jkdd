@@ -4,12 +4,6 @@ import { getUrl } from "@/config/url";
 import { genRequestHeader, login } from "@/utils/account";
 import store from "@/store/index";
 
-// const getAuth = () => {
-//   return {
-//     "x-storesys-id": "xzdev_2020.04.28"
-//   };
-// };
-
 // 请求前拦截
 axios.interceptors.request.use(
   config => {

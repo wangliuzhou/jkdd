@@ -1,86 +1,17 @@
 <template>
   <div class="page-index">
-    <template v-for="(item, index) in components">
-      <!-- 页面设置 -->
-      <Config
-        v-if="item.type == 'config'"
-        :item="item"
-        :index="index"
-        :key="item.pageComponentId"
-      />
-      <!-- 分割线 -->
-      <SpaceDivision
-        v-else-if="item.type == 'space-division'"
-        :item="item"
-        :index="index"
-        :key="item.pageComponentId"
-      />
-      <!-- 公告 -->
-      <Notice
-        v-else-if="item.type == 'notice'"
-        :item="item"
-        :index="index"
-        :key="item.pageComponentId"
-      />
-      <!-- 直播 -->
-      <WxappLivePlayer
-        v-else-if="item.type == 'wxapp-live-player'"
-        :item="item"
-        :index="index"
-        :key="item.pageComponentId"
-      />
-      <!-- 商品搜索 -->
-      <GoodsSearch
-        v-else-if="item.type == 'goods-search'"
-        :item="item"
-        :index="index"
-        :key="item.pageComponentId"
-      />
-      <!-- 图文导航 -->
-      <ImageTextNav
-        v-else-if="item.type == 'image-text-nav'"
-        :item="item"
-        :index="index"
-        :key="item.pageComponentId"
-      />
-      <!-- 视频 -->
-      <XzVideo
-        v-else-if="item.type == 'video'"
-        :item="item"
-        :index="index"
-        :key="item.pageComponentId"
-      />
-      <!-- 图片 -->
-      <XzImage
-        v-else-if="item.type == 'image'"
-        :item="item"
-        :index="index"
-        :key="item.pageComponentId"
-      />
-      <!-- 商品列表 -->
-      <GoodsList
-        v-else-if="item.type == 'goodsList'"
-        :item="item"
-        :index="index"
-        :key="item.pageComponentId"
-      />
-    </template>
+    <MicroPage class="micro-page-component" :components="components" />
+
+    <Tabbar />
   </div>
 </template>
 <script>
-import Config from "@/components/microPage/Config";
-import SpaceDivision from "@/components/microPage/SpaceDivision";
-import WxappLivePlayer from "@/components/microPage/WxappLivePlayer";
-import GoodsSearch from "@/components/microPage/GoodsSearch";
-import ImageTextNav from "@/components/microPage/ImageTextNav";
-
+import MicroPage from "@/components/microPage/Index";
+import Tabbar from "@/components/Tabbar";
 export default {
   components: {
-    Config,
-    SpaceDivision,
-    WxappLivePlayer,
-    GoodsSearch,
-    ImageTextNav
+    MicroPage,
+    Tabbar
   },
   data() {
     return {
@@ -92,7 +23,7 @@ export default {
   },
   methods: {
     loadData() {
-      this.$get("/store/tenantPage/findMainPage").then(
+      this.$get("/store/mobile/tenantPage/findMainPage").then(
         ({ data: { componentArray } }) => {
           this.components = componentArray.map(item => {
             return JSON.parse(item.componentContent || {});

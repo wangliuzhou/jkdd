@@ -1,15 +1,19 @@
 const routes = [
   {
     path: "/",
-    redirect: "/index"
-  },
-  {
-    path: "/index",
     name: "Index",
     meta: {
       needLogin: false
     },
-    component: () => import(/* webpackChunkName: "Index" */ "@/views/Index.vue")
+    component: () => import("@/views/Index.vue")
+  },
+  {
+    path: "/classify",
+    name: "Classify",
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/Classify.vue")
   },
   {
     path: "/test",

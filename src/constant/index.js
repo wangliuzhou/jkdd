@@ -1,5 +1,3 @@
-export const OssDomain = "http://static.xzintl.com";
-
 //直播状态
 export const LiveStatus = {
   101: "直播中",

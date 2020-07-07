@@ -21,7 +21,6 @@ export default {
       this.px = rpx.replace(/([0-9\\.]+)rpx/g, (a, b) => {
         return parseFloat((b / 2).toFixed(5)) + "px";
       });
-      console.log(this.px);
     }
   }
 };

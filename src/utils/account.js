@@ -17,7 +17,8 @@ export const needLogin = to => {
 export const genRequestHeader = () => {
   return {
     "x-user-id": Cookie.get("userId") || "",
-    "x-access-token": Cookie.get("accessToken") || ""
+    "x-access-token": Cookie.get("accessToken") || "",
+    "x-storesys-id": "ORVZ17ZXD9"
   };
 };
 

@@ -1,6 +1,6 @@
 <template>
   <div class="imageTextNav-container-wrap">
-    <div class="imageTextNav-container">
+    <div class="imageTextNav-container" :style="containerStyle">
       <div class="scroll" :class="{ scrollX: item.pictureType === 2 }">
         <div class="imageTextNav-image" v-if="item.tempType === 1">
           <div
@@ -46,13 +46,23 @@ export default {
       }
       return [];
     },
+    containerStyle() {
+      let { item } = this;
+      if (item) {
+        let { backgroundColor } = item;
+        return `background-color: ${backgroundColor}`;
+      }
+      return "";
+    },
     itemStyle() {
       let { item } = this;
       if (item) {
-        let { column, pictureType } = item;
-        return pictureType === 2
-          ? `flex: 0 0 ${px2rem((375 - 24) / column)};`
-          : "";
+        let { column, pictureType, color } = item;
+        return (
+          (pictureType === 2
+            ? `flex: 0 0 ${px2rem((375 - 24) / column)};`
+            : "") + `color:${color};`
+        );
       }
       return "";
     }
@@ -64,6 +74,8 @@ export default {
   padding: 0 6px;
   .imageTextNav-container {
     background: white;
+    border-radius: 0 0 8px 8px;
+
     .scroll {
       &.scrollX {
         overflow-x: auto;
@@ -82,6 +94,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
+        color: #333;
         .imageTextNav-image-item-image {
           width: 44px;
           height: 44px;
@@ -93,7 +106,6 @@ export default {
         }
         .imageTextNav-image-item-text {
           text-align: center;
-          color: #333333;
           font-size: 13px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
@@ -107,10 +119,10 @@ export default {
       align-items: center;
       height: 42.5px;
       border-radius: 0 0 8px 8px;
+      color: #333333;
       .imageTextNav-text-item {
         flex: 1;
         text-align: center;
-        color: #333333;
         font-size: 13px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
