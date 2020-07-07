@@ -24,7 +24,7 @@
             }"
             v-for="(item, index) in list"
             :key="item.pageCateId"
-            @click="setActiveIndex"
+            @click="setActiveIndex(item, index)"
           >
             <span>{{ item.pageCateName }}</span>
           </div>
@@ -97,6 +97,14 @@ export default {
           this.list = list;
         }
       );
+    },
+    setActiveIndex(item, index) {
+      this.activeIndex = index;
+      //做个标记防止重复触发handleRightScroll
+      // this.scrolling = true;
+      // setTimeout(() => {
+      //   this.scrolling = false;
+      // }, 400);
     }
   }
 };
@@ -169,11 +177,16 @@ export default {
         display: flex;
         align-items: center;
         span {
+          font-size: 16px;
           flex: 1;
+          color: #666666;
         }
         &.active {
           background: white;
           span {
+            color: #333333;
+            font-family: PingFangSC-Medium, PingFang SC;
+            font-weight: 500;
             &::before {
               content: "";
               position: absolute;

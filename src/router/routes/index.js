@@ -16,6 +16,17 @@ const routes = [
     component: () => import("@/views/Classify.vue")
   },
   {
+    path: "/microPage",
+    name: "MicroPage",
+    props: route => ({
+      id: route.query.id
+    }),
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/MicroPage.vue")
+  },
+  {
     path: "/test",
     name: "Test",
     meta: {

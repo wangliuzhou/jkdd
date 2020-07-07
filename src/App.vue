@@ -25,8 +25,8 @@ export default {
 </script>
 <style lang="less" scoped>
 #app {
-  width: 100%;
-  min-height: 100%;
+  width: 100vw;
+  min-height: 100vh;
   position: relative;
   left: 0;
   top: 0;
