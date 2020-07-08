@@ -12,7 +12,9 @@
             <div
               class="imageTextNav-image-item-image"
               :style="
-                item.img_url ? 'background-image:url(' + item.img_url + ')' : ''
+                item.img_url
+                  ? 'background-image:url(' + $ali(item.img_url, 44) + ')'
+                  : ''
               "
             ></div>
             <div class="imageTextNav-image-item-text">{{ item.title }}</div>

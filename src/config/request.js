@@ -82,7 +82,7 @@ export const postRequestParam = (url, params) => {
 };
 
 //单请求
-export const get = (url, params = {}) => {
+export const fetchGet = (url, params = {}) => {
   return new Promise((resolve, reject) => {
     axios
       .get(url, {
@@ -94,7 +94,7 @@ export const get = (url, params = {}) => {
   });
 };
 
-export const post = (url, data = {}, config = {}) => {
+export const fetchPost = (url, data = {}, config = {}) => {
   return new Promise((resolve, reject) => {
     axios.post(url, data, config).then(res => {
       callback({ res, resolve, reject });
@@ -117,9 +117,9 @@ export const multiple = function(requsetArray, callback) {
 };
 
 export default Vue => {
-  Vue.prototype.$get = get;
-  Vue.prototype.$post = post;
-  Vue.prototype.$postRequestParam = postRequestParam;
+  Vue.prototype.$fetchGet = fetchGet;
+  Vue.prototype.$fetchPost = fetchPost;
+  Vue.prototype.$fetchPostRequestParam = postRequestParam;
   Vue.prototype.$multiple = multiple;
   Vue.prototype.$axios = axios;
 };

@@ -7,15 +7,12 @@ export const ali = (url, w) => {
     return url;
   }
 
-  let dpr = parseInt(
-    window.document.documentElement.getAttribute("data-dpr"),
-    10
-  );
+  let dpr = parseInt(window.devicePixelRatio || 2, 10);
 
   // dpr不能小于2，否则图片会太模糊
-  dpr = Math.max(dpr, 1);
+  dpr = Math.max(dpr, 2);
 
-  w = w || 750;
+  w = w || 375;
 
   if (url.indexOf("?") > -1) {
     url += "&";

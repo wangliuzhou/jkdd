@@ -4,10 +4,14 @@ export default {
     loading: false
   },
   mutations: {
-    setLoading(state, loading) {
+    _setLoading(state, loading) {
       state.loading = loading;
     }
   },
-  actions: {},
+  actions: {
+    setLoading({ commit }, payload) {
+      commit("_setLoading", payload);
+    }
+  },
   getters: {}
 };

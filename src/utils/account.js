@@ -18,7 +18,7 @@ export const genRequestHeader = () => {
   return {
     "x-user-id": Cookie.get("userId") || "",
     "x-access-token": Cookie.get("accessToken") || "",
-    "x-storesys-id": "ORVZ17ZXD9"
+    "x-storesys-id": "425ZP1Q60O"
   };
 };
 

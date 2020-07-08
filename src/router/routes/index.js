@@ -13,18 +13,29 @@ const routes = [
     meta: {
       needLogin: false
     },
-    component: () => import("@/views/Classify.vue")
+    component: () => import("@/views/Classify/index.vue")
   },
   {
-    path: "/microPage",
+    path: "/microPage/:id",
     name: "MicroPage",
     props: route => ({
-      id: route.query.id
+      id: route.params.id
     }),
     meta: {
       needLogin: false
     },
     component: () => import("@/views/MicroPage.vue")
+  },
+  {
+    path: "/goodsDetail/:id",
+    name: "GoodsDetail",
+    props: route => ({
+      id: route.params.id
+    }),
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/GoodsDetail/index.vue")
   },
   {
     path: "/test",

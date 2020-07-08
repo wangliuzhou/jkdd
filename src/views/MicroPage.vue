@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     loadData() {
-      this.$get(
+      this.$fetchGet(
         `/store/mobile/tenantPage/findPage?pageContentId=${this.id}`
       ).then(({ data: { componentArray } }) => {
         this.setData({

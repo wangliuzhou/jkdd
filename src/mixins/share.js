@@ -104,7 +104,7 @@ export default {
       jsApiList = jsApiList || defaultJsApiList;
       shareParams = Object.assign({}, defaultShareParams, shareParams);
 
-      this.$post(
+      this.$fetchPost(
         "/ThirdPartyDocking/Wechat/Agent/WechatOffcialAccount/JsTicket",
         {
           data: {

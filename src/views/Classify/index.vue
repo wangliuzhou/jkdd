@@ -12,10 +12,10 @@
     </div>
 
     <div class="classify-content">
-      <div class="classify-content-left">
+      <div class="classify-content-left" ref="left">
         <div class="classify-content-left-list">
           <div
-            :id="`tab_${item.pageCateId}`"
+            :ref="`tab_${item.pageCateId}`"
             class="classify-content-left-item"
             :class="{
               active: activeIndex === index,
@@ -30,19 +30,25 @@
           </div>
         </div>
       </div>
-      <div class="classify-content-right">
-        <!-- <div class="classify-content-right-content">
+      <div
+        class="classify-content-right"
+        ref="right"
+        @scroll="handleRightScroll"
+      >
+        <div class="classify-content-right-content">
           <div class="classify-content-right-goods-wrap">
             <div
-              id="goods_{{ item.pageCateId }}"
+              :ref="`classify_${item.pageCateId}`"
               class="classify-content-right-goods"
-              wx:for="{{ list }}"
-              wx:key="pageCateId"
+              v-for="item in list"
+              :key="item.pageCateId"
             >
               <div
                 class="classify-content-right-banner"
-                wx:if="{{ item.pageCateTitlePic }}"
-                style="{{ 'background-image: url(' + item.pageCateTitlePic + ')' }}"
+                v-if="item.pageCateTitlePic"
+                :style="
+                  `background-image: url(${$ali(item.pageCateTitlePic, 250)})`
+                "
               ></div>
               <div class="classify-content-right-goods-title">
                 {{ item.pageCateName }}
@@ -50,21 +56,23 @@
               <div class="classify-content-right-goods-list">
                 <div
                   class="classify-content-right-goods-item"
-                  wx:for="{{ item.tenantPageCateSons }}"
-                  wx:key="pageCateId"
+                  v-for="it in item.tenantPageCateSons"
+                  :key="it.pageCateId"
                 >
                   <div
                     class="classify-content-right-goods-item-image"
-                    style="{{ 'background-image: url(' + item.pageCateTitlePic + ')' }}"
+                    :style="
+                      `background-image: url(${$ali(it.pageCateTitlePic, 84)})`
+                    "
                   ></div>
                   <div class="classify-content-right-goods-item-name">
-                    {{ item.pageCateName }}
+                    {{ it.pageCateName }}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
 
@@ -72,6 +80,7 @@
   </div>
 </template>
 <script>
+import { getOffsetTop } from "@/utils/dom";
 import IconFont from "@/components/IconFont";
 import Tabbar from "@/components/Tabbar";
 export default {
@@ -92,7 +101,7 @@ export default {
   },
   methods: {
     loadData() {
-      this.$get("/store/mobile/tenantPage/findSysPage?sysType=3").then(
+      this.$fetchGet("/store/mobile/tenantPage/findSysPage?sysType=3").then(
         ({ data: list }) => {
           this.list = list;
         }
@@ -100,11 +109,44 @@ export default {
     },
     setActiveIndex(item, index) {
       this.activeIndex = index;
+      let oRight = this.$refs["right"];
+      let oClassify = this.$refs[`classify_${item.pageCateId}`][0];
+      oRight.scrollTop = getOffsetTop(oClassify) - getOffsetTop(oRight);
       //做个标记防止重复触发handleRightScroll
-      // this.scrolling = true;
-      // setTimeout(() => {
-      //   this.scrolling = false;
-      // }, 400);
+      this._scrolling = true;
+      setTimeout(() => {
+        this._scrolling = false;
+      }, 400);
+    },
+    handleRightScroll() {
+      if (this._scrolling) return;
+
+      let oRight = this.$refs["right"];
+      let { activeIndex } = this;
+      for (let i = 0, len = this.list.length; i < len; i++) {
+        let item = this.list[i];
+        let oClassify = this.$refs[`classify_${item.pageCateId}`][0];
+        if (getOffsetTop(oClassify) - getOffsetTop(oRight) < oRight.scrollTop) {
+          activeIndex = i;
+        }
+      }
+
+      let oLeft = this.$refs["left"];
+      let oTab = this.$refs[`tab_${this.list[activeIndex].pageCateId}`][0];
+
+      if (
+        getOffsetTop(oTab) - getOffsetTop(oLeft) >
+        oLeft.scrollTop + (oLeft.offsetHeight - oTab.offsetHeight)
+      ) {
+        oLeft.scrollTop =
+          getOffsetTop(oTab) -
+          getOffsetTop(oLeft) -
+          (oLeft.offsetHeight - oTab.offsetHeight);
+      } else if (getOffsetTop(oTab) - getOffsetTop(oLeft) < oLeft.scrollTop) {
+        oLeft.scrollTop = getOffsetTop(oTab) - getOffsetTop(oLeft);
+      }
+
+      this.activeIndex = activeIndex;
     }
   }
 };
@@ -117,13 +159,16 @@ export default {
 }
 .classify-search {
   display: flex;
+  width: 351px;
   border: 1px solid rgba(204, 204, 204, 1);
   border-radius: 18px;
   height: 36px;
   line-height: 36px;
+  background: white;
+  z-index: 1;
+  box-sizing: border-box;
   margin: 0 12px;
   margin-bottom: 16px;
-  box-sizing: border-box;
   .classify-search-left {
     flex: auto;
     display: flex;
@@ -166,7 +211,11 @@ export default {
   .classify-content-left {
     background: white;
     height: 100%;
+    overflow-y: scroll;
     flex: 0 0 105px;
+    &::-webkit-scrollbar {
+      display: none;
+    }
     .classify-content-left-list {
       text-align: center;
       .classify-content-left-item {
@@ -228,8 +277,12 @@ export default {
   .classify-content-right {
     box-sizing: border-box;
     height: 100%;
+    overflow-y: scroll;
     flex: auto;
     background: white;
+    &::-webkit-scrollbar {
+      display: none;
+    }
     .classify-content-right-content {
       padding: 8px 10px;
       .classify-content-right-goods-wrap {

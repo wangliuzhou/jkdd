@@ -10,6 +10,7 @@ import "lib-flexible/flexible.js";
 
 //axios
 import request from "@/config/request";
+import ali from "@/config/ali";
 
 import {
   Toast,
@@ -18,7 +19,10 @@ import {
   Dialog,
   NoticeBar,
   Tabbar,
-  TabbarItem
+  TabbarItem,
+  Popup,
+  Swipe,
+  SwipeItem
 } from "vant";
 
 // import * as fundebug from "fundebug-javascript";
@@ -48,6 +52,8 @@ Vue.use(VueLazyload, {
 });
 Vue.use(VueAwesomeSwiper);
 Vue.use(request);
+Vue.use(ali);
+//vant
 Vue.use(Toast);
 Vue.use(Switch);
 Vue.use(Loading);
@@ -55,7 +61,9 @@ Vue.use(Dialog);
 Vue.use(NoticeBar);
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
-
+Vue.use(Popup);
+Vue.use(Swipe);
+Vue.use(SwipeItem);
 // FastClick.attach(document.body);
 
 Vue.config.productionTip = false;

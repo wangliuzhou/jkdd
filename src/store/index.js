@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
+
 import global from "./modules/global";
+import pageGoodsDetail from "./modules/pageGoodsDetail";
 
 Vue.use(Vuex);
 
@@ -11,6 +13,7 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   modules: {
-    global
+    global,
+    pageGoodsDetail
   }
 });

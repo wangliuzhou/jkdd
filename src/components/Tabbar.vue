@@ -3,6 +3,7 @@
     :value="selected"
     :inactive-color="color"
     :active-color="selectedColor"
+    :safe-area-inset-bottom="true"
   >
     <van-tabbar-item
       v-for="(item, i) in list"
