@@ -22,11 +22,38 @@ export default {
   namespaced: true,
   state: defaultState,
   mutations: {
-    resetData(state) {
-      let cln = JSON.parse(JSON.stringify(defaultState));
-      for (let key in cln) {
-        state[key] = cln[key];
+    // resetData(state) {
+    //   let cln = JSON.parse(JSON.stringify(defaultState));
+    //   for (let key in cln) {
+    //     state[key] = cln[key];
+    //   }
+    // },
+    //显示sku面板
+    setShowSku(state, payload) {
+      state.showSku = payload;
+    },
+    setGoodsDetail(state, payload) {
+      if (payload && payload.dealerProductJoinId) {
+        state.goodsDetail = {
+          ...payload,
+          mainCover:
+            "https://saasoss.xzintl.com/4zdolwl1nr/2020/07/07/file_d66nlnzke33zg-w828_h6184.jpg,https://saasoss.xzintl.com/4zdolwl1nr/2020/07/07/file_xeezyzg379w28-w828_h2126.jpg"
+        };
+      } else {
+        state.goodsDetail = null;
       }
+    },
+    setScrollTop(state, payload) {
+      state.scrollTop = payload;
+    },
+    setDataIsLoad(state, payload) {
+      state.dataIsLoad = payload;
+    },
+    setBtnStatus(state, payload) {
+      state.btnStatus = payload;
+    },
+    updateChooseInfo(state, payload) {
+      state.chooseInfo = { ...state.chooseInfo, ...payload };
     }
   },
   actions: {
@@ -38,17 +65,11 @@ export default {
         storeId: "TSRORVZ17ZXD9"
       })
         .then(({ data }) => {
-          if (data && data.dealerProductJoinId) {
-            data.mainCover =
-              "https://saasoss.xzintl.com/4zdolwl1nr/2020/07/07/file_d66nlnzke33zg-w828_h6184.jpg,https://saasoss.xzintl.com/4zdolwl1nr/2020/07/07/file_xeezyzg379w28-w828_h2126.jpg";
-            state.goodsDetail = data;
-          } else {
-            state.goodsDetail = null;
-          }
+          commit("setGoodsDetail", data);
         })
         .catch(({ message }) => {})
         .then(() => {
-          state.dataIsLoad = true;
+          commit("setDataIsLoad", true);
           dispatch("global/setLoading", false, { root: true });
         });
     }

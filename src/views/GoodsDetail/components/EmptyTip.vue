@@ -1,10 +1,6 @@
 <template>
   <div class="empty-tip">
-    <img
-      :src="require('@/assets/images/empty-goods.png')"
-      mode="widthFix"
-      alt="暂未发布商品"
-    />
+    <img :src="require('@/assets/images/empty-goods.png')" alt="暂未发布商品" />
     <div class="empty-tip-text">暂未发布商品～</div>
   </div>
 </template>

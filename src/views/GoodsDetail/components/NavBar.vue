@@ -1,9 +1,9 @@
 <template>
-  <div class="nav-bar" v-if="scrollTop > 0" :style="navBarStyle">
+  <div ref="nav-bar" class="nav-bar" v-if="scrollTop > 0" :style="navBarStyle">
     <div
       class="nav-item"
       :class="{ active: activeIndex === 0 }"
-      @click="handleClick"
+      @click="handleClick(0)"
     >
       商品
       <span></span>
@@ -11,7 +11,7 @@
     <div
       class="nav-item"
       :class="{ active: activeIndex === 1 }"
-      @click="handleClick"
+      @click="handleClick(1)"
     >
       详情
       <span></span>
@@ -19,13 +19,93 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   data() {
     return {
       activeIndex: 0
     };
+  },
+  computed: {
+    ...mapState({
+      scrollTop: state => state.pageGoodsDetail.scrollTop
+    }),
+    navBarStyle() {
+      let { scrollTop } = this;
+      let opacity = scrollTop / 100;
+      opacity = opacity > 1 ? 1 : opacity;
+      return `opacity: ${opacity}`;
+    }
+  },
+  mounted() {
+    window.addEventListener(
+      "scroll",
+      () => {
+        let scrollTop =
+          document.body.scrollTop || document.documentElement.scrollTop || 0;
+        this.setScrollTop(scrollTop);
+
+        this.handleScrollChangeNavBar();
+      },
+      false
+    );
+  },
+  methods: {
+    ...mapMutations({
+      setScrollTop: "pageGoodsDetail/setScrollTop"
+    }),
+    handleScrollChangeNavBar() {
+      if (this.scrollTo.running) return;
+      let index = 0;
+      let oGoodsDetailRect = document
+        .querySelector(".goods-detail")
+        .getBoundingClientRect();
+      let oNavBarHeight = this.$refs["nav-bar"]
+        ? this.$refs["nav-bar"].offsetHeight
+        : 0;
+      if (oGoodsDetailRect.top - oNavBarHeight <= 0) {
+        index = 1;
+      }
+      this.activeIndex = index;
+    },
+    handleClick(index) {
+      this.activeIndex = index;
+
+      if (index === 0) {
+        this.scrollTo(0, 400);
+      } else if (index === 1) {
+        let scrollTop =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        let oGoodsDetailRect = document
+          .querySelector(".goods-detail")
+          .getBoundingClientRect();
+        let oNavBarHeight = this.$refs["nav-bar"]
+          ? this.$refs["nav-bar"].offsetHeight
+          : 0;
+        this.scrollTo(oGoodsDetailRect.top + scrollTop - oNavBarHeight, 400);
+      }
+      this.scrollTo.running = true;
+    },
+    scrollTo(number = 0, time) {
+      if (!time) {
+        document.body.scrollTop = document.documentElement.scrollTop = number;
+        return number;
+      }
+      const spacingTime = 20; // 设置循环的间隔时间  值越小消耗性能越高
+      let spacingInex = time / spacingTime; // 计算循环的次数
+      let nowTop = document.body.scrollTop + document.documentElement.scrollTop; // 获取当前滚动条位置
+      let everTop = (number - nowTop) / spacingInex; // 计算每次滑动的距离
+      let scrollTimer = setInterval(() => {
+        if (spacingInex > 0) {
+          spacingInex--;
+          this.scrollTo((nowTop += everTop));
+        } else {
+          this.scrollTo.running = false;
+          clearInterval(scrollTimer); // 清除计时器
+        }
+      }, spacingTime);
+    }
   }
 };
 </script>
@@ -46,6 +126,7 @@ export default {
     flex: 1;
     text-align: center;
     position: relative;
+    font-size: 16px;
     span {
       width: 20px;
       height: 4px;

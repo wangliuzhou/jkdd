@@ -3,7 +3,6 @@
     <template v-if="goodsDetail">
       <NavBar
         class="nav-bar-component"
-        :scrollTop="scrollTop"
         bind:tap-nav-bar-item="handleNavBarTap"
       />
 
@@ -22,22 +21,12 @@
       <BottomBtns />
 
       <!-- sku -->
-      <van-popup
-        :show="showSku"
-        bind:close="handleCloseSku"
-        position="bottom"
-        closeable
-      >
-        <Sku
-          :goodsDetail="goodsDetail"
-          :chooseInfo="chooseInfo"
-          bind:update-choose-info="handleUpdateChooseInfo"
-          bind:confirm="handleConfirm"
-        />
+      <van-popup v-model="showSku" position="bottom" closeable>
+        <Sku />
       </van-popup>
 
       <!-- cms -->
-      <Cms />
+      <!-- <Cms /> -->
     </template>
 
     <template v-if="dataIsLoad && !goodsDetail">
@@ -46,33 +35,48 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
+import NavBar from "./components/NavBar";
 import GoodsImgs from "./components/GoodsImgs";
 import GoodsInfo from "./components/GoodsInfo";
 import ChooseInfo from "./components/ChooseInfo";
 import GoodsDetail from "./components/GoodsDetail";
 import BottomBtns from "./components/BottomBtns";
 import EmptyTip from "./components/EmptyTip";
+import Sku from "./components/Sku";
 
 export default {
   components: {
+    NavBar,
     GoodsImgs,
     GoodsInfo,
     ChooseInfo,
     GoodsDetail,
     BottomBtns,
-    EmptyTip
+    EmptyTip,
+    Sku
   },
   computed: {
     ...mapState({
       dataIsLoad: state => state.pageGoodsDetail.dataIsLoad,
       goodsDetail: state => state.pageGoodsDetail.goodsDetail
-    })
+    }),
+    showSku: {
+      get() {
+        return this.$store.state.pageGoodsDetail.showSku;
+      },
+      set(value) {
+        this.setShowSku(value);
+      }
+    }
   },
   mounted() {
     this.loadData(this.$attrs.id);
   },
   methods: {
+    ...mapMutations({
+      setShowSku: "pageGoodsDetail/setShowSku"
+    }),
     ...mapActions({
       loadData: "pageGoodsDetail/loadData"
     })

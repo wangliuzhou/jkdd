@@ -14,14 +14,12 @@
     <template v-if="goodsDetail.productOnsaleStatus === 1">
       <template v-if="goodsDetail.stockSum > 0">
         <div class="add-cart">
-          <button v-if="isLogin" bind:tap="handleAddCart">
+          <button @click="handleAddCart">
             加入购物车
           </button>
-          <PhoneLoginContainer v-if="!isLogin">加入购物车</PhoneLoginContainer>
         </div>
         <div class="buy">
-          <button v-if="isLogin" bind:tap="handleGoBuy">立即购买</button>
-          <PhoneLoginContainer v-if="!isLogin">立即购买</PhoneLoginContainer>
+          <button @click="handleGoBuy">立即购买</button>
         </div>
       </template>
       <template v-if="!goodsDetail.stockSum">
@@ -38,13 +36,27 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   computed: {
     ...mapState({
       goodsDetail: state => state.pageGoodsDetail.goodsDetail
     })
+  },
+  methods: {
+    ...mapMutations({
+      setBtnStatus: "pageGoodsDetail/setBtnStatus",
+      setShowSku: "pageGoodsDetail/setShowSku"
+    }),
+    handleAddCart() {
+      this.setBtnStatus(1);
+      this.setShowSku();
+    },
+    handleGoBuy() {
+      this.setBtnStatus(2);
+      this.setShowSku();
+    }
   }
 };
 </script>

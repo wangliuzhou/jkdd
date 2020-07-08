@@ -1,6 +1,6 @@
 <template>
   <div class="choose-info">
-    <div class="choose-info-item" bind:tap="handleOpenSku">
+    <div class="choose-info-item" @click="handleOpenSku">
       <div class="left">选择</div>
       <div class="right">{{ selectSkuStr }}</div>
     </div>
@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   computed: {
     ...mapState({
@@ -57,6 +57,16 @@ export default {
       } else {
         return "¥0.00";
       }
+    }
+  },
+  methods: {
+    ...mapMutations({
+      setShowSku: "pageGoodsDetail/setShowSku",
+      setBtnStatus: "pageGoodsDetail/setBtnStatus"
+    }),
+    handleOpenSku() {
+      this.setBtnStatus(null);
+      this.setShowSku(true);
     }
   }
 };
