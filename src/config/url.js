@@ -1,61 +1,131 @@
-const { VUE_APP_API_ENV } = process.env;
+const ApiInfos = [
+  { key: "/store/", service: "/api/store", dev: "http://192.168.100.114:8080" },
+  { key: "/oss/", service: "/api/oss", dev: "http://192.168.100.114:8081" },
+  {
+    key: "/client/",
+    service: "/api/client",
+    dev: "http://192.168.100.114:8083"
+  },
+  {
+    key: "/storage/",
+    service: "/api/storage",
+    dev: "http://192.168.100.114:8084"
+  },
+  {
+    key: "/sysBackendCategoryAttr/",
+    service: "/api/product",
+    dev: "http://192.168.100.142:8080"
+  },
+  {
+    key: "/brand/",
+    service: "/api/product",
+    dev: "http://192.168.100.142:8080"
+  },
+  {
+    key: "/tenantUnit/",
+    service: "/api/product",
+    dev: "http://192.168.100.142:8080"
+  },
+  {
+    key: "/tenantBackCate/",
+    service: "/api/product",
+    dev: "http://192.168.100.142:8080"
+  },
+  {
+    key: "/tenantFrontCate/",
+    service: "/api/product",
+    dev: "http://192.168.100.142:8080"
+  },
+  {
+    key: "/frontBackCate/",
+    service: "/api/product",
+    dev: "http://192.168.100.142:8080"
+  },
+  {
+    key: "/tenantProduct/",
+    service: "/api/product",
+    dev: "http://192.168.100.142:8080"
+  },
+  {
+    key: "/sysAccount/",
+    service: "/api/system",
+    dev: "http://192.168.100.142:8088"
+  },
+  {
+    key: "/storesysBaseInfo/",
+    service: "/api/system",
+    dev: "http://192.168.100.142:8088"
+  },
+  {
+    key: "/sysWechatappLiveroom/",
+    service: "/api/product",
+    dev: "http://192.168.100.142:8080"
+  },
+  {
+    key: "/tenantMemberLevel/",
+    service: "/api/product",
+    dev: "http://192.168.100.142:8080"
+  },
+  {
+    key: "/tenantProductUserLabel/",
+    service: "/api/product",
+    dev: "http://192.168.100.142:8080"
+  },
+  {
+    key: "/sysWechatThirdAuthInfo/",
+    service: "/api/product",
+    dev: "http://192.168.100.142:8080"
+  },
+  {
+    key: "/sysWechatThirdAuth/",
+    service: "/api/system",
+    dev: "http://192.168.100.142:8088"
+  },
+  {
+    key: "/tenantSingleProduct/",
+    service: "/api/product",
+    dev: "http://192.168.100.142:8080"
+  },
+  {
+    key: "/tenantEmployeeAccount/",
+    service: "/api/product",
+    dev: "http://192.168.100.142:8080"
+  },
+  { key: "/order/", service: "/api/order", dev: "http://192.168.100.114:8086" },
+  { key: "/sms/", service: "/api/product", dev: "http://192.168.100.142:8080" },
+  { key: "/captcha/", service: "/api/sms", dev: "http://192.168.100.111:80" }
+];
+
+const genMap = ({ origin = "https://saas.xzintl.com", isDev = false } = {}) => {
+  return ApiInfos.reduce((result, { key, service, dev }) => {
+    result[key] = isDev ? [dev] : [origin + service];
+    return result;
+  }, {});
+};
+
 const CONFIG = {
   dev: {
-    url_map: {
-      "/store/": ["http://192.168.100.114:8080"],
-      "/oss/": ["http://192.168.100.114:8081"],
-      "/client/": ["http://192.168.100.114:8083"],
-      "/storage/": ["http://192.168.100.114:8084"],
-      "/sysBackendCategoryAttr/": ["http://192.168.100.142:8080"],
-      "/brand/": ["http://192.168.100.142:8080"],
-      "/tenantUnit/": ["http://192.168.100.142:8080"],
-      "/tenantBackCate/": ["http://192.168.100.142:8080"],
-      "/tenantFrontCate/": ["http://192.168.100.142:8080"],
-      "/frontBackCate/": ["http://192.168.100.142:8080"],
-      "/mobile/tenantProduct/": ["http://192.168.100.142:8080"],
-      "/sysAccount/": ["http://192.168.100.142:8088"],
-      "/storesysBaseInfo/": ["http://192.168.100.142:8088"],
-      "/sysWechatappLiveroom/": ["http://192.168.100.142:8080"],
-      "/tenantMemberLevel/": ["http://192.168.100.142:8080"],
-      "/tenantProductUserLabel/": ["http://192.168.100.142:8080"],
-      "/sysWechatThirdAuthInfo/": ["http://192.168.100.142:8080"],
-      "/sysWechatThirdAuth/": ["http://192.168.100.142:8088"],
-      "/tenantSingleProduct/": ["http://192.168.100.114:8080"],
-      "/tenantEmployeeAccount/": ["http://192.168.100.142:8080"],
-      "/sms/": ["http://192.168.100.142:8080"],
-      "/order/": ["http://192.168.100.111:8086"]
-    }
+    apiUrl: genMap({ isDev: true })
   },
-  beta: {},
+  beta: {
+    apiUrl: genMap({ origin: "https://saastest.xzintl.com" })
+  },
+  beta1: {
+    apiUrl: genMap({ origin: "https://saastest.xzdev.com" })
+  },
   prod: {
-    url_map: {
-      "/store/": ["https://saas.xzintl.com/api/store"],
-      "/oss/": ["https://saas.xzintl.com/api/oss"],
-      "/client/": ["https://saas.xzintl.com/api/client"],
-      "/storage/": ["https://saas.xzintl.com/api/storage"],
-      "/sysBackendCategoryAttr/": ["https://saas.xzintl.com/api/product"],
-      "/brand/": ["https://saas.xzintl.com/api/product"],
-      "/tenantUnit/": ["https://saas.xzintl.com/api/product"],
-      "/tenantBackCate/": ["https://saas.xzintl.com/api/product"],
-      "/tenantFrontCate/": ["https://saas.xzintl.com/api/product"],
-      "/frontBackCate/": ["https://saas.xzintl.com/api/product"],
-      "/mobile/tenantProduct/": ["https://saas.xzintl.com/api/product"],
-      "/sysAccount/": ["https://saas.xzintl.com/api/system"],
-      "/storesysBaseInfo/": ["https://saas.xzintl.com/api/system"],
-      "/sysWechatappLiveroom/": ["https://saas.xzintl.com/api/product"],
-      "/tenantMemberLevel/": ["https://saas.xzintl.com/api/product"],
-      "/tenantProductUserLabel/": ["https://saas.xzintl.com/api/product"],
-      "/sysWechatThirdAuthInfo/": ["https://saas.xzintl.com/api/product"],
-      "/sysWechatThirdAuth/": ["https://saas.xzintl.com/api/system"],
-      "/order/": ["https://saas.xzintl.com/api/order"]
-    }
+    apiUrl: genMap({ origin: "https://saas.xzintl.com" })
   }
 };
-let config = "";
-if (["beta", "prod"].indexOf(VUE_APP_API_ENV) > -1) {
-  config = CONFIG[VUE_APP_API_ENV];
+
+const { VUE_APP_API_ENV } = process.env;
+
+let config = CONFIG[VUE_APP_API_ENV];
+
+if (!config) {
+  throw new Error(`请检查环境配置，当前环境：[${VUE_APP_API_ENV}]`);
 } else {
-  config = CONFIG["prod"];
+  console.log("VUE_APP_API_ENV=", VUE_APP_API_ENV);
 }
 
 export const getUrl = url => {
@@ -63,11 +133,11 @@ export const getUrl = url => {
     return url;
   }
   let domain = "";
-  for (let key in config.url_map) {
+  for (let key in config.apiUrl) {
     if (url.indexOf(key) === 0) {
       domain =
-        config.url_map[key][
-          Math.floor(Math.random() * config.url_map[key].length)
+        config.apiUrl[key][
+          Math.floor(Math.random() * config.apiUrl[key].length)
         ];
       break;
     }
