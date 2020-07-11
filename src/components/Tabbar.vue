@@ -1,5 +1,6 @@
 <template>
   <van-tabbar
+    class="tabbar"
     :value="selected"
     :inactive-color="color"
     :active-color="selectedColor"
@@ -65,3 +66,7 @@ export default {
   }
 };
 </script>
+<style lang="less" scoped>
+.tabbar {
+}
+</style>

@@ -14,9 +14,7 @@
     <template v-if="goodsDetail.productOnsaleStatus === 1">
       <template v-if="goodsDetail.stockSum > 0">
         <div class="add-cart">
-          <button @click="handleAddCart">
-            加入购物车
-          </button>
+          <button @click="handleAddCart">加入购物车</button>
         </div>
         <div class="buy">
           <button @click="handleGoBuy">立即购买</button>
