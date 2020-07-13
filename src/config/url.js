@@ -42,7 +42,7 @@ const ApiInfos = [
     dev: "http://192.168.100.142:8080"
   },
   {
-    key: "/tenantProduct/",
+    key: "/mobile/tenantProduct/",
     service: "/api/product",
     dev: "http://192.168.100.142:8080"
   },
