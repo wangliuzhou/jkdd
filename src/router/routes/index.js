@@ -38,6 +38,19 @@ const routes = [
     component: () => import("@/views/GoodsDetail/index.vue")
   },
   {
+    path: "/orderSettle",
+    name: "OrderSettle",
+    props: route => ({
+      skuIds: route.query.skuIds,
+      skuNums: route.query.skuNums,
+      addressId: route.query.addressId
+    }),
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/OrderSettle/index.vue")
+  },
+  {
     path: "/test",
     name: "Test",
     meta: {

@@ -16,9 +16,11 @@ export const needLogin = to => {
 //生成请求头
 export const genRequestHeader = () => {
   return {
-    "x-user-id": Cookie.get("userId") || "",
-    "x-access-token": Cookie.get("accessToken") || "",
-    "x-storesys-id": "425ZP1Q60O"
+    "x-user-id": Cookie.get("userId") || "VLZWJWNQLLQW3L63J7D1",
+    "x-access-token":
+      Cookie.get("accessToken") || "57830ba4b6ef49031d936a0156893d2537605e8d",
+    "x-storesys-id": "E7M8V19ZOP",
+    "x-token-time": 1594867303938
   };
 };
 
