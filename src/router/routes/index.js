@@ -51,6 +51,38 @@ const routes = [
     component: () => import("@/views/OrderSettle/index.vue")
   },
   {
+    path: "/orderList",
+    name: "OrderList",
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/OrderList/index.vue")
+  },
+  {
+    path: "/orderDetail",
+    name: "OrderDetail",
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/OrderDetail/index.vue")
+  },
+  {
+    path: "/addressList",
+    name: "AddressList",
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/AddressList/index.vue")
+  },
+  {
+    path: "/addAddress",
+    name: "AddAddress",
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/AddAddress/index.vue")
+  },
+  {
     path: "/test",
     name: "Test",
     meta: {

@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 import VueLazyload from "vue-lazyload";
 import VueAwesomeSwiper from "vue-awesome-swiper";
+import VueClipboard from "vue-clipboard2";
 
 // import FastClick from "fastclick";
 import "lib-flexible/flexible.js";
@@ -22,7 +23,10 @@ import {
   TabbarItem,
   Popup,
   Swipe,
-  SwipeItem
+  SwipeItem,
+  Field,
+  Area,
+  List
 } from "vant";
 
 // import * as fundebug from "fundebug-javascript";
@@ -53,6 +57,8 @@ Vue.use(VueLazyload, {
 Vue.use(VueAwesomeSwiper);
 Vue.use(request);
 Vue.use(ali);
+// 复制到剪切板
+Vue.use(VueClipboard);
 //vant
 Vue.use(Toast);
 Vue.use(Switch);
@@ -64,6 +70,9 @@ Vue.use(TabbarItem);
 Vue.use(Popup);
 Vue.use(Swipe);
 Vue.use(SwipeItem);
+Vue.use(Field);
+Vue.use(Area);
+Vue.use(List);
 // FastClick.attach(document.body);
 
 Vue.config.productionTip = false;
