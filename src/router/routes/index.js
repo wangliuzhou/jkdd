@@ -38,19 +38,6 @@ const routes = [
     component: () => import("@/views/GoodsDetail/index.vue")
   },
   {
-    path: "/orderSettle",
-    name: "OrderSettle",
-    props: route => ({
-      skuIds: route.query.skuIds,
-      skuNums: route.query.skuNums,
-      addressId: route.query.addressId
-    }),
-    meta: {
-      needLogin: false
-    },
-    component: () => import("@/views/OrderSettle/index.vue")
-  },
-  {
     path: "/orderList",
     name: "OrderList",
     meta: {
@@ -81,6 +68,19 @@ const routes = [
       needLogin: false
     },
     component: () => import("@/views/AddAddress/index.vue")
+  },
+  {
+    path: "/orderSettle",
+    name: "OrderSettle",
+    props: route => ({
+      skuIds: route.query.skuIds,
+      skuNums: route.query.skuNums,
+      addressId: route.query.addressId
+    }),
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/OrderSettle/index.vue")
   },
   {
     path: "/test",
