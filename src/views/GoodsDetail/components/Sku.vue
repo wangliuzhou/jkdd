@@ -66,11 +66,14 @@
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
+import { Toast } from "vant";
+
 export default {
   computed: {
     ...mapState({
       goodsDetail: state => state.pageGoodsDetail.goodsDetail,
-      chooseInfo: state => state.pageGoodsDetail.chooseInfo
+      chooseInfo: state => state.pageGoodsDetail.chooseInfo,
+      btnStatus: state => state.pageGoodsDetail.btnStatus
     }),
     goodsImg() {
       let {
@@ -118,6 +121,7 @@ export default {
   },
   methods: {
     ...mapMutations({
+      setShowSku: "pageGoodsDetail/setShowSku",
       updateChooseInfo: "pageGoodsDetail/updateChooseInfo"
     }),
     hasStock(skuList, selectSkuAttr, attr, item) {
@@ -210,8 +214,8 @@ export default {
         }
       }
 
-      if (sku && num > this.data.stock) {
-        num = this.data.stock;
+      if (sku && num > this.stock) {
+        num = this.stock;
       }
 
       this.updateChooseInfo({
@@ -221,18 +225,17 @@ export default {
         num
       });
     },
-    handleChangeNum(e) {
-      let { type } = e.currentTarget.dataset;
+    handleChangeNum(type) {
       let {
         chooseInfo,
         chooseInfo: { num }
-      } = this.data;
+      } = this;
 
       if (type === "reduce" && num > 1) {
         num--;
       }
 
-      if (type === "add" && num < this.data.stock) {
+      if (type === "add" && num < this.stock) {
         num++;
       }
 
@@ -242,7 +245,30 @@ export default {
       });
     },
     handleConfirm() {
-      // this.triggerEvent("confirm");
+      let {
+        btnStatus,
+        chooseInfo: { sku, num },
+        goodsDetail: { isMultiAttr, valueVoList }
+      } = this;
+      //有sku
+      if (isMultiAttr != 1) {
+        sku = valueVoList[0];
+      }
+
+      if (!sku) {
+        return Toast({ position: "bottom", message: "请选择商品规格" });
+      }
+
+      this.setShowSku(false);
+
+      if (btnStatus == 1) {
+        //加入购物车
+      } else if (btnStatus == 2) {
+        //立即购买
+        this.$router.push({
+          path: `/orderSettle?skuIds=${sku.singleProductOuterId}&skuNums=${num}`
+        });
+      }
     }
   }
 };

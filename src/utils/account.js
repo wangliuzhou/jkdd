@@ -19,7 +19,7 @@ export const genRequestHeader = () => {
     "x-user-id": Cookie.get("userId") || "VLZWJWNQLLQW3L63J7D1",
     "x-access-token":
       Cookie.get("accessToken") || "57830ba4b6ef49031d936a0156893d2537605e8d",
-    "x-storesys-id": "E7M8V19ZOP",
+    "x-storesys-id": "E7M8V19ZOP", //"425ZP1Q60O",
     "x-token-time": 1594867303938
   };
 };

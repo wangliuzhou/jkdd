@@ -49,11 +49,11 @@ export default {
     }),
     handleAddCart() {
       this.setBtnStatus(1);
-      this.setShowSku();
+      this.setShowSku(true);
     },
     handleGoBuy() {
       this.setBtnStatus(2);
-      this.setShowSku();
+      this.setShowSku(true);
     }
   }
 };
@@ -131,9 +131,7 @@ export default {
       background: #ff6a00;
       color: white;
       font-size: 15px;
-      &:after {
-        border: none;
-      }
+      border: none;
     }
   }
   .ysq,
