@@ -1,51 +1,59 @@
 <template>
-  <div class="xz-image-wrap">
-    <div class="image-container-wrap">
-      <div class="image-swiper-wrap" :style="calcPaddingY">
-        <div class="image-swiper-content">
-          <van-swipe>
-            <van-swipe-item v-for="item in detail.imageList" :key="item.id">
-              <swiper-item>
-                <div class="image-swiper-item" style="padding:0">
-                  <van-image
-                    class="image-swiper-image"
-                    :src="item.src"
-                    fit="cover"
-                    style="border-radius:10px"
-                  />
-                </div>
-              </swiper-item>
-            </van-swipe-item>
-          </van-swipe>
-
-          <!-- 指示器 -->
-          <!-- <div wx:if="{{detail.indicatorTpye === 1}}" class="indicator-dots-1">
-            <block wx:for="{{detail.imageList}}" wx:key="productOuterId">
-              <div
-                class="indicator-dots-1-item {{current === index && 'active-indicators'}}"
-              ></div>
-            </block>
-          </div>
-          <div wx:if="{{detail.indicatorTpye === 2}}" class="indicator-dots-2">
-            <block wx:for="{{detail.imageList}}" wx:key="productOuterId">
-              <div
-                class="indicator-dots-2-item {{current === index && 'active-indicators'}}"
-              ></div>
-            </block>
-          </div>
-          <div wx:if="{{detail.indicatorTpye === 3}}" class="indicator-dots-3">
-            <block wx:for="{{detail.imageList}}" wx:key="productOuterId">
-              <div
-                class="indicator-dots-3-item {{current === index && 'active-indicators'}}"
-              ></div>
-            </block>
-          </div>
-          <div wx:if="{{detail.indicatorTpye === 4}}" class="indicator-dots-4">
-            <div class="indicator-dots-4-item">
-              <text class="active-indicators">{{ current + 1 }}</text>
-              <text>/ {{ detail.imageList.length }}</text>
+  <div class="image-container-wrap">
+    <div class="image-swiper-wrap" :style="calcPaddingY">
+      <div class="image-swiper-content">
+        <van-swipe
+          :style="calcSwiperHeight"
+          :show-indicators="false"
+          autoplay="5000"
+          @change="onSwipeChange"
+        >
+          <van-swipe-item v-for="item in detail.imageList" :key="item.id">
+            <div
+              class="image-swiper-item"
+              :style="{ padding: calcPaddingX }"
+              @click="goPage(item)"
+            >
+              <van-image
+                class="image-swiper-image"
+                :src="$ali(item.src, 375)"
+                :fit="calcImageStyle"
+                :style="{ borderRadius: calcBorderRadius }"
+              />
             </div>
-          </div> -->
+          </van-swipe-item>
+        </van-swipe>
+
+        <!-- 指示器 -->
+        <div v-if="detail.indicatorTpye === 1" class="indicator-dots-1">
+          <div
+            v-for="(item, index) in detail.imageList"
+            :key="item.id"
+            class="indicator-dots-1-item"
+            :class="{ 'active-indicators': current === index }"
+          ></div>
+        </div>
+        <div v-if="detail.indicatorTpye === 2" class="indicator-dots-2">
+          <div
+            v-for="(item, index) in detail.imageList"
+            :key="item.id"
+            class="indicator-dots-2-item"
+            :class="{ 'active-indicators': current === index }"
+          ></div>
+        </div>
+        <div v-if="detail.indicatorTpye === 3" class="indicator-dots-3">
+          <div
+            v-for="(item, index) in detail.imageList"
+            :key="item.id"
+            class="indicator-dots-3-item"
+            :class="{ 'active-indicators': current === index }"
+          ></div>
+        </div>
+        <div v-if="detail.indicatorTpye === 4" class="indicator-dots-4">
+          <div class="indicator-dots-4-item">
+            <span class="active-indicators">{{ current + 1 }}</span>
+            <span>/ {{ detail.imageList.length }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -55,51 +63,61 @@
 import { px2rem } from "@/utils/index";
 export default {
   props: ["detail"],
+  data: () => {
+    return {
+      current: 0
+    };
+  },
   computed: {
     calcSwiperHeight() {
       let { detail } = this;
       if (detail) {
-        return px2rem(750 * detail.ratio);
+        return `height:${px2rem(375 * detail.ratio)}`;
       }
-      return px2rem(375);
+      return `height:${px2rem(375)}`;
     },
     calcImageStyle() {
       let { detail } = this;
       if (detail) {
-        return detail.fillType === 1 ? "aspectFill" : "aspectFit";
+        return detail.fillType === 1 ? "cover" : "contain";
       }
-      return "aspectFill";
+      return "cover";
     },
     calcBorderRadius() {
       let { detail } = this;
       if (detail) {
-        return px2rem(detail.borderRadius * 2);
+        return px2rem(detail.borderRadius);
       }
       return 0;
     },
     calcPaddingY() {
       let { detail } = this;
       if (detail) {
-        return `margin:${px2rem(detail.paddingY * 2)} 0`;
+        return `margin:${px2rem(detail.paddingY)} 0`;
       }
-      return `margin: 0`;
+      return "";
     },
     calcPaddingX() {
       let { detail } = this;
       if (detail) {
-        return px2rem(detail.paddingX * 2);
+        return `0 ${px2rem(detail.paddingX)}`;
       }
       return 0;
     }
   },
-  mounted() {
-    console.log(this.detail);
-  },
-  methods: {}
+  mounted() {},
+  methods: {
+    onSwipeChange(e) {
+      this.current = e;
+    },
+    goPage(item) {
+      console.log(item);
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
-.xz-image-swiper-wrap {
+.image-swiper-wrap {
   width: 100%;
 
   .image-swiper-content {
@@ -114,20 +132,21 @@ export default {
       .image-swiper-image {
         width: 100%;
         height: 100%;
+        overflow: hidden;
       }
     }
 
     .indicator-dots-1 {
       position: absolute;
-      bottom: 20rpx;
+      bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       flex-wrap: wrap;
 
       .indicator-dots-1-item {
-        width: 12rpx;
-        height: 12rpx;
+        width: 6px;
+        height: 6px;
         background-color: #ebedf0;
         border-radius: 100%;
         -webkit-transition: opacity 0.2s;
@@ -145,17 +164,17 @@ export default {
 
     .indicator-dots-2 {
       position: absolute;
-      bottom: 20rpx;
+      bottom: 10px;
       left: 50%;
-      transform: translate(0; -50%);
+      transform: translateX(-50%);
       display: flex;
       flex-wrap: wrap;
 
       .indicator-dots-2-item {
-        width: 22rpx;
-        height: 8rpx;
+        width: 11px;
+        height: 4px;
         background: rgba(0, 0, 0, 0.3);
-        border-radius: 6rpx;
+        border-radius: 3px;
         background-color: #ebedf0;
         -webkit-transition: opacity 0.2s;
         transition: opacity 0.2s;
@@ -166,21 +185,21 @@ export default {
 
         &.active-indicators {
           background-color: #ffa600;
-          width: 46rpx;
+          width: 23px;
         }
       }
     }
 
     .indicator-dots-3 {
       position: absolute;
-      bottom: 20rpx;
-      right: 20rpx;
+      bottom: 10px;
+      right: 10px;
       display: flex;
       flex-wrap: wrap;
 
       .indicator-dots-3-item {
-        width: 12rpx;
-        height: 12rpx;
+        width: 6px;
+        height: 6px;
         background-color: #ebedf0;
         border-radius: 100%;
         -webkit-transition: opacity 0.2s;
@@ -198,23 +217,23 @@ export default {
 
     .indicator-dots-4 {
       position: absolute;
-      bottom: 20rpx;
-      right: 20rpx;
-      height: 56rpx;
-      min-width: 80rpx;
-      padding: 0 10rpx;
+      bottom: 10px;
+      right: 10px;
+      height: 28px;
+      min-width: 40px;
+      padding: 0 5px;
       color: #fff;
-      font-size: 24rpx;
-      line-height: 56rpx;
+      font-size: 12px;
+      line-height: 28px;
       background: rgba(0, 0, 0, 0.3);
-      border-radius: 28rpx;
+      border-radius: 14px;
       text-align: center;
 
       .active-indicators {
-        font-size: 32rpx;
+        font-size: 16px;
         color: #ffa600;
         font-weight: 700;
-        margin-right: 6rpx;
+        margin-right: 3px;
       }
     }
   }

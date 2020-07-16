@@ -95,6 +95,14 @@ const routes = [
     name: "LoginError",
     component: () =>
       import(/* webpackChunkName: "LoginError" */ "@/views/LoginError.vue")
+  },
+  {
+    path: "/userCenter",
+    name: "UserCenter",
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/UserCenter/index.vue")
   }
 ];
 

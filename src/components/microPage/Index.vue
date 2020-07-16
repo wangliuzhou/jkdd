@@ -57,6 +57,13 @@
         :index="index"
         :key="item.pageComponentId"
       />
+      <!-- 商品 -->
+      <XzGoods
+        v-else-if="item.type == 'goods'"
+        :item="item"
+        :index="index"
+        :key="item.pageComponentId"
+      />
       <!-- 商品列表 -->
       <GoodsList
         v-else-if="item.type == 'goodsList'"
@@ -75,6 +82,7 @@ import GoodsSearch from "@/components/microPage/GoodsSearch";
 import ImageTextNav from "@/components/microPage/ImageTextNav";
 import Notice from "@/components/microPage/Notice";
 import XzImage from "@/components/microPage/XzImage";
+import XzGoods from "@/components/microPage/XzGoods";
 
 export default {
   components: {
@@ -84,7 +92,8 @@ export default {
     GoodsSearch,
     ImageTextNav,
     Notice,
-    XzImage
+    XzImage,
+    XzGoods
   },
   props: {
     components: {
