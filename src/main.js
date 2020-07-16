@@ -26,7 +26,8 @@ import {
   SwipeItem,
   Field,
   Area,
-  List
+  List,
+  Image as VanImage
 } from "vant";
 
 // import * as fundebug from "fundebug-javascript";
@@ -73,6 +74,8 @@ Vue.use(SwipeItem);
 Vue.use(Field);
 Vue.use(Area);
 Vue.use(List);
+Vue.use(VanImage);
+
 // FastClick.attach(document.body);
 
 Vue.config.productionTip = false;

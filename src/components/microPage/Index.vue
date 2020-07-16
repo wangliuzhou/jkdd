@@ -74,6 +74,7 @@ import WxappLivePlayer from "@/components/microPage/WxappLivePlayer";
 import GoodsSearch from "@/components/microPage/GoodsSearch";
 import ImageTextNav from "@/components/microPage/ImageTextNav";
 import Notice from "@/components/microPage/Notice";
+import XzImage from "@/components/microPage/XzImage";
 
 export default {
   components: {
@@ -82,7 +83,8 @@ export default {
     WxappLivePlayer,
     GoodsSearch,
     ImageTextNav,
-    Notice
+    Notice,
+    XzImage
   },
   props: {
     components: {

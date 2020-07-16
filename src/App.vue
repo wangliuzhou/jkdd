@@ -6,10 +6,10 @@
     <router-view v-if="!$route.meta.keepAlive"></router-view>
 
     <van-loading
-      v-if="global.loading"
       class="loading"
       type="spinner"
       color="#FF6A00"
+      v-if="global.loading"
     />
   </div>
 </template>
