@@ -93,7 +93,12 @@ const ApiInfos = [
   },
   { key: "/order/", service: "/api/order", dev: "http://192.168.100.114:8086" },
   { key: "/sms/", service: "/api/product", dev: "http://192.168.100.114:80" },
-  { key: "/captcha/", service: "/api/sms", dev: "http://192.168.100.111:80" }
+  { key: "/captcha/", service: "/api/sms", dev: "http://192.168.100.111:80" },
+  {
+    key: "/market/",
+    service: "/api/market",
+    dev: "http://192.168.100.38:8086"
+  }
 ];
 
 const genMap = ({ origin = "https://saas.xzintl.com", isDev = false } = {}) => {

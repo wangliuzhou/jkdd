@@ -103,6 +103,30 @@ const routes = [
       needLogin: false
     },
     component: () => import("@/views/UserCenter/index.vue")
+  },
+  {
+    path: "/qrcodeIntroduction",
+    name: "QrcodeIntroduction",
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/QrcodeIntroduction/index.vue")
+  },
+  {
+    path: "/qrcodeMissing",
+    name: "QrcodeMissing",
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/QrcodeMissing/index.vue")
+  },
+  {
+    path: "/qrcodeDetail",
+    name: "QrcodeDetail",
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/QrcodeDetail/index.vue")
   }
 ];
 
