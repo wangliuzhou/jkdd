@@ -7,6 +7,7 @@
 </template>
 <script>
 import api from "./api";
+import { getUserId } from "@/utils/account";
 export default {
   data() {
     return {
@@ -22,9 +23,12 @@ export default {
   methods: {
     // 获取二维码详情
     getActiveQrcodeById(activeQrcodeOuterId) {
+      let userMark = getUserId()
+        ? getUserId()
+        : localStorage.getItem("client_token");
       this.$fetchGet(api.getActiveQrcodeById, {
         activeQrcodeOuterId: activeQrcodeOuterId,
-        userMark: 1
+        userMark: userMark
       }).then(({ data }) => {
         if (data) {
           this.qrcodeUrl = data.tenantActiveQrcodeDetail?.qrcodeUrl;
