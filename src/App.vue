@@ -15,11 +15,15 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import { initContext } from "@/utils/account";
 export default {
   computed: {
     ...mapState({
       global: "global"
     })
+  },
+  created() {
+    initContext();
   }
 };
 </script>

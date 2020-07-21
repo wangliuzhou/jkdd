@@ -1,5 +1,6 @@
 import Cookie from "js-cookie";
 import cfg from "@/config/index";
+import { getUUID } from "@/utils/index";
 
 export const getUserId = () => {
   return Cookie.get("userId") || 0;
@@ -11,6 +12,13 @@ export const isLogin = () => {
 
 export const needLogin = to => {
   return to && to.meta && to.meta.needLogin === true && !isLogin();
+};
+
+export const initContext = () => {
+  let clientToken = localStorage.getItem("client_token");
+  if (!clientToken) {
+    localStorage.setItem("client_token", getUUID());
+  }
 };
 
 //生成请求头
