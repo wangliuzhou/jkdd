@@ -1,5 +1,5 @@
 const ApiInfos = [
-  { key: "/store/", service: "/api/store", dev: "http://192.168.100.114:80" },
+  { key: "/store/", service: "/api/store", dev: "http://192.168.100.142:8080" },
   { key: "/oss/", service: "/api/oss", dev: "http://192.168.100.114:8081" },
   {
     key: "/client/",
@@ -14,37 +14,37 @@ const ApiInfos = [
   {
     key: "/sysBackendCategoryAttr/",
     service: "/api/product",
-    dev: "http://192.168.100.114:80"
+    dev: "http://192.168.100.142:8080"
   },
   {
     key: "/brand/",
     service: "/api/product",
-    dev: "http://192.168.100.114:80"
+    dev: "http://192.168.100.142:8080"
   },
   {
     key: "/tenantUnit/",
     service: "/api/product",
-    dev: "http://192.168.100.114:80"
+    dev: "http://192.168.100.142:8080"
   },
   {
     key: "/tenantBackCate/",
     service: "/api/product",
-    dev: "http://192.168.100.114:80"
+    dev: "http://192.168.100.142:8080"
   },
   {
     key: "/tenantFrontCate/",
     service: "/api/product",
-    dev: "http://192.168.100.114:80"
+    dev: "http://192.168.100.142:8080"
   },
   {
     key: "/frontBackCate/",
     service: "/api/product",
-    dev: "http://192.168.100.114:80"
+    dev: "http://192.168.100.142:8080"
   },
   {
     key: "/mobile/tenantProduct/",
     service: "/api/product",
-    dev: "http://192.168.100.114:80"
+    dev: "http://192.168.100.142:8080"
   },
   {
     key: "/sysAccount/",
@@ -59,22 +59,22 @@ const ApiInfos = [
   {
     key: "/sysWechatappLiveroom/",
     service: "/api/product",
-    dev: "http://192.168.100.114:80"
+    dev: "http://192.168.100.142:8080"
   },
   {
     key: "/tenantMemberLevel/",
     service: "/api/product",
-    dev: "http://192.168.100.114:80"
+    dev: "http://192.168.100.142:8080"
   },
   {
     key: "/tenantProductUserLabel/",
     service: "/api/product",
-    dev: "http://192.168.100.114:80"
+    dev: "http://192.168.100.142:8080"
   },
   {
     key: "/sysWechatThirdAuthInfo/",
     service: "/api/product",
-    dev: "http://192.168.100.114:80"
+    dev: "http://192.168.100.142:8080"
   },
   {
     key: "/sysWechatThirdAuth/",
@@ -84,15 +84,15 @@ const ApiInfos = [
   {
     key: "/tenantSingleProduct/",
     service: "/api/product",
-    dev: "http://192.168.100.114:80"
+    dev: "http://192.168.100.142:8080"
   },
   {
     key: "/tenantEmployeeAccount/",
     service: "/api/product",
-    dev: "http://192.168.100.114:80"
+    dev: "http://192.168.100.142:8080"
   },
   { key: "/order/", service: "/api/order", dev: "http://192.168.100.114:8086" },
-  { key: "/sms/", service: "/api/product", dev: "http://192.168.100.114:80" },
+  { key: "/sms/", service: "/api/product", dev: "http://192.168.100.142:8080" },
   { key: "/captcha/", service: "/api/sms", dev: "http://192.168.100.111:80" },
   {
     key: "/market/",

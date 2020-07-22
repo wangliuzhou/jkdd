@@ -38,6 +38,17 @@ const routes = [
     component: () => import("@/views/GoodsDetail/index.vue")
   },
   {
+    path: "/seckill/:id",
+    name: "Seckill",
+    props: route => ({
+      id: route.params.id
+    }),
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/Seckill/index.vue")
+  },
+  {
     path: "/orderList",
     name: "OrderList",
     meta: {
