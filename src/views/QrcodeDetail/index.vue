@@ -1,7 +1,15 @@
 <template>
   <div class="qrcode-detail-page">
-    <div class="qrcode-wrap">
+    <div v-if="!isMissing" class="qrcode-wrap">
       <van-image class="qrcode-img" :src="qrcodeUrl" />
+    </div>
+    <div v-if="isMissing" class="qrcode-missing">
+      <img
+        class="missing-qrcode"
+        :src="require('@/assets/images/missing.png')"
+        alt="missing"
+      />
+      <div class="remarks">暂无可分配的二维码~</div>
     </div>
   </div>
 </template>
@@ -11,7 +19,8 @@ import { getUserId } from "@/utils/account";
 export default {
   data() {
     return {
-      qrcodeUrl: ""
+      qrcodeUrl: "",
+      isMissing: false
     };
   },
   components: {},
@@ -33,12 +42,9 @@ export default {
         if (data) {
           this.qrcodeUrl = data.tenantActiveQrcodeDetail?.qrcodeUrl;
         } else {
-          this.goQrcodeMissing();
+          this.isMissing = true;
         }
       });
-    },
-    goQrcodeMissing() {
-      this.$router.push({ path: "/qrcodeMissing" });
     }
   }
 };
@@ -54,6 +60,27 @@ export default {
     .qrcode-img {
       width: 100%;
       height: 100%;
+    }
+  }
+  .qrcode-missing {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .missing-qrcode {
+      margin-top: 157px;
+      width: 157px;
+      height: 125px;
+    }
+    .remarks {
+      width: 150px;
+      height: 21px;
+      font-size: 15px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(102, 102, 102, 1);
+      line-height: 21px;
+      margin-top: 22px;
     }
   }
 }
