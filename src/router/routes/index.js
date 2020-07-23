@@ -138,6 +138,18 @@ const routes = [
       needLogin: false
     },
     component: () => import("@/views/QrcodeDetail/index.vue")
+  },
+  {
+    path: "/officialAccountQrcode",
+    name: "OfficialAccountQrcode",
+    props: route => ({
+      gzhName: route.query.gzhName,
+      gzhQrcode: route.query.gzhQrcode
+    }),
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/OfficialAccountQrcode/index.vue")
   }
 ];
 

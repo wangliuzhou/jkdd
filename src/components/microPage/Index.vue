@@ -71,6 +71,13 @@
         :index="index"
         :key="item.pageComponentId"
       />
+      <!-- 涨粉 -->
+      <IncreaseFans
+        v-else-if="item.type == 'increase-fans'"
+        :item="item"
+        :index="index"
+        :key="item.pageComponentId"
+      />
     </template>
   </div>
 </template>
@@ -83,6 +90,7 @@ import ImageTextNav from "@/components/microPage/ImageTextNav";
 import Notice from "@/components/microPage/Notice";
 import XzImage from "@/components/microPage/XzImage";
 import XzGoods from "@/components/microPage/XzGoods";
+import IncreaseFans from "@/components/microPage/IncreaseFans";
 
 export default {
   components: {
@@ -93,7 +101,8 @@ export default {
     ImageTextNav,
     Notice,
     XzImage,
-    XzGoods
+    XzGoods,
+    IncreaseFans
   },
   props: {
     components: {
