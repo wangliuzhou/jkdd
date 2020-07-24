@@ -81,6 +81,22 @@ const routes = [
     component: () => import("@/views/AddAddress/index.vue")
   },
   {
+    path: "/goodsGroup",
+    name: "GoodsGroup",
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/GoodsGroup/index.vue")
+  },
+  {
+    path: "/orderLogistics",
+    name: "OrderLogistics",
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/OrderLogistics/index.vue")
+  },
+  {
     path: "/orderSettle",
     name: "OrderSettle",
     props: route => ({

@@ -74,6 +74,7 @@
 export default {
   data() {
     return {
+      lastChoosedStatusType: "",
       loading: false,
       finished: false,
       error: false,
@@ -109,27 +110,44 @@ export default {
   mounted() {},
   methods: {
     /**
-     * 初始化请求列表数据
+     * 请求列表数据
+     * @param {*} 点击tab触发请求,type=1
+     * @param {*} 下拉触底触发请求,type=undefined
      */
-    getList() {
+    getList(type) {
       const api = "/order/mobile/tenantOrder/findOrderPageMiniProgram";
       const { tabs, currentPage, activeTabIndex } = this;
       const statusType = tabs[activeTabIndex].id;
       this.$fetchGet(api, { statusType, currentPage })
         .then(({ data: { pages, records } }) => {
-          const arr = this.formatData(records);
-          if (arr.length === 0) {
-            this.showNoOrderImg = true;
-          } else {
-            this.showNoOrderImg = false;
-            this.list = arr;
-            this.pages = pages;
-            this.loading = false;
+          // 解决频繁切换tabs，响应次序不对问题
+          if (this.lastChoosedStatusType === statusType) {
+            // 在这里把list置空，而不是点击tab时置空，
+            // 是为了让页面在请求时间内不变成空白
+            if (type === 1) {
+              this.list = [];
+              this.setFetchList(pages, records);
+            } else {
+              this.setFetchList(pages, records);
+            }
           }
         })
         .catch(() => {
           this.error = true;
         });
+    },
+
+    // 设置请求到数据
+    setFetchList(pages, records) {
+      const arr = this.formatData(records);
+      if (arr.length === 0) {
+        this.showNoOrderImg = true;
+      } else {
+        this.showNoOrderImg = false;
+        this.list = arr;
+        this.pages = pages;
+        this.loading = false;
+      }
     },
 
     // 点击tab标签
@@ -140,8 +158,8 @@ export default {
         this.currentPage = 1;
         this.finished = false;
         this.loading = false;
-        this.list = [];
-        this.getList();
+        // this.list = [];
+        this.getList(1);
       }
     },
 
