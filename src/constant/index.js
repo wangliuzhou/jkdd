@@ -8,3 +8,13 @@ export const LiveStatus = {
   106: "异常",
   107: "已过期"
 };
+
+//系统页面枚举
+export const SysPage = {
+  //首页
+  1: "/index",
+  //个人中心
+  2: "/userCenter",
+  //分类页
+  3: "/classify"
+};

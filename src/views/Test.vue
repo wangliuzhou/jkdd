@@ -17,10 +17,16 @@ export default {
   },
   methods: {
     convert() {
-      let { rpx } = this;
-      this.px = rpx.replace(/([0-9\\.]+)rpx/g, (a, b) => {
-        return parseFloat((b / 2).toFixed(5)) + "px";
-      });
+      let { rpx, px } = this;
+      if (rpx) {
+        this.px = rpx.replace(/([0-9\\.]+)rpx/g, (a, b) => {
+          return parseFloat((b / 2).toFixed(5)) + "px";
+        });
+      } else if (px) {
+        this.rpx = px.replace(/([0-9\\.]+)px/g, (a, b) => {
+          return parseFloat((b * 2).toFixed(5)) + "rpx";
+        });
+      }
     }
   }
 };
