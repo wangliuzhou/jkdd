@@ -117,9 +117,27 @@ export default {
     calcBorderRadius() {
       let { detail } = this;
       if (detail) {
-        return px2rem(detail.radiusNumber);
+        // 旧版的值是个数字, 做下兼容,如果是旧版的值转换成数组
+        let value = [];
+        if (typeof detail.radiusNumber === "number") {
+          value = [
+            detail.radiusNumber,
+            detail.radiusNumber,
+            detail.radiusNumber,
+            detail.radiusNumber
+          ];
+        } else {
+          value = [...detail.radiusNumber];
+        }
+        let style = [
+          px2rem(value[0]) + "px",
+          px2rem(value[1]) + "px",
+          px2rem(value[3]) + "px",
+          px2rem(value[2]) + "px"
+        ];
+        return style.join(" ");
       }
-      return 0;
+      return "";
     },
     calcWidth() {
       let { detail } = this;

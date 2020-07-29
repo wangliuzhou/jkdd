@@ -51,9 +51,27 @@ export default {
     calcBorderRadius() {
       let { detail } = this;
       if (detail) {
-        return px2rem(detail.borderRadius);
+        // 旧版的值是个数字, 做下兼容,如果是旧版的值转换成数组
+        let value = [];
+        if (typeof detail.borderRadius === "number") {
+          value = [
+            detail.borderRadius,
+            detail.borderRadius,
+            detail.borderRadius,
+            detail.borderRadius
+          ];
+        } else {
+          value = [...detail.borderRadius];
+        }
+        let style = [
+          px2rem(value[0]) + "px",
+          px2rem(value[1]) + "px",
+          px2rem(value[3]) + "px",
+          px2rem(value[2]) + "px"
+        ];
+        return style.join(" ");
       }
-      return 0;
+      return "";
     },
     calcPaddingY() {
       let { detail } = this;
