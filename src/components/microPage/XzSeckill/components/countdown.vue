@@ -1,21 +1,58 @@
 <template>
   <div class="countdown-wrap">
-    <div class="time">01</div>
+    <div class="time">{{ formatTime[1] }}</div>
     <div class="separator">:</div>
-    <div class="time">02</div>
+    <div class="time">{{ formatTime[2] }}</div>
     <div class="separator">:</div>
-    <div class="time">03</div>
+    <div class="time">{{ formatTime[3] }}</div>
   </div>
 </template>
 <script>
+import { formatNumber } from "@/utils/index";
 export default {
   props: ["detail"],
   data: () => {
-    return {};
+    return {
+      remainingTime: 2000000
+    };
   },
-  computed: {},
-  mounted() {},
-  methods: {}
+  computed: {
+    formatTime() {
+      let { remainingTime } = this;
+      remainingTime = remainingTime || 0;
+      if (remainingTime) {
+        let day = parseInt(remainingTime / (60 * 60 * 24 * 1000));
+        let hour = parseInt((remainingTime / (60 * 60 * 1000)) % 24);
+        let minu = parseInt((remainingTime / (60 * 1000)) % 60);
+        let sec = parseInt((remainingTime / 1000) % 60);
+        return [day, hour, minu, sec].map(formatNumber);
+      }
+      return [0, 0, 0, 0];
+    }
+  },
+  mounted() {
+    this.countDown();
+  },
+  methods: {
+    countDown() {
+      let { remainingTime } = this;
+      remainingTime = remainingTime <= 0 ? 0 : remainingTime;
+      //如果剩余倒计时小于等于0则不进行倒计时
+      if (remainingTime <= 0) return;
+      //设置初始值
+      this.remainingTime = remainingTime;
+      //开始倒计时
+      this.timer = setInterval(() => {
+        remainingTime = this.remainingTime - 1000;
+        if (remainingTime <= 0) {
+          //倒计时结束
+          remainingTime = 0;
+          clearInterval(this.timer);
+        }
+        this.remainingTime = remainingTime;
+      }, 1000);
+    }
+  }
 };
 </script>
 <style lang="less" scoped>

@@ -35,7 +35,7 @@ export const px2rem = val => {
   return `${val / 37.5}rem`;
 };
 
-const formatNumber = n => {
+export const formatNumber = n => {
   n = n.toString();
   return n[1] ? n : "0" + n;
 };
