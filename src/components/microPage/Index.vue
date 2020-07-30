@@ -78,6 +78,13 @@
         :index="index"
         :key="item.pageComponentId"
       />
+      <!-- 秒杀 -->
+      <XzSeckill
+        v-else-if="item.type == 'seckill'"
+        :item="item"
+        :index="index"
+        :key="item.pageComponentId"
+      />
     </template>
   </div>
 </template>
@@ -91,6 +98,7 @@ import Notice from "@/components/microPage/Notice";
 import XzImage from "@/components/microPage/XzImage";
 import XzGoods from "@/components/microPage/XzGoods";
 import IncreaseFans from "@/components/microPage/IncreaseFans";
+import XzSeckill from "@/components/microPage/XzSeckill";
 
 export default {
   components: {
@@ -102,7 +110,8 @@ export default {
     Notice,
     XzImage,
     XzGoods,
-    IncreaseFans
+    IncreaseFans,
+    XzSeckill
   },
   props: {
     components: {

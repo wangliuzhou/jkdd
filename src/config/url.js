@@ -1,5 +1,5 @@
 const ApiInfos = [
-  { key: "/store/", service: "/api/store", dev: "http://192.168.100.142:8080" },
+  { key: "/store/", service: "/api/store", dev: "http://192.168.100.114:8082" },
   { key: "/oss/", service: "/api/oss", dev: "http://192.168.100.114:8081" },
   {
     key: "/client/",
