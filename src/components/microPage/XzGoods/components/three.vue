@@ -314,7 +314,6 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
             word-break: break-all;
-            max-width: 50%;
           }
 
           .xz-goods__buy-box {
@@ -335,7 +334,7 @@ export default {
             }
 
             .xz-goods__buy-btn {
-              padding: 0 4px;
+              padding: 0 8px;
               height: 24px;
               background: rgba(255, 106, 0, 1);
               border-radius: 12px;
