@@ -151,7 +151,6 @@ export default {
         userAddressCity: cityName,
         userAddressDistrict: countyName
       };
-      console.log(params);
       this.addUserReceivingAddress(params);
     },
 
