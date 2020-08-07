@@ -1,5 +1,7 @@
 <template>
   <div class="countdown-wrap">
+    <div class="time">{{ formatTime[0] }}</div>
+    <div class="separator">:</div>
     <div class="time">{{ formatTime[1] }}</div>
     <div class="separator">:</div>
     <div class="time">{{ formatTime[2] }}</div>
@@ -10,7 +12,7 @@
 <script>
 import { formatNumber } from "@/utils/index";
 export default {
-  props: ["detail"],
+  props: ["endTime"],
   data: () => {
     return {
       remainingTime: 2000000
@@ -35,7 +37,7 @@ export default {
   },
   methods: {
     countDown() {
-      let { remainingTime } = this;
+      let remainingTime = this.getCountDownNum();
       remainingTime = remainingTime <= 0 ? 0 : remainingTime;
       //如果剩余倒计时小于等于0则不进行倒计时
       if (remainingTime <= 0) return;
@@ -51,6 +53,15 @@ export default {
         }
         this.remainingTime = remainingTime;
       }, 1000);
+    },
+    getCountDownNum() {
+      let { endTime } = this;
+      if (endTime) {
+        const endTimeStamp = Date.parse(endTime);
+        const nowTimeStamp = new Date().getTime();
+        const num = parseInt(endTimeStamp - nowTimeStamp);
+        return num;
+      }
     }
   }
 };

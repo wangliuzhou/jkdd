@@ -9,7 +9,7 @@
     <div class="goodsList-container">
       <div
         v-for="item of detail.goodsList"
-        :key="item.productOuterId"
+        :key="item.marketingSeckillOuterId"
         @click="goPage(item)"
         class="goodsList-item-card"
         :class="calcCardStyle"
@@ -27,7 +27,10 @@
             class="goodsList-item-cover-img"
             :fit="calcImageStyle"
           />
-          <Countdown v-if="detail.isShowCountdown" />
+          <Countdown
+            v-if="detail.isShowCountdown"
+            :endTime="item.marketingSeckillEnd"
+          />
           <van-image
             v-if="detail.tag.type === 1 && detail.tag.show"
             class="goodsList-item-tag-img"
@@ -43,7 +46,7 @@
         </div>
         <div class="goodsList-item-detail-box">
           <div v-if="detail.isShowGoodsName" class="goodsList-item-title-box">
-            <div class="seckill-tag">2.5折</div>
+            <div class="seckill-tag">{{ item.marketingSeckillLabel }}</div>
             {{ item.dealerProductName || "无标题" }}
           </div>
           <div
@@ -56,14 +59,18 @@
             v-if="detail.isShowGoodsPrice || detail.isShowGoodsOriginalPrice"
             class="goodsList-item-price-box"
           >
-            <div class="goodsList-item-sale-price">¥{{ item.retailPrice }}</div>
+            <div class="goodsList-item-sale-price">
+              ¥{{ item.seckillPrice }}
+            </div>
             <div class="goodsList-item-original-price">
-              ¥{{ item.delPrice }}
+              ¥{{ item.minDelPrice }}
             </div>
           </div>
           <div class="goodsList-item-sale-box">
             <div class="goodsList-item-sale">
-              {{ detail.isShowGoodsNum ? "仅剩" + item.sellCount + "件" : "" }}
+              {{
+                detail.isShowGoodsNum ? "仅剩" + item.seckillStock + "件" : ""
+              }}
             </div>
             <div v-if="detail.buy.show" class="xz-goods__buy-box">
               <IconFont
