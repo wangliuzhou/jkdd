@@ -45,7 +45,9 @@
         <div class="goodsList-item-detail-box">
           <div v-if="detail.isShowGoodsName" class="goodsList-item-title-box">
             <div class="seckill-tag">{{ item.marketingSeckillLabel }}</div>
-            {{ item.dealerProductName || "无标题" }}
+            <div class="goodsList-item-title">
+              {{ item.dealerProductName || "无标题" }}
+            </div>
           </div>
           <div
             v-if="detail.isShowGoodsDescribe"
@@ -245,15 +247,20 @@ export default {
         padding: 8px 12px;
 
         .goodsList-item-title-box {
-          font-size: 15px;
-          font-family: PingFangSC-Medium, PingFang SC;
-          font-weight: 500;
-          color: rgba(51, 51, 51, 1);
-          line-height: 15px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          word-break: break-all;
+          display: flex;
+          align-items: center;
+          .goodsList-item-title {
+            font-size: 15px;
+            font-family: PingFangSC-Medium, PingFang SC;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+            line-height: 15px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
+          }
+
           .seckill-tag {
             display: inline-block;
             padding: 0 3px;
@@ -267,6 +274,10 @@ export default {
             line-height: 15px;
             text-align: center;
             margin-right: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
           }
         }
 

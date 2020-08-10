@@ -69,32 +69,35 @@ export default {
 <style lang="less" scoped>
 .countdown-wrap {
   position: absolute;
-  right: 6px;
-  bottom: 6px;
+  right: 3px;
+  bottom: 3px;
   display: flex;
   align-items: center;
-  justify-content: start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-all;
   .time {
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 17px;
+    height: 17px;
     background: #ff6a00;
     border-radius: 5px;
     font-size: 11px;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: rgba(255, 255, 255, 1);
-    line-height: 20px;
+    line-height: 17px;
     text-align: center;
   }
 
   .separator {
-    margin: 0 5px;
+    margin: 0 3px;
     font-size: 11px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: #ff6a00;
-    line-height: 20px;
+    line-height: 17px;
   }
 }
 </style>
