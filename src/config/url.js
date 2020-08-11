@@ -108,6 +108,11 @@ const ApiInfos = [
     key: "/inner/tenantProduct/",
     service: "/api/product",
     dev: "http://192.168.100.142:8080"
+  },
+  {
+    key: "/apply/",
+    service: "/api/apply",
+    dev: "http://192.168.100.114:8089"
   }
 ];
 

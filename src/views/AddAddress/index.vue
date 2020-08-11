@@ -1,11 +1,9 @@
 <template>
   <div class="address-list-container">
+    <div class="get-wx-address-left"></div>
     <div class="get-wx-address flex-between" @click="getWXAddress">
       <div class="get-wx-address-left">
-        <img
-          class="wx-icon"
-          :src="require('@/assets/images/weixin_icon.png')"
-        />
+        <img class="wx-icon" src="~@/assets/images/weixin_icon.png" />
         <div class="get-wx-adress-text">获取微信收货地址</div>
       </div>
       <div class="get-wx-address-right">

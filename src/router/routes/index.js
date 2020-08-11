@@ -166,6 +166,14 @@ const routes = [
       needLogin: false
     },
     component: () => import("@/views/OfficialAccountQrcode/index.vue")
+  },
+  {
+    path: "/coupons",
+    name: "Coupons",
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/Coupons/index.vue")
   }
 ];
 
