@@ -62,7 +62,7 @@
         class="no-order-img"
         :src="require('@/assets/images/empty-oreder.png')"
         mode="widthFix"
-        alt="暂"
+        alt=""
       />
       <span>暂无订单</span>
     </div>
@@ -70,7 +70,6 @@
 </template>
 
 <script>
-// import Test from "@/divs/Test";
 export default {
   data() {
     return {
@@ -92,7 +91,6 @@ export default {
       list: [],
       showNoOrderImg: false,
       currentPage: 1,
-      pages: 1,
       tabs: [
         // 后台id 要字符串类型
         { name: "全部", id: "" },
@@ -118,6 +116,7 @@ export default {
       const api = "/order/mobile/tenantOrder/findOrderPageMiniProgram";
       const { tabs, currentPage, activeTabIndex } = this;
       const statusType = tabs[activeTabIndex].id;
+      this.loading = true;
       this.$fetchGet(api, { statusType, currentPage })
         .then(({ data: { pages, records } }) => {
           // 解决频繁切换tabs，响应次序不对问题
@@ -134,20 +133,19 @@ export default {
         })
         .catch(() => {
           this.error = true;
+          this.loading = false;
         });
     },
 
     // 设置请求到数据
     setFetchList(pages, records) {
-      const arr = this.formatData(records);
-      if (arr.length === 0) {
-        this.showNoOrderImg = true;
-      } else {
-        this.showNoOrderImg = false;
-        this.list = arr;
-        this.pages = pages;
-        this.loading = false;
+      this.list = this.formatData(records);
+      this.loading = false;
+      this.showNoOrderImg = this.list.length === 0 ? true : false;
+      if (pages <= this.currentPage) {
+        this.finished = true;
       }
+      this.currentPage += 1;
     },
 
     // 点击tab标签
@@ -187,19 +185,6 @@ export default {
     // 点击跳转到详情页
     handleGoDetail(id) {
       this.$router.push({ path: "/orderDetial", query: { id } });
-    },
-
-    //
-    onScrollToLower() {
-      const { pages, currentPage } = this;
-      if (pages <= currentPage) {
-        this.finished = true;
-      } else {
-        const current = currentPage + 1;
-        this.currentPage = current;
-        this.loading = true;
-        this.getList();
-      }
     }
   }
 };

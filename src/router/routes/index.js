@@ -174,6 +174,14 @@ const routes = [
       needLogin: false
     },
     component: () => import("@/views/Coupons/index.vue")
+  },
+  {
+    path: "/couponsInvalid",
+    name: "CouponsInvalid",
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/CouponsInvalid/index.vue")
   }
 ];
 

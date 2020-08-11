@@ -24,7 +24,7 @@
           <CouponItem
             :item="item"
             :index="index"
-            :invalid="0"
+            :invalid="1"
             :active-index="activeIndex"
             @handleClickCouponItem="handleClickCouponItem"
             style="width:100%"
@@ -32,9 +32,7 @@
         </div>
       </van-list>
     </div>
-    <div v-if="!loading" class="look-past-due" @click="lookPastDue">
-      查看失效优惠券>>
-    </div>
+    <div style="height:60px"></div>
     <div class="footer-wrap iphone-bottom">
       <div class="exchange-btn" @click="handleToogleExchange">兑换优惠码</div>
     </div>
@@ -70,7 +68,7 @@ export default {
       return this.list.length ? "没有更多数据" : "暂无优惠券";
     }
   },
-
+  mounted() {},
   methods: {
     /**
      * 请求列表数据
@@ -78,7 +76,7 @@ export default {
     getCouponsList() {
       const api = "/apply/mobile/tenantMarketingCoupon/findCoupon";
       const params = {
-        isValid: 0, // 0生效 1失效
+        isValid: 1, // 0生效 1失效
         currentPage: this.currentPage,
         pageSize: 10
       };
@@ -112,9 +110,7 @@ export default {
       this.isShow = !this.isShow;
     },
     lookPastDue() {
-      this.$router.push({
-        path: "/couponsInvalid"
-      });
+      wx.navigateTo({ url: "/pages/coupons/invalidCoupons/index" });
     },
     handleClickCouponItem(index) {
       this.activeIndex = index;
@@ -137,17 +133,6 @@ page {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-  }
-
-  .look-past-due {
-    text-align: center;
-    height: 20px;
-    font-size: 14px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: rgba(144, 147, 153, 1);
-    line-height: 20px;
-    margin-bottom: 80px;
   }
 
   .footer-wrap {
