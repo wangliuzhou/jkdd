@@ -67,6 +67,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import { Toast } from "vant";
+import { fetchPost } from "@/config/request";
 
 export default {
   computed: {
@@ -263,6 +264,13 @@ export default {
 
       if (btnStatus == 1) {
         //加入购物车
+        fetchPost("/order/mobile/tenantCart/insert", {
+          storeOutId: "TSRORVZ17ZXD9",
+          onlinestoreSingleProductOuterId: sku.singleProductOuterId,
+          count: num
+        }).then(() => {
+          Toast({ position: "bottom", message: "添加成功" });
+        });
       } else if (btnStatus == 2) {
         //立即购买
         this.$router.push({
