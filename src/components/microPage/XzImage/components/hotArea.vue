@@ -131,7 +131,6 @@ export default {
 
           .area-item {
             position: absolute;
-            background: #9cb6ce9f;
           }
         }
 
