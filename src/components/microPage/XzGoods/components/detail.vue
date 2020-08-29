@@ -51,8 +51,16 @@
             v-if="detail.isShowGoodsPrice || detail.isShowGoodsOriginalPrice"
             class="goodsList-item-price-box"
           >
-            <div class="goodsList-item-sale-price">¥{{ item.retailPrice }}</div>
-            <div class="goodsList-item-original-price">
+            <div
+              class="goodsList-item-sale-price"
+              v-if="detail.isShowGoodsPrice"
+            >
+              ¥{{ item.retailPrice }}
+            </div>
+            <div
+              class="goodsList-item-original-price"
+              v-if="detail.isShowGoodsOriginalPrice"
+            >
               ¥{{ item.delPrice }}
             </div>
           </div>
