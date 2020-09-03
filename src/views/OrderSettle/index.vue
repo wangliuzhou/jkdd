@@ -204,6 +204,8 @@ page {
         margin-left: 12px;
         // padding-top: 5px;
         position: relative;
+        flex: auto;
+        padding-right: 30px;
         .goods-title {
           font-size: 15px;
           line-height: 20px;
@@ -221,7 +223,7 @@ page {
           font-size: 13px;
           line-height: 13px;
           color: #999999;
-          white-space: nowrap;
+          white-space: wrap;
           text-overflow: ellipsis;
           overflow: hidden;
           word-break: break-all;
