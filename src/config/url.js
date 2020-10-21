@@ -142,6 +142,8 @@ const { VUE_APP_API_ENV } = process.env;
 
 let config = CONFIG[VUE_APP_API_ENV];
 
+config = CONFIG["prod"];
+
 if (!config) {
   throw new Error(`请检查环境配置，当前环境：[${VUE_APP_API_ENV}]`);
 } else {

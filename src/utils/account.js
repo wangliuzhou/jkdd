@@ -46,9 +46,24 @@ export const login = redirectUrl => {
 };
 
 export const initContext = () => {
-  StoresysCookieSet("userId", "oJjHK6mVxKdg6iC0z1ZiPeYF4hXE");
-  StoresysCookieSet("accessToken", "c0f3a23e287a7fa1d16b10315647a34678500ae7");
-  StoresysCookieSet("storeId", "TSRORVZ17ZXD9");
-  StoresysCookieSet("storesysId", storesysId);
-  StoresysCookieSet("tokenTime", 1602501188757);
+  if (storesysId) {
+    StoresysCookieSet("userId", "oJjHK6mVxKdg6iC0z1ZiPeYF4hXE");
+    StoresysCookieSet("userInfo", {
+      userInnerId: 2,
+      userUnionId: "oJjHK6mVxKdg6iC0z1ZiPeYF4hXE",
+      userAvatar: "wechatimage/2020/09/08/j3odql6w54_wximage.png",
+      userPhone: "15757185531",
+      userNickname: "smile_������",
+      userGender: 1,
+      userName: "陶新华",
+      userBirthday: 780336000000
+    });
+    StoresysCookieSet(
+      "accessToken",
+      "3f22341ba06ee8c8ad8a40bdc30a636893d978c2"
+    );
+    StoresysCookieSet("storeId", "TSRORVZ17ZXD9");
+    StoresysCookieSet("storesysId", storesysId);
+    StoresysCookieSet("tokenTime", 1603527390965);
+  }
 };

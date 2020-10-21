@@ -1,7 +1,6 @@
 <template>
   <div class="page-index">
     <MicroPage class="micro-page-component" :components="components" />
-
     <Tabbar />
   </div>
 </template>
