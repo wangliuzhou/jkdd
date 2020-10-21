@@ -277,7 +277,7 @@ export default {
       bottom: 0;
       left: 50%;
       display: flex;
-      align-items: start;
+      align-items: flex-start;
       justify-content: space-between;
       width: 345px;
       height: 42px;
@@ -433,7 +433,7 @@ export default {
     .order-types {
       display: flex;
       align-items: center;
-      justify-content: start;
+      justify-content: flex-start;
       flex-wrap: nowrap;
       width: 100%;
       height: 95px;
@@ -470,7 +470,7 @@ export default {
     border-radius: 8px;
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     flex-wrap: wrap;
     box-sizing: border-box;
     overflow: hidden;
@@ -511,7 +511,7 @@ export default {
       .item {
         width: 100%;
         height: 48px;
-        justify-content: start;
+        justify-content: flex-start;
         flex-direction: row;
         border-bottom: 1px solid rgba(238, 238, 238, 1);
 

@@ -1,34 +1,28 @@
-import Cookie from "js-cookie";
 import cfg from "@/config/index";
-import { getUUID } from "@/utils/index";
+import { StoresysCookieSet, StoresysCookieGet } from "@/utils/cookie";
+import { storesysId } from "@/utils/storesys";
 
 export const getUserId = () => {
-  return Cookie.get("userId") || 0;
+  return StoresysCookieGet("userId") || 0;
 };
 
 export const isLogin = () => {
   return !!getUserId();
 };
 
+// 判断路由是否需要登录
 export const needLogin = to => {
   return to && to.meta && to.meta.needLogin === true && !isLogin();
-};
-
-export const initContext = () => {
-  let clientToken = localStorage.getItem("client_token");
-  if (!clientToken) {
-    localStorage.setItem("client_token", getUUID());
-  }
 };
 
 //生成请求头
 export const genRequestHeader = () => {
   return {
-    "x-user-id": Cookie.get("userId") || "VLZWJWNQLLQW3L63J7D1",
-    "x-access-token":
-      Cookie.get("accessToken") || "57830ba4b6ef49031d936a0156893d2537605e8d",
-    "x-storesys-id": "E7M8VVW8OP", //"425ZP1Q60O",
-    "x-token-time": 1594867303938
+    "x-user-id": StoresysCookieGet("userId"),
+    "x-access-token": StoresysCookieGet("accessToken"),
+    "x-store-id": StoresysCookieGet("storeId"),
+    "x-storesys-id": StoresysCookieGet("storesysId"),
+    "x-token-time": StoresysCookieGet("tokenTime")
   };
 };
 
@@ -49,4 +43,12 @@ export const login = redirectUrl => {
   }&redirect_uri=${encodeURIComponent(
     redirect_uri
   )}&response_type=code&scope=snsapi_userinfo&state=state&component_appid=wx52e6a157b436d353#wechat_redirect`;
+};
+
+export const initContext = () => {
+  StoresysCookieSet("userId", "oJjHK6mVxKdg6iC0z1ZiPeYF4hXE");
+  StoresysCookieSet("accessToken", "c0f3a23e287a7fa1d16b10315647a34678500ae7");
+  StoresysCookieSet("storeId", "TSRORVZ17ZXD9");
+  StoresysCookieSet("storesysId", storesysId);
+  StoresysCookieSet("tokenTime", 1602501188757);
 };

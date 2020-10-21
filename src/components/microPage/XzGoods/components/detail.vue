@@ -189,7 +189,7 @@ export default {
       overflow: hidden;
       display: flex;
       align-items: center;
-      justify-content: start;
+      justify-content: flex-start;
       width: 100%;
       height: 150px;
 

@@ -16,6 +16,7 @@
 <script>
 import api from "./api";
 import { getUserId } from "@/utils/account";
+import Cookie from "js-cookie";
 export default {
   data() {
     return {
@@ -32,9 +33,7 @@ export default {
   methods: {
     // 获取二维码详情
     getActiveQrcodeById(activeQrcodeOuterId) {
-      let userMark = getUserId()
-        ? getUserId()
-        : localStorage.getItem("client_token");
+      let userMark = getUserId() ? getUserId() : Cookie.get("client_token");
       this.$fetchGet(api.getActiveQrcodeById, {
         activeQrcodeOuterId: activeQrcodeOuterId,
         userMark: userMark
