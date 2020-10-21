@@ -1,13 +1,13 @@
 import axios from "axios";
 import { Toast } from "vant";
 import { getUrl } from "@/config/url";
-import { genRequestHeader /*login*/ } from "@/utils/account";
+import { getRequestHeader /*login*/ } from "@/utils/account";
 import store from "@/store/index";
 
 // 请求前拦截
 axios.interceptors.request.use(
   config => {
-    let header = genRequestHeader();
+    let header = getRequestHeader();
     for (let key in header) {
       config.headers[key] = header[key];
     }

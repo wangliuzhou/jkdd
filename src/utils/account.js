@@ -16,7 +16,7 @@ export const needLogin = to => {
 };
 
 //生成请求头
-export const genRequestHeader = () => {
+export const getRequestHeader = () => {
   return {
     "x-user-id": StoresysCookieGet("userId"),
     "x-access-token": StoresysCookieGet("accessToken"),
