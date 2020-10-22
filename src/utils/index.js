@@ -1,3 +1,5 @@
+import { parse } from "querystring";
+
 //判断是否为微信环境
 export const isWechat = /micromessenger/.test(
   navigator.userAgent.toLowerCase()
@@ -73,3 +75,5 @@ export const getUUID = () => {
   });
   return uuid;
 };
+
+export const getPageQuery = () => parse(window.location.href.split("?")[1]);

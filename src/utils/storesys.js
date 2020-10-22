@@ -1,9 +1,16 @@
+import { getPageQuery } from "@/utils/index";
+
 const getStoresysIdFromUrl = () => {
-  let res = location.host.match(/^shop_([^.]+)\.m\.xzintl\.com$/);
-  if (res && res[1]) {
-    return res[1].toUpperCase();
+  let shopRes = location.host.match(/^shop_([^.]+)\.m\.xzintl\.com$/);
+  let { storesysId } = getPageQuery();
+
+  if (shopRes && shopRes[1]) {
+    return shopRes[1].toUpperCase();
+  } else if (storesysId) {
+    return storesysId.toUpperCase();
   }
-  return "";
+
+  return null;
 };
 
 export const storesysId = getStoresysIdFromUrl();
