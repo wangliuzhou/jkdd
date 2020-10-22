@@ -23,6 +23,7 @@
           class="goodsList-item-cover-box"
           :style="{ 'padding-top': detail.imageRatio }"
         >
+          <div v-if="item.stockNum === 0" class="sold-out">已售罄</div>
           <van-image
             :src="$ali(item.mainCover, 375)"
             class="goodsList-item-cover-img"
@@ -42,50 +43,70 @@
           </div>
         </div>
         <div class="goodsList-item-detail-box">
-          <div v-if="detail.isShowGoodsName" class="goodsList-item-title-box">
-            {{ item.dealerProductName || "无标题" }}
+          <div class="goodsList-item-title-box">
+            <van-image
+              class="icon"
+              v-if="detail.titleTag && detail.titleTag.show"
+              :src="$ali(detail.titleTag.img)"
+              fit="contain"
+            />
+            <span>{{
+              detail.isShowGoodsName ? item.dealerProductName : ""
+            }}</span>
           </div>
-          <div
+          <!-- <div
             v-if="detail.isShowGoodsDescribe"
             class="goodsList-item-describe-box"
           >
             {{ item.sellingPoint || "无描述" }}
-          </div>
-          <div
-            v-if="detail.isShowGoodsPrice || detail.isShowGoodsOriginalPrice"
-            class="goodsList-item-price-box"
-          >
+          </div> -->
+          <div class="xz-goods__goods-label-box">
             <div
-              class="goodsList-item-sale-price"
-              v-if="detail.isShowGoodsPrice"
+              v-for="(labelItem, labelIndex) in onlinestoreProductLabelName[
+                index
+              ]"
+              class="label-item"
+              :key="labelIndex"
             >
-              ¥{{ item.retailPrice }}
-            </div>
-            <div
-              class="goodsList-item-original-price"
-              v-if="detail.isShowGoodsOriginalPrice"
-            >
-              ¥{{ item.delPrice }}
+              {{ labelItem }}
             </div>
           </div>
-          <div class="goodsList-item-sale-box">
-            <div class="goodsList-item-sale">
-              月销{{ item.sellCount || 0 }}件
+          <div class="footer">
+            <div
+              v-if="detail.isShowGoodsPrice || detail.isShowGoodsOriginalPrice"
+              class="goodsList-item-price-box"
+            >
+              <div
+                class="goodsList-item-sale-price"
+                v-if="detail.isShowGoodsPrice"
+              >
+                ¥{{ item.retailPrice }}
+              </div>
+              <div
+                class="goodsList-item-original-price"
+                v-if="detail.isShowGoodsOriginalPrice && item.delPrice"
+              >
+                ¥{{ item.delPrice }}
+              </div>
             </div>
-            <div v-if="detail.buy.show" class="xz-goods__buy-box">
+            <div
+              v-if="detail.buy.show"
+              class="xz-goods__buy-box"
+              @click.stop="onBuy(item)"
+            >
               <IconFont
-                v-if="detail.buy.type == 1"
-                type="iconicon-jiagouwudai"
+                v-if="detail.buy.type === 1"
+                type="iconjiagouwudai"
                 class="xz-goods__icon-btn"
               ></IconFont>
-              <div v-if="detail.buy.type == 2" class="xz-goods__buy-btn">
+              <div v-if="detail.buy.type === 2" class="xz-goods__buy-btn">
                 {{ detail.buy.name }}
               </div>
               <van-image
-                v-if="detail.buy.type == 3"
                 class="xz-goods__img-btn"
-                fit="cover"
+                v-if="detail.buy.type === 3"
                 :src="$ali(detail.buy.img, 100)"
+                fit="contain"
               />
             </div>
           </div>
@@ -169,14 +190,30 @@ export default {
         return `0 0 ${px2rem(detail.spacingNumber)} 0`;
       }
       return "";
+    },
+    onlinestoreProductLabelName() {
+      let { detail } = this;
+      if (detail) {
+        return detail.goodsList.map(d => {
+          return d.onlinestoreProductLabelName
+            ? d.onlinestoreProductLabelName.split(",")
+            : [];
+        });
+      }
+      return [];
     }
   },
   mounted() {
     console.log(this.detail);
   },
   methods: {
-    goPage(item) {
-      console.log(item);
+    goPage() {
+      // let { item } = e.currentTarget.dataset;
+      // this.triggerEvent("goPage", item);
+    },
+    onBuy() {
+      // let { item } = e.currentTarget.dataset;
+      // this.triggerEvent("onBuy", e);
     }
   }
 };
@@ -184,7 +221,6 @@ export default {
 <style lang="less" scoped>
 .goodsList-container-wrap {
   width: 100%;
-  // height: 800rpx;
   box-sizing: border-box;
 
   .goodsList-container {
@@ -203,7 +239,25 @@ export default {
       .goodsList-item-cover-box {
         position: relative;
         width: 100%;
-
+        .sold-out {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 78px;
+          height: 78px;
+          background: #000000;
+          opacity: 0.65;
+          z-index: 2;
+          border-radius: 50%;
+          color: #ffffff;
+          transform: translate(-50%, -50%);
+          text-align: center;
+          line-height: 78px;
+          font-size: 15px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #ffffff;
+        }
         .goodsList-item-cover-img {
           position: absolute;
           top: 0;
@@ -218,8 +272,8 @@ export default {
           position: absolute;
           top: 0;
           right: 15px;
-          width: 28px;
-          height: 28px;
+          max-width: 50px;
+          padding: 0 5px;
           background: rgba(255, 106, 0, 1);
           border-radius: 0px 0px 8px 8px;
           font-size: 11px;
@@ -232,16 +286,23 @@ export default {
 
         .goodsList-item-tag-img {
           position: absolute;
-          top: 0;
-          right: 15px;
-          width: 28px;
-          height: 28px;
+          top: 8px;
+          right: 8px;
+          width: 35px;
+          height: 35px;
         }
       }
 
       .goodsList-item-detail-box {
         box-sizing: border-box;
         padding: 8px 12px;
+        flex-grow: 1;
+        width: 0;
+        height: 100%;
+        padding-top: 10px;
+        margin: 0 8px;
+        display: flex;
+        flex-direction: column;
 
         .goodsList-item-title-box {
           font-size: 15px;
@@ -249,13 +310,24 @@ export default {
           font-weight: 500;
           color: rgba(51, 51, 51, 1);
           line-height: 20px;
+          text-overflow: -o-ellipsis-lastline;
           overflow: hidden;
           text-overflow: ellipsis;
-          white-space: nowrap;
-          word-break: break-all;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
+          -webkit-box-orient: vertical;
+          height: 40px;
+          width: 100%;
+          .icon {
+            margin-right: 4px;
+            height: 16px;
+            vertical-align: middle;
+          }
         }
 
         .goodsList-item-describe-box {
+          width: 100%;
           margin-top: 8px;
           height: 12px;
           color: #999;
@@ -269,79 +341,95 @@ export default {
           -webkit-box-orient: vertical;
         }
 
-        .goodsList-item-price-box {
-          margin-top: 4px;
-          height: 25px;
+        .xz-goods__goods-label-box {
+          width: 100%;
+          height: 15px;
+          line-height: 15px;
+          margin: 4px 0;
           text-overflow: -o-ellipsis-lastline;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
-          -webkit-line-clamp: 2;
-          line-clamp: 2;
+          -webkit-line-clamp: 1;
+          line-clamp: 1;
           -webkit-box-orient: vertical;
+          color: #ff6a00;
 
-          .goodsList-item-sale-price {
+          .label-item {
             display: inline-block;
-            font-size: 18px;
-            font-family: PingFangSC-Medium, PingFang SC;
-            font-weight: 500;
-            color: rgba(255, 106, 0, 1);
-            line-height: 25px;
-          }
-
-          .goodsList-item-original-price {
-            display: inline-block;
-            margin-left: 9px;
-            font-size: 13px;
-            font-family: PingFangSC-Medium, PingFang SC;
-            font-weight: 500;
-            color: rgba(255, 106, 0, 1);
-            line-height: 25px;
-            text-decoration: line-through;
+            margin-right: 6px;
+            height: 15px;
+            line-height: 15px;
+            background: #ffe9d9;
+            border-radius: 2px;
+            font-size: 11px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #ff6a00;
+            padding: 0 2px;
+            overflow: hidden;
           }
         }
 
-        .goodsList-item-sale-box {
-          margin-top: 8px;
+        .footer {
           display: flex;
           align-items: center;
           justify-content: space-between;
 
-          .goodsList-item-sale {
-            height: 19px;
-            font-size: 12px;
-            font-family: PingFangSC-Regular, PingFang SC;
-            font-weight: 400;
-            color: rgba(153, 153, 153, 1);
-            line-height: 19px;
+          .goodsList-item-price-box {
+            flex-grow: 1;
+            width: 0;
+            margin-top: 4px;
+            height: 25px;
+            text-overflow: -o-ellipsis-lastline;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
             word-break: break-all;
+
+            .goodsList-item-sale-price {
+              display: inline-block;
+              font-size: 18px;
+              font-family: PingFangSC-Medium, PingFang SC;
+              font-weight: 500;
+              color: rgba(255, 106, 0, 1);
+              line-height: 25px;
+            }
+
+            .goodsList-item-original-price {
+              display: inline-block;
+              margin-left: 9px;
+              font-size: 13px;
+              font-family: PingFangSC-Medium, PingFang SC;
+              font-weight: 500;
+              // color: rgba(255, 106, 0, 1);
+              line-height: 25px;
+              text-decoration: line-through;
+              color: #999;
+            }
           }
 
           .xz-goods__buy-box {
-            cursor: pointer;
-            height: 24px;
+            height: 25px;
 
             .xz-goods__icon-btn {
-              line-height: 24px;
+              line-height: 25px;
               font-size: 22px;
               color: rgba(255, 106, 0, 1);
             }
 
             .xz-goods__img-btn {
-              width: 24px;
-              height: 24px;
+              width: 25px;
+              height: 25px;
             }
 
             .xz-goods__buy-btn {
               padding: 0 8px;
-              height: 24px;
+              height: 25px;
               background: rgba(255, 106, 0, 1);
               border-radius: 12px;
               text-align: center;
-              line-height: 24px;
+              line-height: 25px;
               color: #ffffff;
               font-size: 12px;
             }

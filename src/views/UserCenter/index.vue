@@ -1,97 +1,130 @@
 <template>
   <div class="user-content-page">
-    <div class="user-info-card">
+    <CustomNavigation
+      title="个人中心"
+      :scrollTop="scrollTop"
+    ></CustomNavigation>
+    <div
+      class="user-info-card"
+      :style="{
+        height: `${statusBarHeight + 187}px`,
+        'padding-top': `${tabbarBarHeight + 15}px`
+      }"
+    >
       <div class="user-info">
         <div class="user-avatar-box">
-          <!-- <open-data
-            type="userAvatarUrl"
-            style="width:100%;height:100%;display:block"
-          ></open-data> -->
+          <!-- <van-image
+            v-if="userInfo.userAvatar"
+            :src="$ali(ossDomain + userInfo.userAvatar, 375)"
+            class="user-avatar"
+            :fit="calcImageStyle"
+          /> -->
         </div>
         <div class="user-detail">
           <div class="user-name">
-            <span class="name">立即登录</span>
+            <span class="name">{{
+              !!userInfo ? userInfo.userNickname : "立即登录"
+            }}</span>
             <IconFont
               type="iconhuiyuanma"
               fontStyle="font-size:15px;color:#ffffff;"
             />
           </div>
         </div>
+        <!-- <AuthAll type="userInfo"></AuthAll> -->
       </div>
+      <!-- <AuthAll type="phone"></AuthAll> -->
+      <!-- <button v-if="{{!$state.userInfo.userAvatar}}" open-type="getUserInfo" class="get-user-info-btn" bindgetuserinfo="checkSession"></button> -->
+      <!-- <button v-if="{{!$state.userInfo}}" open-type="getPhoneNumber" class="get-user-info-btn" style="z-index:4" bindgetphonenumber="checkSession"></button> -->
       <div class="member-card" @click="goMember">
-        <div class="icon">NEELLY</div>
+        <div class="icon">{{ storeSysName }}</div>
         <div class="join-member">
           <IconFont
-            type="iconjisushouhou-yinka"
-            fontStyle="font-size:13px;color:#ffffff"
+            type="iconhuiyuanxingbiao"
+            fontStyle="font-size:15px;color:#ffffff"
           />
-          <span class="text">成为会员</span>
-          <IconFont type="iconright" fontStyle="font-size:10px;color:#ffffff" />
+          <span class="text">{{
+            isMmember === 2 ? "会员中心" : "成为会员"
+          }}</span>
+          <IconFont
+            type="iconright"
+            fontStyle="font-size:20rpx;color:#ffffff"
+          />
         </div>
       </div>
-      <van-image
-        class="member-background-img"
-        :src="require('@/assets/images/members/ordinary_radius_card.png')"
-      />
-      <van-image
-        class="footer-img"
-        :src="require('@/assets/images/members/footer_border.png')"
-      />
+      <!-- <image class="member-background-img" src="/assets/image/members/ordinary_radius_card.png" /> -->
+      <!-- <image class="footer-img" src="/assets/image/members/footer_border.png" /> -->
     </div>
-    <div class="balance-card">
-      <div class="item">
-        <div class="value">1800</div>
-        <div class="label">积分</div>
-      </div>
-      <div class="item">
-        <div class="value">4</div>
-        <div class="label">优惠券/码</div>
-      </div>
-      <div class="item">
-        <div class="value">100.00</div>
-        <div class="label">余额</div>
-      </div>
+    <!-- <div class="balance-card">
+    <div class="item">
+      <div class="value">1800</div>
+      <div class="label">积分</div>
     </div>
+    <div class="item" bindtap="goPage" data-link="/pages/coupons/index">
+      <div class="value">4</div>
+      <div class="label">优惠券/码</div>
+    </div>
+    <div class="item">
+      <div class="value">100.00</div>
+      <div class="label">余额</div>
+    </div>
+  </div>-->
     <div class="order-card">
       <div class="header">
         <div class="left-label">我的订单</div>
         <div class="right-go-all">
-          <span class="span">查看全部订单</span>
-          <IconFont type="iconright" fontStyle="font-size:11px;color:#666666" />
+          <text class="text" @click="goPage" data-link="/pages/orderList/index"
+            >查看全部订单</text
+          >
+          <IconFont
+            type="iconright"
+            fontStyle="font-size:22rpx;color:#999999"
+          />
         </div>
       </div>
       <div class="order-types">
         <div
-          v-for="item of orderList"
-          :key="item.label"
+          v-for="(item, index) in orderList"
+          :key="index"
           class="item"
           @click="goPage(item.link, item.activeIndex)"
         >
-          <van-image
-            mode="aspectFill"
-            :src="require('@/assets/images/order/' + item.icon + '.png')"
-            class="icon"
-          />
+          <div
+            v-if="item.num"
+            class="order-num"
+            :style="{ padding: `0 ${item.num > 9 ? '2px' : 0} ` }"
+          >
+            {{ item.num > 99 ? "99+" : item.num }}
+          </div>
+          <van-image :src="item.icon" class="icon" fit="aspectFill" />
           <div class="label">{{ item.label }}</div>
         </div>
       </div>
+      <!-- <AuthAll type="phone"></AuthAll> -->
     </div>
-    <div class="function-card">
+    <div class="function-card function-card-list-style">
       <div
-        v-for="(item, index) of functionList"
+        v-for="(item, index) in functionList"
         :key="index"
         class="item"
-        :class="{ block: (index + 1) % 3 === 0 }"
         @click="goPage(item.link)"
       >
-        <IconFont :type="item.icon" fontStyle="font-size:28px;" />
+        <IconFont
+          :type="item.icon"
+          :fontStyle="{
+            'font-size': item.fontSize || '15px',
+            color: '#303133'
+          }"
+        />
         <div class="label">
-          <div class="span">{{ item.label }}</div>
-          <!-- <div class="value-and-icon">
-            <div class="value">内容</div>
-            <IconFont type="iconright" fontStyle="font-size:26rpx;color:#999999" />
-          </div> -->
+          <div class="text">{{ item.label }}</div>
+          <IconFont type="iconright" fontStyle="font-size:12px;color:#999999" />
         </div>
+        <button
+          v-if="item.label === '客服聊天'"
+          class="contact-btn"
+          open-type="contact"
+        ></button>
       </div>
     </div>
     <Tabbar />
@@ -99,77 +132,122 @@
 </template>
 <script>
 import Tabbar from "@/components/Tabbar";
+import CustomNavigation from "@/components/CustomNavigation";
 export default {
   data() {
     return {
       orderList: [
         {
-          icon: "payment",
+          icon: "/assets/images/order/payment.png",
           link: "/pages/orderList/index",
           label: "待付款",
           activeIndex: 1
         },
         {
-          icon: "send",
+          icon: "/assets/images/order/send.png",
           link: "/pages/orderList/index",
           label: "待发货",
           activeIndex: 2
         },
         {
-          icon: "take",
+          icon: "/assets/images/order/take.png",
           link: "/pages/orderList/index",
           label: "待收货",
           activeIndex: 3
         },
         {
-          icon: "comments",
+          icon: "/assets/images/order/comments.png",
           link: "/pages/orderList/index",
           label: "评价",
           activeIndex: 4
         },
         {
-          icon: "refund",
+          icon: "/assets/images/order/refund.png",
           link: "/pages/orderList/index",
           label: "退款/售后",
           activeIndex: 5
         }
       ],
       functionList: [
+        // {
+        //   icon: "/assets/image/userCenter/renwuzhongxin.png",
+        //   label: "任务中心",
+        //   link: "/page/index/index"
+        // },
+        // {
+        //   icon: "/assets/image/userCenter/pintuan.png",
+        //   label: "拼团",
+        //   link: "/page/index/index"
+        // },
+        // {
+        //   icon: "/assets/image/userCenter/renrenfenxiao.png",
+        //   label: "象征销客",
+        //   link: "/page/index/index"
+        // },
+        // {
+        //   icon: "/assets/image/userCenter/zhekou.png",
+        //   label: "折扣",
+        //   link: "/page/index/index"
+        // },
         {
-          icon: "icondaifahuo",
-          label: "任务中心",
-          link: "/page/index/index"
+          icon: "iconyouhuiquan",
+          label: "我的优惠券",
+          link: "/pages/coupons/index"
         },
         {
-          icon: "icondaifahuo",
-          label: "任务中心",
-          link: "/page/index/index"
+          img: "/assets/image/userCenter/shouhuodizhi.png",
+          icon: "iconweizhi",
+          label: "收货地址",
+          link: "/pages/addressList/index",
+          fontSize: "36rpx"
         },
         {
-          icon: "icondaifahuo",
-          label: "任务中心",
-          link: "/page/index/index"
-        },
-        {
-          icon: "icondaifahuo",
-          label: "任务中心",
-          link: "/page/index/index"
-        },
-        {
-          icon: "icondaifahuo",
-          label: "任务中心",
-          link: "/page/index/index"
-        },
-        {
-          icon: "icondaifahuo",
-          label: "任务中心",
+          img: "/assets/image/userCenter/kefuliaotian.png",
+          icon: "iconkefuliaotian1",
+          label: "客服聊天",
           link: "/page/index/index"
         }
-      ]
+        // {
+        //   icon: "/assets/image/userCenter/zhanghaoyuanquan.png",
+        //   label: "账号与安全",
+        //   link: "/page/index/index"
+        // },
+        // {
+        //   icon: "/assets/image/userCenter/wodeshoucang.png",
+        //   label: "我的收藏",
+        //   link: "/page/index/index"
+        // },
+        // {
+        //   icon: "/assets/image/userCenter/wodemendian.png",
+        //   label: "我的门店",
+        //   link: "/page/index/index"
+        // },
+        // {
+        //   icon: "/assets/image/userCenter/wodeyuyue.png",
+        //   label: "服务预约",
+        //   link: "/page/index/index"
+        // },
+        // {
+        //   icon: "/assets/image/userCenter/tuijian.png",
+        //   label: "推荐",
+        //   link: "/page/index/index"
+        // }
+      ],
+      statusBarHeight: 20,
+      tabbarBarHeight: 20 + 45,
+      ratio: 2,
+      scrollTop: 0,
+      ossDomain: "",
+      dpr: 2,
+      storeOuterId: 0,
+      storeSysName: "",
+      isMmember: 0,
+      orderNums: {}
     };
   },
   components: {
-    Tabbar
+    Tabbar,
+    CustomNavigation
   },
   mounted() {
     this.setTitle();
@@ -186,12 +264,15 @@ export default {
 </script>
 <style lang="less" scoped>
 .user-content-page {
+  background: rgba(248, 248, 248, 1);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 58px);
+  min-height: calc(100vh - env(safe-area-inset-bottom) - 58px);
   .user-info-card {
     position: relative;
     width: 100%;
     height: 187px;
     background: rgba(55, 61, 65, 1);
-    padding: 0 22px;
+    padding: 0 12px;
     box-sizing: border-box;
     overflow: hidden;
 
@@ -206,9 +287,10 @@ export default {
     }
 
     .user-info {
+      position: relative;
       display: flex;
       align-items: center;
-      height: 100%;
+      // height: 100%;
 
       .user-avatar-box {
         width: 60px;
@@ -277,13 +359,15 @@ export default {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
+      align-items: center;
       width: 345px;
       height: 42px;
-      border-radius: 8px;
+      border-radius: 8px 8px 0 0;
       transform: translate(-50%, 0);
       box-sizing: border-box;
       padding: 6px 14px;
       z-index: 1;
+      background: linear-gradient(to right, #f5b482, #f0833b);
 
       .icon {
         font-size: 15px;
@@ -367,7 +451,7 @@ export default {
 
       .label {
         height: 19px;
-        font-size: 13px;
+        font-size: 213px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
         color: rgba(144, 147, 153, 1);
@@ -386,8 +470,9 @@ export default {
   }
 
   .order-card {
+    position: relative;
     background: #ffffff;
-    width: 368px;
+    width: 363px;
     height: 140px;
     background: rgba(255, 255, 255, 1);
     border-radius: 8px;
@@ -415,14 +500,14 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 19px;
-        line-height: 19px;
+        height: 18px;
+        line-height: 18px;
 
         .text {
           font-size: 13px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
-          color: rgb(102, 102, 102);
+          color: #999999;
           margin-right: 5px;
         }
       }
@@ -437,6 +522,7 @@ export default {
       height: 95px;
 
       .item {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -444,14 +530,31 @@ export default {
         width: 20%;
         height: 100%;
 
+        .order-num {
+          position: absolute;
+          right: 16px;
+          top: 13px;
+          min-width: 14px;
+          height: 14px;
+          line-height: 14px;
+          background: #ff6a00;
+          border-radius: 14px;
+          text-align: center;
+          // padding: 0 4rpx;
+          font-size: 10px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #ffffff;
+        }
+
         .label {
-          margin-top: 17px;
-          height: 19px;
+          margin-top: 16px;
+          height: 18px;
           font-size: 13px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
-          color: rgba(51, 51, 51, 1);
-          line-height: 19px;
+          line-height: 18px;
+          color: #666666;
         }
 
         .icon {
@@ -463,7 +566,7 @@ export default {
   }
 
   .function-card {
-    width: 368px;
+    width: 363px;
     margin: 10px auto 0;
     border-radius: 8px;
     display: flex;
@@ -476,26 +579,38 @@ export default {
     padding: 0 6px;
 
     .item {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      width: 20%;
+      width: 25%;
       height: 95px;
       background: rgba(255, 255, 255, 1);
 
       .label {
-        margin-top: 17px;
-        height: 19px;
-        font-size: 13px;
+        margin-top: 16px;
+        height: 18px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        line-height: 18px;
+        font-size: 15px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
-        color: rgba(51, 51, 51, 1);
-        line-height: 19px;
+        color: #333333;
       }
 
       .icon {
-        font-size: 28px;
+        width: 40px;
+        height: 40px;
+      }
+
+      .contact-btn {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        opacity: 0;
       }
     }
 
@@ -513,14 +628,19 @@ export default {
         flex-direction: row;
         border-bottom: 1px solid rgba(238, 238, 238, 1);
 
+        .icon {
+          width: 24px;
+          height: 24px;
+        }
+
         .label {
           flex: 1;
           height: 100%;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin: 0 14px;
-          font-size: 17px;
+          margin: 0 13px;
+          font-size: 15px;
 
           .text {
           }
@@ -535,7 +655,7 @@ export default {
               font-family: PingFangSC-Regular, PingFang SC;
               font-weight: 400;
               color: rgba(153, 153, 153, 1);
-              margin-right: 8px;
+              margin-right: 13px;
             }
           }
         }
