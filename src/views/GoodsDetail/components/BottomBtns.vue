@@ -111,12 +111,11 @@ export default {
       height: 40px;
       line-height: 40px;
       border-radius: 20px;
-      border: 0.5px solid #ff6a00;
+      border: 1px solid #ff6a00;
       background: #ffe9d9;
       padding: 0;
       color: #ff6a00;
       font-size: 15px;
-      border: none;
     }
   }
   .buy {

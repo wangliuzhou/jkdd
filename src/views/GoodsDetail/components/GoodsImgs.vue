@@ -2,7 +2,10 @@
   <div class="goods-imgs">
     <van-swipe :autoplay="autoplay" @change="handleChange">
       <van-swipe-item v-for="(item, i) in imgs" :key="i">
-        <div class="img" :style="{ backgroundImage: `url(${item})` }"></div>
+        <div
+          class="img"
+          :style="{ backgroundImage: `url(${$ali(item, 375)})` }"
+        ></div>
       </van-swipe-item>
       <template #indicator v-if="imgs && imgs.length">
         <div class="indicator">
@@ -55,7 +58,7 @@ export default {
         height: 100%;
         background-repeat: no-repeat;
         background-position: center center;
-        background-size: cover;
+        background-size: contain;
       }
     }
   }

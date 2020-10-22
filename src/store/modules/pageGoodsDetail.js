@@ -34,11 +34,7 @@ export default {
     },
     setGoodsDetail(state, payload) {
       if (payload && payload.dealerProductJoinId) {
-        state.goodsDetail = {
-          ...payload,
-          mainCover:
-            "https://saasoss.xzintl.com/4zdolwl1nr/2020/07/07/file_d66nlnzke33zg-w828_h6184.jpg,https://saasoss.xzintl.com/4zdolwl1nr/2020/07/07/file_xeezyzg379w28-w828_h2126.jpg"
-        };
+        state.goodsDetail = payload;
       } else {
         state.goodsDetail = null;
       }

@@ -21,9 +21,8 @@
       <BottomBtns />
 
       <!-- sku -->
-      <van-popup v-model="showSku" position="bottom" closeable>
-        <Sku />
-      </van-popup>
+
+      <Sku :show.sync="showSku" :btnStatus="btnStatus" />
 
       <!-- cms -->
       <!-- <Cms /> -->
@@ -59,7 +58,8 @@ export default {
   computed: {
     ...mapState({
       dataIsLoad: state => state.pageGoodsDetail.dataIsLoad,
-      goodsDetail: state => state.pageGoodsDetail.goodsDetail
+      goodsDetail: state => state.pageGoodsDetail.goodsDetail,
+      btnStatus: state => state.pageGoodsDetail.btnStatus
     }),
     showSku: {
       get() {

@@ -5,9 +5,9 @@
     <text>关注</text>
   </div> -->
     <div class="goods-price">
-      <span class="sell-price">¥{{ goodsDetail.minPrice }}</span>
-      <span class="del-price" v-if="goodsDetail.minDelPrice"
-        >¥{{ goodsDetail.minDelPrice }}</span
+      <span class="sell-price">¥{{ goodsDetail.minPrice * 1 }}</span>
+      <span class="del-price" v-if="goodsDetail.minDelPrice * 1"
+        >¥{{ goodsDetail.minDelPrice * 1 }}</span
       >
     </div>
     <div class="goods-title">{{ goodsDetail.productName }}</div>

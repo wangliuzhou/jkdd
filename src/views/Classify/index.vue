@@ -65,6 +65,7 @@
                     :style="
                       `background-image: url(${$ali(it.pageCateTitlePic, 84)})`
                     "
+                    @click="handleJump(it)"
                   ></div>
                   <div class="classify-content-right-goods-item-name">
                     {{ it.pageCateName }}
@@ -84,6 +85,7 @@
 </template>
 <script>
 import { getOffsetTop } from "@/utils/dom";
+import jumpLink from "@/utils/jumpLink";
 // import IconFont from "@/components/IconFont";
 import Tabbar from "@/components/Tabbar";
 import EmptyTip from "./components/EmptyTip";
@@ -159,6 +161,15 @@ export default {
       }
 
       this.activeIndex = activeIndex;
+    },
+    handleJump(item) {
+      console.log("item=", item);
+      jumpLink({
+        linkType: item.pageCateLinkType,
+        linkId: item.pageCateLinkId,
+        linkJump: item.pageCateLinkJump,
+        linkName: item.pageCateLinkName
+      });
     }
   }
 };
