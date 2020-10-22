@@ -4,7 +4,7 @@
       <div class="result-icon">
         <IconFont
           type="iconzhifuchenggong"
-          fontStyle="font-size:136rpx;color:#15C669;"
+          fontStyle="font-size:68px;color:#15C669;"
         />
       </div>
       <div class="result-text">订单支付成功</div>
@@ -13,8 +13,8 @@
         <span>¥{{ price * 1 }}</span>
       </div>
       <div class="result-btns">
-        <button class="show-order-btn" bind:tap="goOrderList">查看订单</button>
-        <button class="go-index-btn" bind:tap="goHome">回到首页</button>
+        <button class="show-order-btn" @click="goOrderList">查看订单</button>
+        <button class="go-index-btn" @click="goHome">回到首页</button>
       </div>
     </div>
 
@@ -49,6 +49,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.page-pay-result {
+  padding-top: 8px;
+}
 .pay-result {
   width: 363px;
   height: 267.5px;
@@ -56,7 +59,6 @@ export default {
   background: rgba(255, 255, 255, 1);
   border-radius: 8px;
   margin: 0 auto;
-  margin-top: 8px;
   text-align: center;
   .result-icon {
     padding-top: 33px;
