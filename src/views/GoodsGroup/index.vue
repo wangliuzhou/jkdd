@@ -95,7 +95,7 @@ export default {
     },
     //跳转商品详情页
     handleGoGoodsDetail(id) {
-      this.$router.push({
+      this.$push({
         path: "/goodsDetail",
         query: { id }
       });

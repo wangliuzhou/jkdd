@@ -1,5 +1,5 @@
 import { SysPage } from "@/constant/index";
-import router from "@/router/index";
+import router from "@/utils/router";
 
 export default function jumpLink(link) {
   if (!link || link.linkType == null) return;

@@ -51,7 +51,7 @@ export default {
           //群活码
           url = `/qrcodeIntroduction?activeQrcodeOuterId=${activityQrcodeInfo.activeQrcodeOuterId}`;
         }
-        this.$router.push({
+        this.$push({
           path: url
         });
       } else if (increaseFansType == 2) {

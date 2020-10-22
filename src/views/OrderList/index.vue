@@ -184,7 +184,7 @@ export default {
 
     // 点击跳转到详情页
     handleGoDetail(id) {
-      this.$router.push({ path: "/orderDetial", query: { id } });
+      this.$push({ path: "/orderDetial", query: { id } });
     }
   }
 };

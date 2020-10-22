@@ -157,7 +157,7 @@ export default {
         actuallyPaid: orderInfo.actuallyPaid
       })
         .then(() => {
-          this.$router.push({
+          this.$push({
             path: `/payResult?price=${orderInfo.actuallyPaid}`
           });
         })

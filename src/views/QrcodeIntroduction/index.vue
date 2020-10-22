@@ -62,10 +62,10 @@ export default {
       });
     },
     goQrcodeMissing() {
-      this.$router.push({ path: "/qrcodeMissing" });
+      this.$push({ path: "/qrcodeMissing" });
     },
     goQrcodeDetail() {
-      this.$router.push({
+      this.$push({
         path: `/qrcodeDetail?activeQrcodeOuterId=${this.groupInfo.activeQrcodeOuterId}`
       });
     }

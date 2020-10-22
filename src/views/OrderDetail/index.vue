@@ -294,7 +294,7 @@ export default {
 
     // 跳转到物流详情页
     handleGoLogistics(code) {
-      this.$router.push({ path: "/orderLogistics", query: { code } });
+      this.$push({ path: "/orderLogistics", query: { code } });
     }
   }
 };

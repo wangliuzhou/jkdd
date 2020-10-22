@@ -112,7 +112,7 @@ export default {
       this.isShow = !this.isShow;
     },
     lookPastDue() {
-      this.$router.push({
+      this.$push({
         path: "/couponsInvalid"
       });
     },

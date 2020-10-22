@@ -39,17 +39,17 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener(
-      "scroll",
-      () => {
-        let scrollTop =
-          document.body.scrollTop || document.documentElement.scrollTop || 0;
-        this.setScrollTop(scrollTop);
+    this.scrollFn = () => {
+      let scrollTop =
+        document.body.scrollTop || document.documentElement.scrollTop || 0;
+      this.setScrollTop(scrollTop);
 
-        this.handleScrollChangeNavBar();
-      },
-      false
-    );
+      this.handleScrollChangeNavBar();
+    };
+    window.addEventListener("scroll", this.scrollFn, false);
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.scrollFn, false);
   },
   methods: {
     ...mapMutations({

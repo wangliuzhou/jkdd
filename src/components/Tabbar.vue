@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     goPage(item) {
-      this.$router.push({
+      this.$push({
         path: item.pagePath
       });
     }

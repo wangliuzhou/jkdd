@@ -80,7 +80,7 @@ export default {
   methods: {
     // 跳转地址详情页
     goAddAddress(query) {
-      this.$router.push({ path: "/addAddress", query });
+      this.$push({ path: "/addAddress", query });
     },
 
     // 格式化列表
@@ -191,7 +191,7 @@ export default {
       // 2.地址列表页带过去query里面有地址的addressId addressId:2
       const { redirectUrl } = this.$route.query;
       if (redirectUrl) {
-        this.$router.push({
+        this.$push({
           path: redirectUrl,
           query: { addressId }
         });

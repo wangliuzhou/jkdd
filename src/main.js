@@ -11,6 +11,7 @@ import "lib-flexible/flexible.js";
 
 //axios
 import request from "@/config/request";
+import mixins from "@/mixins/index";
 import ali from "@/config/ali";
 
 import {
@@ -56,6 +57,7 @@ Vue.use(VueLazyload, {
   attempt: 1
 });
 Vue.use(VueAwesomeSwiper);
+Vue.use(mixins);
 Vue.use(request);
 Vue.use(ali);
 // 复制到剪切板

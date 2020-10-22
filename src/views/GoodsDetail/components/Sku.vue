@@ -84,6 +84,7 @@
 import { mapState, mapMutations } from "vuex";
 import { Toast } from "vant";
 import { fetchPost } from "@/config/request";
+import { storesysId } from "@/utils/storesys";
 
 export default {
   props: {
@@ -121,7 +122,6 @@ export default {
           if (selectSkuAttr[i].picUrl) return selectSkuAttr[i].picUrl;
         }
       }
-      console.log(mainCover, selectSkuAttr);
       return mainCover ? mainCover.split(",")[0] : "";
     },
     //商品价格
@@ -319,8 +319,8 @@ export default {
         });
       } else if (btnStatus == 2) {
         //立即购买
-        this.$router.push({
-          path: `/orderSettle?skuIds=${sku.singleProductOuterId}&skuNums=${num}`
+        this.$push({
+          path: `/pay/orderSettle?storesysId=${storesysId}&skuIds=${sku.singleProductOuterId}&skuNums=${num}`
         });
       }
     }

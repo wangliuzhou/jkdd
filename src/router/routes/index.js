@@ -97,7 +97,7 @@ const routes = [
     component: () => import("@/views/OrderLogistics/index.vue")
   },
   {
-    path: "/orderSettle",
+    path: "/pay/orderSettle",
     name: "OrderSettle",
     props: route => ({
       skuIds: route.query.skuIds,
