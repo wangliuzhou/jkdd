@@ -93,12 +93,8 @@
 
 <script>
 import areaList from "@/utils/area.js";
-import IconFont from "@/components/IconFont";
 import { Toast } from "vant";
 export default {
-  components: {
-    IconFont
-  },
   data() {
     return {
       aaa: "",

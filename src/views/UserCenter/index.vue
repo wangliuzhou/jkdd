@@ -98,7 +98,6 @@
   </div>
 </template>
 <script>
-import IconFont from "@/components/IconFont";
 import Tabbar from "@/components/Tabbar";
 export default {
   data() {
@@ -170,7 +169,6 @@ export default {
     };
   },
   components: {
-    IconFont,
     Tabbar
   },
   mounted() {

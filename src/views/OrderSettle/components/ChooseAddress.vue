@@ -28,12 +28,8 @@
   </div>
 </template>
 <script>
-import IconFont from "@/components/IconFont";
 export default {
   props: ["addressInfo"],
-  components: {
-    IconFont
-  },
   methods: {
     handleChooseAddress() {
       console.log("跳转选择地址页面");

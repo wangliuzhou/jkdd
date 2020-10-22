@@ -171,14 +171,10 @@
 </template>
 
 <script>
-import IconFont from "@/components/IconFont";
 import logisticsStatus from "@/utils/logisticsStatus";
 import { formatTime } from "@/utils/index";
 import { Toast } from "vant";
 export default {
-  components: {
-    IconFont
-  },
   data() {
     return {
       payChannel: [

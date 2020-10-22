@@ -110,6 +110,17 @@ const routes = [
     component: () => import("@/views/OrderSettle/index.vue")
   },
   {
+    path: "/payResult",
+    name: "payResult",
+    props: route => ({
+      price: Number(route.query.price)
+    }),
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/PayResult/index.vue")
+  },
+  {
     path: "/test",
     name: "Test",
     meta: {

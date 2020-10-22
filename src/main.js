@@ -14,6 +14,8 @@ import request from "@/config/request";
 import mixins from "@/mixins/index";
 import ali from "@/config/ali";
 
+import Components from "@/components/index";
+
 import {
   Toast,
   Switch,
@@ -51,6 +53,8 @@ if (process.env.VUE_APP_API_ENV === "dev") {
   const vConsole = new Vconsole();
   Vue.use(vConsole);
 }
+
+Vue.use(Components);
 
 Vue.use(VueLazyload, {
   preLoad: 1.3,

@@ -52,11 +52,7 @@
 
 <script>
 import logisticsStatus from "@/utils/logisticsStatus";
-import IconFont from "@/components/IconFont";
 export default {
-  components: {
-    IconFont
-  },
   name: "",
   data() {
     return { logisticsCode: "", info: { maps: [] } };

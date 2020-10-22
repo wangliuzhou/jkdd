@@ -86,13 +86,11 @@
 <script>
 import { getOffsetTop } from "@/utils/dom";
 import jumpLink from "@/utils/jumpLink";
-// import IconFont from "@/components/IconFont";
 import Tabbar from "@/components/Tabbar";
 import EmptyTip from "./components/EmptyTip";
 
 export default {
   components: {
-    // IconFont,
     Tabbar,
     EmptyTip
   },

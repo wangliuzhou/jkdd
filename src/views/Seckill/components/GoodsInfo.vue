@@ -45,11 +45,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import IconFont from "@/components/IconFont";
 export default {
-  components: {
-    IconFont
-  },
   computed: {
     ...mapState({
       goodsDetail: state => state.pageGoodsDetail.goodsDetail

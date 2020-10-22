@@ -21,11 +21,9 @@
   </div>
 </template>
 <script>
-import IconFont from "@/components/IconFont";
 import { px2rem } from "@/utils/index";
 export default {
   props: ["item"],
-  components: { IconFont },
   computed: {
     seizeStyle() {
       let { item } = this;

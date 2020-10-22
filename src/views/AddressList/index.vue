@@ -50,12 +50,8 @@
 </template>
 
 <script>
-import IconFont from "@/components/IconFont";
 import areaList from "@/utils/area.js";
 export default {
-  components: {
-    IconFont
-  },
   data() {
     return {
       addressList: [

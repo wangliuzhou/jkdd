@@ -46,13 +46,12 @@
 </template>
 
 <script>
-import IconFont from "@/components/IconFont";
 import CModal from "./components/CModal";
 import CouponItem from "@/components/CouponItem";
 import { formatTimeSimple } from "@/utils/index";
 import { Toast } from "vant";
 export default {
-  components: { CModal, CouponItem, IconFont },
+  components: { CModal, CouponItem },
   data() {
     return {
       list: [],
