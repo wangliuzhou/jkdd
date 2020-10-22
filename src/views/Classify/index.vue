@@ -1,6 +1,7 @@
 <template>
   <div class="page-classify">
-    <div class="classify-search">
+    <!-- 搜索框 -->
+    <!-- <div class="classify-search">
       <div class="classify-search-left">
         <div class="classify-search-icon-wrap">
           <IconFont type="iconsousuo" fontStyle="font-size:0.34rem;" />
@@ -9,9 +10,9 @@
           <input type="text" placeholder="搜索词" />
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="classify-content">
+    <div class="classify-content" v-if="!noData">
       <div class="classify-content-left" ref="left">
         <div class="classify-content-left-list">
           <div
@@ -38,7 +39,7 @@
         <div class="classify-content-right-content">
           <div class="classify-content-right-goods-wrap">
             <div
-              :ref="`classify_${item.pageCateId}`"
+              :ref="`goods_${item.pageCateId}`"
               class="classify-content-right-goods"
               v-for="item in list"
               :key="item.pageCateId"
@@ -76,17 +77,22 @@
       </div>
     </div>
 
+    <EmptyTip v-if="noData" />
+
     <Tabbar />
   </div>
 </template>
 <script>
 import { getOffsetTop } from "@/utils/dom";
-import IconFont from "@/components/IconFont";
+// import IconFont from "@/components/IconFont";
 import Tabbar from "@/components/Tabbar";
+import EmptyTip from "./components/EmptyTip";
+
 export default {
   components: {
-    IconFont,
-    Tabbar
+    // IconFont,
+    Tabbar,
+    EmptyTip
   },
   data() {
     return {
@@ -95,6 +101,12 @@ export default {
       rightScrollIntoViewId: null,
       leftScrollTop: null
     };
+  },
+  computed: {
+    noData() {
+      let { list } = this;
+      return !list || !list.length;
+    }
   },
   mounted() {
     this.loadData();
@@ -110,7 +122,7 @@ export default {
     setActiveIndex(item, index) {
       this.activeIndex = index;
       let oRight = this.$refs["right"];
-      let oClassify = this.$refs[`classify_${item.pageCateId}`][0];
+      let oClassify = this.$refs[`goods_${item.pageCateId}`][0];
       oRight.scrollTop = getOffsetTop(oClassify) - getOffsetTop(oRight);
       //做个标记防止重复触发handleRightScroll
       this._scrolling = true;
@@ -153,7 +165,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .page-classify {
-  padding-top: 16px;
   height: 100vh;
   box-sizing: border-box;
 }
@@ -207,17 +218,14 @@ export default {
 
 .classify-content {
   display: flex;
-  height: calc(100vh - 50px - 68px);
+  height: calc(100% - 50px); //calc(100% - 67px);
   .classify-content-left {
-    background: white;
+    background: #f5f5f5;
     height: 100%;
-    overflow-y: scroll;
-    flex: 0 0 105px;
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    flex: 0 0 85px;
     .classify-content-left-list {
       text-align: center;
+      background: white;
       .classify-content-left-item {
         background: #f5f5f5;
         height: 50px;
@@ -226,16 +234,15 @@ export default {
         display: flex;
         align-items: center;
         span {
-          font-size: 16px;
           flex: 1;
           color: #666666;
+          font-size: 13px;
         }
         &.active {
           background: white;
           span {
             color: #333333;
             font-family: PingFangSC-Medium, PingFang SC;
-            font-weight: 500;
             &::before {
               content: "";
               position: absolute;
@@ -277,17 +284,15 @@ export default {
   .classify-content-right {
     box-sizing: border-box;
     height: 100%;
-    overflow-y: scroll;
     flex: auto;
     background: white;
-    &::-webkit-scrollbar {
-      display: none;
-    }
     .classify-content-right-content {
-      padding: 8px 10px;
+      padding: 8px 15px;
+      padding-right: 0;
+      padding-bottom: 30px;
       .classify-content-right-goods-wrap {
         .classify-content-right-banner {
-          width: 250px;
+          width: 260px;
           height: 100px;
           border-radius: 8px;
           background: #f5f5f5;
@@ -309,15 +314,15 @@ export default {
             flex-wrap: wrap;
             margin-top: 8px;
             .classify-content-right-goods-item {
-              width: 76.5px;
+              width: 80px;
               margin-right: 10px;
               margin-bottom: 11.5px;
               &:nth-child(3n) {
                 margin-right: 0;
               }
               .classify-content-right-goods-item-image {
-                width: 76.5px;
-                height: 76.5px;
+                width: 80px;
+                height: 80px;
                 background: #f5f5f5;
                 border-radius: 8px;
                 background-repeat: no-repeat;
@@ -325,7 +330,7 @@ export default {
                 background-size: cover;
               }
               .classify-content-right-goods-item-name {
-                color: #333;
+                color: #666;
                 font-size: 13px;
                 text-align: center;
                 height: 18.5px;
