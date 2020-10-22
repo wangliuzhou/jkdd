@@ -36,6 +36,12 @@ const list = [
     text: "分类"
   },
   {
+    pagePath: "/cart",
+    iconPath: require("@/assets/images/tabbar/cart.png"),
+    selectedIconPath: require("@/assets/images/tabbar/cart-selected.png"),
+    text: "购物车"
+  },
+  {
     pagePath: "/userCenter",
     iconPath: require("@/assets/images/tabbar/user-center.png"),
     selectedIconPath: require("@/assets/images/tabbar/user-center-selected.png"),
