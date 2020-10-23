@@ -5,7 +5,7 @@
   >
     <div class="goodsList-container">
       <div
-        v-for="item of detail.goodsList"
+        v-for="(item, index) of detail.goodsList"
         :key="item.productOuterId"
         @click="goPage(item)"
         class="goodsList-item-card"
@@ -86,10 +86,10 @@
                 ¥{{ item.delPrice }}
               </div>
             </div>
-            <div
+            <!-- <div
               v-if="detail.buy.show"
               class="xz-goods__buy-box"
-              @click.stop="onBuy(item)"
+              @click.stop="onBuy($event, item)"
             >
               <IconFont
                 v-if="detail.buy.type === 1"
@@ -105,7 +105,7 @@
                 :src="$ali(detail.buy.img, 100)"
                 fit="contain"
               />
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -205,13 +205,11 @@ export default {
     console.log(this.detail);
   },
   methods: {
-    goPage() {
-      // let { item } = e.currentTarget.dataset;
-      // this.triggerEvent("goPage", item);
+    goPage(e) {
+      this.$emit("goPage", e);
     },
-    onBuy() {
-      // let { item } = e.currentTarget.dataset;
-      // this.triggerEvent("onBuy", e);
+    onBuy(e, item) {
+      this.$emit("onBuy", { e, item });
     }
   }
 };
@@ -296,14 +294,14 @@ export default {
       }
       .goodsList-item-detail-box {
         box-sizing: border-box;
-        padding: 16rpx 24rpx;
+        padding: 8px 12px;
 
         .goodsList-item-title-box {
-          font-size: 30rpx;
+          font-size: 15px;
           font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 500;
           color: rgba(51, 51, 51, 1);
-          line-height: 40rpx;
+          line-height: 20px;
           text-overflow: -o-ellipsis-lastline;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -311,21 +309,22 @@ export default {
           -webkit-line-clamp: 2;
           line-clamp: 2;
           -webkit-box-orient: vertical;
-          height: 80rpx;
+          white-space: normal;
+          height: 40px;
 
           .icon {
-            margin-right: 8rpx;
-            height: 32rpx;
+            margin-right: 4px;
+            height: 16px;
             vertical-align: middle;
           }
         }
 
         .goodsList-item-describe-box {
-          margin-top: 16rpx;
-          height: 24rpx;
+          margin-top: 8px;
+          height: 12px;
           color: #999;
-          font-size: 24rpx;
-          line-height: 24rpx;
+          font-size: 12px;
+          line-height: 12px;
           word-break: break-all;
           display: -webkit-box;
           overflow: hidden;
@@ -333,12 +332,11 @@ export default {
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
         }
-
         .xz-goods__goods-label-box {
           width: 100%;
-          height: 30rpx;
-          line-height: 30rpx;
-          margin: 8rpx 0;
+          height: 15px;
+          line-height: 15px;
+          margin: 4px 0;
           text-overflow: -o-ellipsis-lastline;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -350,19 +348,20 @@ export default {
 
           .label-item {
             display: inline-block;
-            margin-right: 12rpx;
-            height: 30rpx;
-            line-height: 30rpx;
+            margin-right: 6px;
+            height: 15px;
+            line-height: 15px;
             background: #ffe9d9;
-            border-radius: 4rpx;
-            font-size: 22rpx;
+            border-radius: 2px;
+            font-size: 11px;
             font-family: PingFangSC-Regular, PingFang SC;
             font-weight: 400;
             color: #ff6a00;
-            padding: 0 4rpx;
+            padding: 0 2px;
             overflow: hidden;
           }
         }
+
         .footer {
           display: flex;
           align-items: center;
@@ -371,7 +370,7 @@ export default {
           .goodsList-item-price-box {
             flex-grow: 1;
             width: 0;
-            margin-top: 4px;
+            // margin-top: 4px;
             height: 25px;
             text-overflow: -o-ellipsis-lastline;
             overflow: hidden;

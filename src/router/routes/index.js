@@ -140,10 +140,20 @@ const routes = [
   {
     path: "/userCenter",
     name: "UserCenter",
-    meta: {
-      needLogin: false
-    },
+    meta: {},
     component: () => import("@/views/UserCenter/index.vue")
+  },
+  {
+    path: "/membersCenter",
+    name: "MembersCenter",
+    meta: {},
+    component: () => import("@/views/MembersCenter/index.vue")
+  },
+  {
+    path: "/joinMember",
+    name: "JoinMember",
+    meta: {},
+    component: () => import("@/views/JoinMember/index.vue")
   },
   {
     path: "/qrcodeIntroduction",

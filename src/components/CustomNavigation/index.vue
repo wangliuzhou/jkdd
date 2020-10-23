@@ -63,7 +63,7 @@ export default {
   components: { IconFont },
   data() {
     return {
-      statusBarHeight: 40,
+      statusBarHeight: 20,
       pageLength: 1
     };
   },

@@ -140,7 +140,7 @@ const CONFIG = {
 
 const { VUE_APP_API_ENV } = process.env;
 
-let config = CONFIG["beta"];
+let config = CONFIG[VUE_APP_API_ENV];
 
 config = CONFIG["prod"];
 

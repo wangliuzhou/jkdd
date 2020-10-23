@@ -131,6 +131,8 @@
   </div>
 </template>
 <script>
+import { Toast } from "vant";
+import IconFont from "@/components/IconFont";
 import Tabbar from "@/components/Tabbar";
 import CustomNavigation from "@/components/CustomNavigation";
 export default {
@@ -239,25 +241,81 @@ export default {
       scrollTop: 0,
       ossDomain: "",
       dpr: 2,
-      storeOuterId: 0,
+      storeOuterId: "TSRORVZ17ZXD9",
       storeSysName: "",
       isMmember: 0,
-      orderNums: {}
+      orderNums: {},
+      isLogin: true,
+      userInfo: {
+        userNickname: ""
+      }
     };
   },
   components: {
     Tabbar,
     CustomNavigation
   },
-  mounted() {
-    this.setTitle();
+  onShow() {
+    this.init();
   },
+  mounted() {},
   methods: {
-    goPage() {},
-    goMember() {},
-    getUserInfo() {},
-    setTitle() {
-      // let { item } = this;
+    init() {
+      if (this.isLogin) {
+        this.getMemberDetail();
+        this.getOrderNum();
+      }
+    },
+    onPageScroll({ scrollTop }) {
+      this.scrollTop = scrollTop;
+    },
+    goPage(e) {
+      const { activeIndex, link } = e;
+      if (link === "/pages/orderList/index") {
+        this.$router.push(`${link}?activeIndex=${activeIndex}`);
+      } else {
+        this.$router.push(link);
+      }
+    },
+    goMember() {
+      const { isMmember } = this;
+      if (isMmember === 0) {
+        Toast("商家未设置会员");
+        return;
+      }
+      this.$router.push("/pages/membersCenter/index");
+    },
+    // 获取会员卡详情
+    async getMemberDetail() {
+      const { storeOuterId } = this;
+      const { data } = await this.$fetchGet(
+        "/client/mobile/tenantMemberCardOption/isMemberCard",
+        {
+          storeOuterId
+        }
+      );
+      this.isMmember = data;
+    },
+    // 订单数量
+    async getOrderNum() {
+      const { storeOuterId, orderList } = this;
+      const { data } = await this.$fetchGet(
+        "/order/mobile/tenantOrder/findOrderCount",
+        {
+          storeOuterId
+        }
+      );
+      orderList[0].num = data["stayPayment"];
+      orderList[1].num = data["stayShipments"];
+      orderList[2].num = data["stayReceiving"];
+      orderList[3].num = data["evaluate"];
+      orderList[4].num = data["afterSale"];
+      this.orderList = orderList;
+    },
+    // 登录回调
+    loginCallback() {
+      this.getMemberDetail();
+      this.getOrderNum();
     }
   }
 };

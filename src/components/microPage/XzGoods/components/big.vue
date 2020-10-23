@@ -8,7 +8,7 @@
   >
     <div class="goodsList-container">
       <div
-        v-for="item of detail.goodsList"
+        v-for="(item, index) of detail.goodsList"
         :key="item.productOuterId"
         @click="goPage(item)"
         class="goodsList-item-card"
@@ -91,7 +91,7 @@
             <div
               v-if="detail.buy.show"
               class="xz-goods__buy-box"
-              @click.stop="onBuy(item)"
+              @click.stop="onBuy($event, item)"
             >
               <IconFont
                 v-if="detail.buy.type === 1"
@@ -197,13 +197,11 @@ export default {
   },
   mounted() {},
   methods: {
-    goPage() {
-      // let { item } = e.currentTarget.dataset;
-      // this.triggerEvent("goPage", item);
+    goPage(e) {
+      this.$emit("goPage", e);
     },
-    onBuy() {
-      // let { item } = e.currentTarget.dataset;
-      // this.triggerEvent("onBuy", e);
+    onBuy(e, item) {
+      this.$emit("onBuy", { e, item });
     }
   }
 };

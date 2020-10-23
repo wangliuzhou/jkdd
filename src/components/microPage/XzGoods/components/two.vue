@@ -5,7 +5,7 @@
   >
     <div class="goodsList-container">
       <div
-        v-for="item of detail.goodsList"
+        v-for="(item, index) of detail.goodsList"
         :key="item.productOuterId"
         @click="goPage(item)"
         class="goodsList-item-card"
@@ -89,7 +89,7 @@
             <div
               v-if="detail.buy.show"
               class="xz-goods__buy-box"
-              @click.stop="onBuy(item)"
+              @click.stop="onBuy($event, item)"
             >
               <IconFont
                 v-if="detail.buy.type === 1"
@@ -204,13 +204,11 @@ export default {
     console.log(this.detail);
   },
   methods: {
-    goPage() {
-      // let { item } = e.currentTarget.dataset;
-      // this.triggerEvent("goPage", item);
+    goPage(e) {
+      this.$emit("goPage", e);
     },
-    onBuy() {
-      // let { item } = e.currentTarget.dataset;
-      // this.triggerEvent("onBuy", e);
+    onBuy(e, item) {
+      this.$emit("onBuy", { e, item });
     }
   }
 };
@@ -293,13 +291,6 @@ export default {
       .goodsList-item-detail-box {
         box-sizing: border-box;
         padding: 8px 12px;
-        flex-grow: 1;
-        width: 0;
-        height: 100%;
-        padding-top: 10px;
-        margin: 0 8px;
-        display: flex;
-        flex-direction: column;
 
         .goodsList-item-title-box {
           font-size: 15px;
@@ -315,7 +306,6 @@ export default {
           line-clamp: 2;
           -webkit-box-orient: vertical;
           height: 40px;
-          width: 100%;
           .icon {
             margin-right: 4px;
             height: 16px;
@@ -324,7 +314,6 @@ export default {
         }
 
         .goodsList-item-describe-box {
-          width: 100%;
           margin-top: 8px;
           height: 12px;
           color: #999;
@@ -337,7 +326,6 @@ export default {
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
         }
-
         .xz-goods__goods-label-box {
           width: 100%;
           height: 15px;

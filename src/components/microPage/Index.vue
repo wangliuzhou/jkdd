@@ -35,6 +35,7 @@
         :item="item"
         :index="index"
         :key="item.pageComponentId"
+        ref="goodsSearchComponent"
       />
       <!-- 图文导航 -->
       <ImageTextNav
@@ -63,6 +64,7 @@
         :item="item"
         :index="index"
         :key="item.pageComponentId"
+        @onBuy="onBuy"
       />
       <!-- 商品列表 -->
       <GoodsList
@@ -86,6 +88,7 @@
         :key="item.pageComponentId"
       />
     </template>
+    <SkuBox ref="skuBox" />
   </div>
 </template>
 <script>
@@ -99,6 +102,7 @@ import XzImage from "@/components/microPage/XzImage";
 import XzGoods from "@/components/microPage/XzGoods";
 import IncreaseFans from "@/components/microPage/IncreaseFans";
 import XzSeckill from "@/components/microPage/XzSeckill";
+import SkuBox from "@/components/microPage/SkuBox";
 
 export default {
   components: {
@@ -111,12 +115,24 @@ export default {
     XzImage,
     XzGoods,
     IncreaseFans,
-    XzSeckill
+    XzSeckill,
+    SkuBox
   },
   props: {
     components: {
       type: Array,
       default: () => []
+    }
+  },
+  methods: {
+    handleScroll(scrollTop) {
+      let goodsSearchComponent = this.$refs.goodsSearchComponent;
+      if (goodsSearchComponent) {
+        goodsSearchComponent.handleScroll(scrollTop);
+      }
+    },
+    onBuy({ e, item }) {
+      this.$refs.skuBox.onBuy({ e, item });
     }
   }
 };
