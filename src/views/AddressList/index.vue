@@ -5,6 +5,7 @@
         <img
           class="wx-icon"
           :src="require('@/assets/images/weixin_icon.png')"
+          alt="微信图标"
         />
         <div class="get-wx-adress-text">获取微信收货地址</div>
       </div>
@@ -50,7 +51,9 @@
 </template>
 
 <script>
+import { parse } from "querystring";
 import areaList from "@/utils/area.js";
+
 export default {
   data() {
     return {
@@ -185,11 +188,16 @@ export default {
       // 需要上个页面配合
       // 1.query里面有redirectUrl地址  redirectUrl='/aaaPage'
       // 2.地址列表页带过去query里面有地址的addressId addressId:2
-      const { redirectUrl } = this.$route.query;
+      let { redirectUrl } = this.$route.query;
+      redirectUrl = decodeURIComponent(redirectUrl);
+
       if (redirectUrl) {
+        let path = redirectUrl.split("?")[0];
+        let query = parse(redirectUrl.split("?")[1]);
+
         this.$push({
-          path: redirectUrl,
-          query: { addressId }
+          path,
+          query: { ...query, addressId }
         });
       }
     }

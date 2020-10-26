@@ -1,15 +1,15 @@
 <template>
   <div class="choose-address" @click="handleChooseAddress">
     <div class="left">
-      <IconFont type="iconweizhi" fontStyle="font-size:50rpx;color:#666666;" />
+      <IconFont type="iconweizhi" fontStyle="font-size:25px;color:#666666;" />
     </div>
     <div class="center">
       <template v-if="addressInfo">
         <div class="userinfo">
           {{ addressInfo.userConsigneeName }}
           {{ addressInfo.userConsigneePhone }}
-          <text class="default-tag" v-if="addressInfo.isDefault === 1"
-            >默认</text
+          <span class="default-tag" v-if="addressInfo.isDefault === 1"
+            >默认</span
           >
         </div>
         <div class="addressinfo">
@@ -23,7 +23,7 @@
       </template>
     </div>
     <div class="right">
-      <IconFont type="iconqianjin" fontStyle="font-size:30rpx;color:#CCCCCC;" />
+      <IconFont type="iconqianjin" fontStyle="font-size:15px;color:#CCCCCC;" />
     </div>
   </div>
 </template>
@@ -32,7 +32,11 @@ export default {
   props: ["addressInfo"],
   methods: {
     handleChooseAddress() {
-      console.log("跳转选择地址页面");
+      this.$push({
+        path: `/addressList?redirectUrl=${encodeURIComponent(
+          this.$route.fullPath
+        )}`
+      });
     }
   }
 };

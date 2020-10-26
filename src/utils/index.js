@@ -1,4 +1,4 @@
-import { parse } from "querystring";
+import { parse, stringify } from "querystring";
 
 //判断是否为微信环境
 export const isWechat = /micromessenger/.test(
@@ -77,3 +77,11 @@ export const getUUID = () => {
 };
 
 export const getPageQuery = () => parse(window.location.href.split("?")[1]);
+
+export const joinPath = (path, query) => {
+  let joinSymbol = path.indexOf("?") > -1 ? "&" : "?";
+  if (typeof query === "object") {
+    query = stringify(query);
+  }
+  return path + joinSymbol + query;
+};

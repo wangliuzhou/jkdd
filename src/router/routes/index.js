@@ -102,7 +102,10 @@ const routes = [
     props: route => ({
       skuIds: route.query.skuIds,
       skuNums: route.query.skuNums,
-      addressId: route.query.addressId
+      addressId: Number(route.query.addressId),
+      couponId: route.query.couponId,
+      seckillActivityId: route.query.seckillActivityId,
+      fromCart: Boolean(route.query.fromCart)
     }),
     meta: {
       needLogin: false

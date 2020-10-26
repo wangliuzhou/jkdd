@@ -1,7 +1,11 @@
 <template>
   <div class="page-order-settle">
     <template v-if="orderInfo">
-      <ChooseAddress :addressInfo="addressInfo" />
+      <ChooseAddress
+        :addressInfo="addressInfo"
+        :skuIds="skuIds"
+        :skuNums="skuNums"
+      />
       <div class="shop-list">
         <div class="shop-title">{{ orderInfo.storeName }}</div>
         <div class="goods-list">
@@ -12,12 +16,14 @@
           >
             <div
               class="goods-img"
-              :style="`background-image:url(${item.mainCover})`"
+              :style="`background-image:url(${$ali(item.mainCover, 200)})`"
             ></div>
             <div class="goods-info">
               <div class="goods-title">{{ item.dealerProductName }}</div>
-              <div class="goods-desc">{{ item.attrText }}</div>
-              <div class="goods-price">¥{{ item.retailPrice }}</div>
+              <div class="goods-desc" v-if="item.attrText">
+                {{ item.attrText }}
+              </div>
+              <div class="goods-price">¥{{ item.retailPrice * 1 }}</div>
             </div>
             <div class="goods-number">
               x
@@ -30,44 +36,73 @@
       <div class="price-info">
         <div class="price-item">
           <div class="left">商品金额</div>
-          <div class="right">¥{{ orderInfo.totalPrice }}</div>
+          <div class="right">¥{{ orderInfo.totalPrice * 1 }}</div>
+        </div>
+        <div class="price-item coupon">
+          <div class="left">优惠券</div>
+          <ChooseCoupon
+            :text="couponText"
+            :skuIds="skuIds"
+            :skuNums="skuNums"
+            :couponId="couponId"
+            @handleChooseCoupon="handleChooseCoupon"
+          />
         </div>
         <div class="price-item">
           <div class="left">运费</div>
-          <div class="right">¥{{ orderInfo.allFreightPrice }}</div>
+          <div class="right">¥{{ orderInfo.allFreightPrice * 1 }}</div>
         </div>
         <div class="price-item">
           <div class="left">合计</div>
-          <div class="right">¥{{ orderInfo.actuallyPaid }}</div>
+          <div class="right">¥{{ orderInfo.actuallyPaid * 1 }}</div>
         </div>
       </div>
 
       <div class="bottom-bar">
         <div class="price-wrap">
           <span class="desc">应付金额：</span>
-          <span class="price">¥{{ orderInfo.actuallyPaid }}</span>
+          <span class="price">¥{{ orderInfo.actuallyPaid * 1 }}</span>
         </div>
-        <button @click="handleCommit">提交订单</button>
+        <button @click="handleCommit" :disabled="global.loading">
+          提交订单
+        </button>
       </div>
     </template>
   </div>
 </template>
 <script>
+import { mapActions, mapState } from "vuex";
 import { Toast } from "vant";
+import Cfg from "@/config/index";
 import ChooseAddress from "./components/ChooseAddress";
+import ChooseCoupon from "./components/ChooseCoupon";
+
 export default {
+  props: {
+    skuIds: String,
+    skuNums: String,
+    addressId: Number,
+    couponId: String,
+    seckillActivityId: String,
+    fromCart: Boolean
+  },
   components: {
-    ChooseAddress
+    ChooseAddress,
+    ChooseCoupon
   },
   data() {
     return {
       orderInfo: null,
-      addressInfo: null
+      addressInfo: null,
+      couponInfo: null
     };
   },
   computed: {
+    ...mapState({
+      global: "global"
+    }),
     skus() {
-      let { skuIds, skuNums } = this.$attrs;
+      let { skuIds, skuNums } = this;
       skuIds = skuIds.split(",");
       skuNums = skuNums.split(",");
       return skuIds.map((skuId, i) => {
@@ -76,17 +111,30 @@ export default {
           onlineStoreSingleProductOrderCount: Number(skuNums[i])
         };
       });
+    },
+    couponText(data) {
+      let { orderInfo } = this;
+      if (orderInfo) {
+        if (orderInfo.discountPrice) {
+          // 如果存在折扣金额，说明已经选择了优惠券
+          return "- ¥" + orderInfo.discountPrice * 1;
+        } else if (orderInfo.couponCount) {
+          // 没有选择优惠券，但是有可用优惠券
+          return `${orderInfo.couponCount}张可用`;
+        }
+      }
+      return "暂无可用";
     }
   },
   mounted() {
     this.loadData();
   },
   methods: {
+    ...mapActions({
+      setLoading: "global/setLoading"
+    }),
     loadData() {
-      let {
-        $attrs: { addressId },
-        addressInfo
-      } = this;
+      let { addressId, addressInfo } = this;
       if (addressInfo) {
         this.loadOrderInfo();
       } else if (addressId) {
@@ -103,59 +151,103 @@ export default {
     },
     //通过id加载收货地址
     loadAddressById() {
+      this.setLoading(true);
       return this.$fetchGet(
         "/order/mobile/tenantUserReceivingAddress/findUserReceivingAddressById",
         {
           userReceivingAddressId: this.addressId
         }
-      ).then(({ data }) => {
-        if (data) {
-          this.addressInfo = data;
-        }
-      });
+      )
+        .then(({ data }) => {
+          if (data) {
+            this.addressInfo = data;
+          }
+        })
+        .finally(() => {
+          this.setLoading(false);
+        });
     },
     //获取默认收货地址
     loadDefaultAddress() {
-      return this.$fetchGet(
-        "/order/mobile/tenantUserReceivingAddress/findUserReceivingAddressIsDefault"
-      ).then(({ data }) => {
-        if (data) {
-          this.addressInfo = data;
+      this.setLoading(true);
+      return this.$fetchPost(
+        "/order/mobile/tenantUserReceivingAddress/findUserReceivingAddressIsDefault",
+        {
+          storeOutId: Cfg.mainStoreId,
+          onlineStoreSingleProductOutIdList: this.skus
         }
-      });
+      )
+        .then(({ data }) => {
+          if (data) {
+            this.addressInfo = data;
+          }
+        })
+        .finally(() => {
+          this.setLoading(false);
+        });
     },
     //加载价格信息
     loadOrderInfo() {
-      let { addressInfo, skus } = this;
+      let { addressInfo, couponId, seckillActivityId, skus } = this;
+      this.setLoading(true);
       this.$fetchPost("/order/mobile/tenantOrder/checkOrderPage", {
-        storeOutId: "TSRORVZ17ZXD9",
+        storeOutId: Cfg.mainStoreId,
         consigneeAddressId: addressInfo
           ? addressInfo.userReceivingAddressId
           : null,
-        onlineStoreSingleProductOutIdList: skus
+        onlineStoreSingleProductOutIdList: skus,
+        // 优惠券id
+        couponOutId: couponId || null,
+        // 秒杀活动id
+        seckillActivityId: seckillActivityId || null
       })
         .then(({ data }) => {
           this.orderInfo = data;
         })
         .catch(({ message }) => {
           Toast({ position: "bottom", message: message || "请求失败～" });
+        })
+        .finally(() => {
+          this.setLoading(false);
         });
     },
     //提交订单
     handleCommit() {
-      let { addressInfo, orderInfo, skus } = this;
+      let {
+        addressInfo,
+        couponId,
+        orderInfo,
+        skus,
+        seckillActivityId,
+        fromCart
+      } = this;
+
       if (!addressInfo) {
         return Toast({ position: "bottom", message: "请选择收货地址" });
       }
 
-      this.$fetchPost("/order/mobile/tenantOrder/createOrder", {
-        storeOutId: "TSRORVZ17ZXD9",
-        consigneeAddressId: addressInfo
-          ? addressInfo.userReceivingAddressId
-          : null,
-        onlineStoreSingleProductOutIdList: skus,
-        actuallyPaid: orderInfo.actuallyPaid
-      })
+      let postUrl,
+        postData = {
+          storeOutId: Cfg.mainStoreId,
+          consigneeAddressId: addressInfo
+            ? addressInfo.userReceivingAddressId
+            : null,
+          onlineStoreSingleProductOutIdList: skus,
+          actuallyPaid: orderInfo.actuallyPaid,
+          fromCart
+        };
+
+      //秒杀
+      if (seckillActivityId) {
+        postUrl = "/order/mobile/tenantOrder/secKillOrder";
+        postData.seckillActivityId = seckillActivityId;
+      } else {
+        postUrl = "/order/mobile/tenantOrder/createOrder";
+        postData.couponOutId = couponId || null;
+      }
+
+      this.setLoading(true);
+      this.$fetchPost(postUrl, postData)
         .then(() => {
           this.$push({
             path: `/payResult?price=${orderInfo.actuallyPaid}`
@@ -163,7 +255,31 @@ export default {
         })
         .catch(({ message }) => {
           return Toast({ position: "bottom", message });
+        })
+        .finally(() => {
+          this.setLoading(false);
         });
+    },
+    //支付成功通知服务端
+    updateOrderStatus(orderOutId) {
+      this.$fetchGet("/order/mobile/tenantOrder/updateOrderStatus", {
+        orderOutId
+      }).then(() => {});
+    },
+    // 选择完优惠券回调
+    handleChooseCoupon(couponId) {
+      this.$replace({
+        path: this.$route.path,
+        query: { ...this.$route.query, couponId }
+      });
+    }
+  },
+  watch: {
+    // 选择完优惠券重新加载订单信息
+    couponId(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.loadOrderInfo();
+      }
     }
   }
 };
@@ -307,8 +423,13 @@ page {
     border-radius: 20px;
     color: white;
     background: #ff6a00;
-    border: none;
     font-size: 15px;
+    border: none;
+    &[disabled] {
+      background: #ff6a00;
+      color: white;
+      opacity: 0.5;
+    }
   }
 }
 </style>
