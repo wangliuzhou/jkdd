@@ -1,11 +1,11 @@
 <template>
   <div class="xz-goods-wrap">
-    <Big v-if="item.listType === 1" :detail="item" />
-    <Two v-if="item.listType === 2" :detail="item" />
-    <Three v-if="item.listType === 3" :detail="item" />
-    <Hybrid v-if="item.listType === 4" :detail="item" />
-    <Detail v-if="item.listType === 5" :detail="item" />
-    <Swipe v-if="item.listType === 6" :detail="item" />
+    <Big v-if="item.listType === 1" :detail="item" @goPage="goPage" />
+    <Two v-if="item.listType === 2" :detail="item" @goPage="goPage" />
+    <Three v-if="item.listType === 3" :detail="item" @goPage="goPage" />
+    <Hybrid v-if="item.listType === 4" :detail="item" @goPage="goPage" />
+    <Detail v-if="item.listType === 5" :detail="item" @goPage="goPage" />
+    <Swipe v-if="item.listType === 6" :detail="item" @goPage="goPage" />
   </div>
 </template>
 <script>
@@ -15,6 +15,7 @@ import Hybrid from "./components/hybrid";
 import Swipe from "./components/swipe";
 import Three from "./components/three";
 import Two from "./components/two";
+import { Toast } from "vant";
 export default {
   components: {
     Big,
@@ -25,13 +26,15 @@ export default {
     Two
   },
   props: ["item"],
-  mounted() {
-    console.log(this.item);
-    this.setTitle();
-  },
+  mounted() {},
   methods: {
-    setTitle() {
-      // let { item } = this;
+    goPage(e) {
+      const { dealerProductOutId, stockNum } = e;
+      if (stockNum === 0) {
+        Toast("该商品已售罄");
+        return;
+      }
+      this.$router.push(`/pages/goodsDetail/index?id=${dealerProductOutId}`);
     }
   }
 };

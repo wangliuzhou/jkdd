@@ -23,6 +23,7 @@
           class="goodsList-item-cover-box"
           :style="{ 'padding-top': detail.imageRatio }"
         >
+          <div v-if="item.seckillStock === 0" class="sold-out">已售罄</div>
           <van-image
             :src="$ali(item.mainCover, 375)"
             class="goodsList-item-cover-img"
@@ -31,6 +32,8 @@
           <Countdown
             v-if="detail.isShowCountdown"
             :endTime="item.marketingSeckillEnd"
+            :startTime="item.marketingSeckillStart"
+            :currentTime="item.systemTime"
           />
           <van-image
             v-if="detail.tag.type === 1 && detail.tag.show"
@@ -47,17 +50,17 @@
         </div>
         <div class="goodsList-item-detail-box">
           <div v-if="detail.isShowGoodsName" class="goodsList-item-title-box">
-            <div class="seckill-tag">{{ item.marketingSeckillLabel }}</div>
-            <div class="goodsList-item-title">
-              {{ item.dealerProductName || "无标题" }}
-            </div>
+            <span class="seckill-tag">{{ item.marketingSeckillLabel }}</span>
+            <span class="goodsList-item-title">
+              {{ item.marketingSeckillName || "" }}
+            </span>
           </div>
-          <div
+          <!-- <div
             v-if="detail.isShowGoodsDescribe"
             class="goodsList-item-describe-box"
           >
-            {{ item.sellingPoint || "无描述" }}
-          </div>
+            {{ item.sellingPoint || "" }}
+          </div> -->
           <div
             v-if="detail.isShowGoodsPrice || detail.isShowGoodsOriginalPrice"
             class="goodsList-item-price-box"
@@ -257,19 +260,19 @@ export default {
         padding: 8px 12px;
 
         .goodsList-item-title-box {
-          display: flex;
-          align-items: center;
-          .goodsList-item-title {
-            font-size: 15px;
-            font-family: PingFangSC-Medium, PingFang SC;
-            font-weight: 500;
-            color: rgba(51, 51, 51, 1);
-            line-height: 15px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            word-break: break-all;
-          }
+          font-size: 15px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: rgba(51, 51, 51, 1);
+          line-height: 20px;
+          text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
+          -webkit-box-orient: vertical;
+          height: 40px;
 
           .seckill-tag {
             display: inline-block;
@@ -290,7 +293,6 @@ export default {
             word-break: break-all;
           }
         }
-
         .goodsList-item-describe-box {
           margin-top: 8px;
           height: 12px;
