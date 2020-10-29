@@ -65,9 +65,9 @@ export default {
       StoresysCookieSet("tokenTime", tokenTime);
 
       if (redirectUrl) {
-        this.$push(redirectUrl);
+        this.$replace(redirectUrl);
       } else {
-        this.$push("/");
+        this.$replace("/");
       }
     }
   }

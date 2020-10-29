@@ -50,28 +50,29 @@ export const login = redirectUrl => {
 };
 
 export const initContext = () => {
-  if (storesysId) {
-    // 如果是http://shop_425zp1q60o.m.xzintl.com/格式的域名
-    CookieSet("storesysId", storesysId);
-    StoresysCookieSet("userId", "oJjHK6mVxKdg6iC0z1ZiPeYF4hXE");
-    StoresysCookieSet("userInfo", {
-      userInnerId: 2,
-      userUnionId: "oJjHK6mVxKdg6iC0z1ZiPeYF4hXE",
-      userAvatar: "wechatimage/2020/09/08/j3odql6w54_wximage.png",
-      userPhone: "15757185531",
-      userNickname: "smile_微笑",
-      userGender: 1,
-      userName: "陶新华",
-      userBirthday: 780336000000
-    });
-    StoresysCookieSet(
-      "accessToken",
-      "6826ac62078d6ddebc54c37c3e5e0ec44e2e16f7"
-    );
-    StoresysCookieSet("storeId", "TSRORVZ17ZXD9");
-    StoresysCookieSet("storesysId", storesysId);
-    StoresysCookieSet("tokenTime", 1603933951541);
-  } else {
-    // http://cashier.xzintl.com/pay/orderSettle
-  }
+  return;
+  // if (storesysId) {
+  //   // 如果是http://shop_425zp1q60o.m.xzintl.com/格式的域名
+  //   CookieSet("storesysId", storesysId);
+  //   StoresysCookieSet("userId", "oJjHK6mVxKdg6iC0z1ZiPeYF4hXE");
+  //   StoresysCookieSet("userInfo", {
+  //     userInnerId: 2,
+  //     userUnionId: "oJjHK6mVxKdg6iC0z1ZiPeYF4hXE",
+  //     userAvatar: "wechatimage/2020/09/08/j3odql6w54_wximage.png",
+  //     userPhone: "15757185531",
+  //     userNickname: "smile_微笑",
+  //     userGender: 1,
+  //     userName: "陶新华",
+  //     userBirthday: 780336000000
+  //   });
+  //   StoresysCookieSet(
+  //     "accessToken",
+  //     "6826ac62078d6ddebc54c37c3e5e0ec44e2e16f7"
+  //   );
+  //   StoresysCookieSet("storeId", "TSRORVZ17ZXD9");
+  //   StoresysCookieSet("storesysId", storesysId);
+  //   StoresysCookieSet("tokenTime", 1603933951541);
+  // } else {
+  //   // http://cashier.xzintl.com/pay/orderSettle
+  // }
 };

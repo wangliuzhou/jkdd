@@ -18,7 +18,6 @@ const pushOrReplace = ({ location, onComplete, onAbort, replace = false }) => {
   let curIsPassportOrigin = /^passport\.xzintl\.com$/.test(
     window.location.host
   );
-  console.log("curIsPassportOrigin=", curIsPassportOrigin);
   // 拼装要跳转的url
   let path = "";
   if (typeof location === "string") {
@@ -30,26 +29,37 @@ const pushOrReplace = ({ location, onComplete, onAbort, replace = false }) => {
     }
   }
 
-  if (curIsShopOrigin && path.indexOf("/pay/") === 0) {
-    return hrefOrReplace({ path: Cfg.cashierOrigin + path, replace });
-  }
-  if (curIsShopOrigin && path.indexOf("/login") === 0) {
-    return hrefOrReplace({
-      path: Cfg.passportOrigin + path,
-      replace
-    });
+  let specialOrigin = [
+    {
+      originTest: curIsCashierOrigin,
+      origin: Cfg.cashierOrigin,
+      pathPre: "/pay/"
+    },
+    {
+      originTest: curIsPassportOrigin,
+      origin: Cfg.passportOrigin,
+      pathPre: "/login"
+    }
+  ];
+  for (let i = 0; i < specialOrigin.length; i++) {
+    let item = specialOrigin[i];
+    // 从shop域名跳转到其他域名
+    if (curIsShopOrigin && path.indexOf(item.pathPre) === 0) {
+      return hrefOrReplace({ path: item.origin + path, replace });
+    }
   }
 
-  if (
-    (curIsCashierOrigin && path.indexOf("/pay/") !== 0) ||
-    (curIsPassportOrigin && path.indexOf("/login") !== 0)
-  ) {
-    return hrefOrReplace({
-      path:
-        Cfg.shopOrigin.replace("${storesysId}", storesysId.toLowerCase()) +
-        path,
-      replace
-    });
+  for (let i = 0; i < specialOrigin.length; i++) {
+    let item = specialOrigin[i];
+    // 从其他域名跳转到shop域名
+    if (item.originTest && path.indexOf(item.pathPre) !== 0) {
+      return hrefOrReplace({
+        path:
+          Cfg.shopOrigin.replace("${storesysId}", storesysId.toLowerCase()) +
+          path,
+        replace
+      });
+    }
   }
   return router[replace ? "replace" : "push"](location, onComplete, onAbort);
 };
