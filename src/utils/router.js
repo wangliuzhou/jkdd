@@ -15,6 +15,10 @@ const pushOrReplace = ({ location, onComplete, onAbort, replace = false }) => {
   // 当前是否在shop开头的域名下
   let curIsShopOrigin = shopUrlRegExp.test(window.location.host);
   let curIsCashierOrigin = /^cashier\.xzintl\.com$/.test(window.location.host);
+  let curIsPassportOrigin = /^passport\.xzintl\.com$/.test(
+    window.location.host
+  );
+  console.log("curIsPassportOrigin=", curIsPassportOrigin);
   // 拼装要跳转的url
   let path = "";
   if (typeof location === "string") {
@@ -29,7 +33,17 @@ const pushOrReplace = ({ location, onComplete, onAbort, replace = false }) => {
   if (curIsShopOrigin && path.indexOf("/pay/") === 0) {
     return hrefOrReplace({ path: Cfg.cashierOrigin + path, replace });
   }
-  if (curIsCashierOrigin && path.indexOf("/pay/") !== 0) {
+  if (curIsShopOrigin && path.indexOf("/login") === 0) {
+    return hrefOrReplace({
+      path: Cfg.passportOrigin + path,
+      replace
+    });
+  }
+
+  if (
+    (curIsCashierOrigin && path.indexOf("/pay/") !== 0) ||
+    (curIsPassportOrigin && path.indexOf("/login") !== 0)
+  ) {
     return hrefOrReplace({
       path:
         Cfg.shopOrigin.replace("${storesysId}", storesysId.toLowerCase()) +

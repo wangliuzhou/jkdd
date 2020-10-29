@@ -196,6 +196,17 @@ const routes = [
       needLogin: false
     },
     component: () => import("@/views/CouponsInvalid/index.vue")
+  },
+  {
+    path: "/login",
+    name: "Login",
+    props: route => ({
+      storesysId: route.query.storesysId
+    }),
+    meta: {
+      needLogin: false
+    },
+    component: () => import("@/views/Login/index.vue")
   }
 ];
 

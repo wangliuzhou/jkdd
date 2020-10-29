@@ -30,7 +30,8 @@ import {
   Field,
   Area,
   List,
-  Image as VanImage
+  Image as VanImage,
+  Button
 } from "vant";
 
 // import * as fundebug from "fundebug-javascript";
@@ -81,6 +82,7 @@ Vue.use(Field);
 Vue.use(Area);
 Vue.use(List);
 Vue.use(VanImage);
+Vue.use(Button);
 
 // FastClick.attach(document.body);
 

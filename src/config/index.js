@@ -6,7 +6,8 @@ const Config = {
     mainStoreId: "TSRORVZ17ZXD9",
     loginRedirectUrl: "http://agent.xzintl.com/api/salesmanInfo/WeChatCallBack",
     shopOrigin: "http://shop_${storesysId}.m.xzintl.com",
-    cashierOrigin: "http://cashier.xzintl.com"
+    cashierOrigin: "http://cashier.xzintl.com",
+    passportOrigin: "http://passport.xzintl.com"
   },
   dev: {
     appId: "wx1018d54aa9dbc9d7",
