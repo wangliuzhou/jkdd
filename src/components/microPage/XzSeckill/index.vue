@@ -29,12 +29,12 @@ export default {
   mounted() {},
   methods: {
     goPage(e) {
-      const { dealerProductOutId, stockNum } = e;
+      const { dealerProductJoinOuterId, marketingActivityId, stockNum } = e;
       if (stockNum === 0) {
         Toast("该商品已售罄");
         return;
       }
-      this.$push(`/goodsDetail/${dealerProductOutId}`);
+      this.$push(`/seckill/${dealerProductJoinOuterId}/${marketingActivityId}`);
     }
   }
 };

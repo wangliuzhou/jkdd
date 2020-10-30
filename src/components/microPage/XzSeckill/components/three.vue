@@ -48,7 +48,9 @@
         </div>
         <div class="goodsList-item-detail-box">
           <div v-if="detail.isShowGoodsName" class="goodsList-item-title-box">
-            <span class="seckill-tag">{{ item.marketingSeckillLabel }}</span>
+            <span v-if="item.marketingSeckillLabel" class="seckill-tag">{{
+              item.marketingSeckillLabel
+            }}</span>
             <span class="goodsList-item-title">
               {{ item.marketingSeckillName || "" }}
             </span>
@@ -188,7 +190,7 @@ export default {
   },
   methods: {
     goPage(item) {
-      console.log(item);
+      this.$emit("goPage", item);
     }
   }
 };
@@ -286,6 +288,7 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
             word-break: break-all;
+            vertical-align: middle;
           }
         }
 
