@@ -29,6 +29,10 @@ const pushOrReplace = ({ location, onComplete, onAbort, replace = false }) => {
     }
   }
 
+  if (/^https?:\/\//.test(path)) {
+    return hrefOrReplace({ path, replace });
+  }
+
   let specialOrigin = [
     {
       originTest: curIsCashierOrigin,

@@ -5,6 +5,7 @@ import {
   StoresysCookieGet
 } from "@/utils/cookie";
 import { storesysId } from "@/utils/storesys";
+import router from "@/utils/router";
 
 export const getUserId = () => {
   return StoresysCookieGet("userId") || 0;
@@ -25,7 +26,7 @@ export const getRequestHeader = () => {
     "x-user-id": StoresysCookieGet("userId"),
     "x-access-token": StoresysCookieGet("accessToken"),
     "x-store-id": StoresysCookieGet("storeId"),
-    "x-storesys-id": StoresysCookieGet("storesysId"),
+    "x-storesys-id": storesysId,
     "x-token-time": StoresysCookieGet("tokenTime")
   };
 };
@@ -34,19 +35,26 @@ export const getRequestHeader = () => {
 export const login = redirectUrl => {
   redirectUrl = redirectUrl || window.location.href;
 
-  let redirect_uri = `${cfg.loginRedirectUrl}?appid=${
-    cfg.appId
-  }&terminal=terminal&success_url=${encodeURIComponent(
-    redirectUrl
-  )}&error_url=${encodeURIComponent(
-    `${location.origin}/loginError`
-  )}&scope=snsapi_userinfo`;
+  router.push({
+    path: "/login",
+    query: {
+      storesysId,
+      redirectUrl: encodeURIComponent(redirectUrl)
+    }
+  });
+  // let redirect_uri = `${cfg.loginRedirectUrl}?appid=${
+  //   cfg.appId
+  // }&terminal=terminal&success_url=${encodeURIComponent(
+  //   redirectUrl
+  // )}&error_url=${encodeURIComponent(
+  //   `${location.origin}/loginError`
+  // )}&scope=snsapi_userinfo`;
 
-  window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${
-    cfg.appId
-  }&redirect_uri=${encodeURIComponent(
-    redirect_uri
-  )}&response_type=code&scope=snsapi_userinfo&state=state&component_appid=wx52e6a157b436d353#wechat_redirect`;
+  // window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${
+  //   cfg.appId
+  // }&redirect_uri=${encodeURIComponent(
+  //   redirect_uri
+  // )}&response_type=code&scope=snsapi_userinfo&state=state&component_appid=wx52e6a157b436d353#wechat_redirect`;
 };
 
 export const initContext = () => {

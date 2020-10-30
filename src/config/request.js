@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Toast } from "vant";
 import { getUrl } from "@/config/url";
-import { getRequestHeader /*login*/ } from "@/utils/account";
+import { getRequestHeader, login } from "@/utils/account";
 import store from "@/store/index";
 
 // 请求前拦截
@@ -33,8 +33,8 @@ axios.interceptors.response.use(
     let { data: { code } = {} } = data;
     if (code === 500001 || code === 500002 || code === 500003) {
       //跳转到登录页面前，取消其他所有网络请求
-      // cancelAllRequest();
-      // login();
+      cancelAllRequest();
+      login();
     }
     return data;
   },

@@ -31,6 +31,7 @@ import {
   StoresysCookieGet
 } from "@/utils/cookie";
 import { storesysId } from "@/utils/storesys";
+import { Toast } from "vant";
 
 export default {
   props: {
@@ -48,6 +49,8 @@ export default {
     login() {
       let { userId, storeId, storesysId, accessToken, tokenTime } = this;
       let { redirectUrl } = this.$route.query;
+      redirectUrl = decodeURIComponent(redirectUrl);
+
       StoresysCookieSet("userId", userId);
       StoresysCookieSet("userInfo", {
         userInnerId: 2,
@@ -64,11 +67,15 @@ export default {
       StoresysCookieSet("storesysId", storesysId);
       StoresysCookieSet("tokenTime", tokenTime);
 
-      if (redirectUrl) {
-        this.$replace(redirectUrl);
-      } else {
-        this.$replace("/");
-      }
+      Toast("登录成功");
+
+      setTimeout(() => {
+        if (redirectUrl) {
+          this.$replace(redirectUrl);
+        } else {
+          this.$replace("/");
+        }
+      }, 800);
     }
   }
 };

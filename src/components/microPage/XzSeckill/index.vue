@@ -34,7 +34,7 @@ export default {
         Toast("该商品已售罄");
         return;
       }
-      this.$router.push(`/pages/goodsDetail/index?id=${dealerProductOutId}`);
+      this.$push(`/goodsDetail/${dealerProductOutId}`);
     }
   }
 };
