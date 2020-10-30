@@ -86,7 +86,7 @@ export default {
       this.$router.go(-1);
     },
     goHome() {
-      this.$router.push({ path: "/pages/index/index" });
+      this.$push({ path: "/pages/index/index" });
     }
   }
 };

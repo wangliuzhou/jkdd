@@ -52,7 +52,7 @@ export default {
     },
     cancelModal() {
       this.show = false;
-      this.$router.replace("/");
+      this.$replace("/");
     },
     goHome() {
       this.cancelModal();

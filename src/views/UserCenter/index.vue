@@ -272,9 +272,9 @@ export default {
     goPage(e) {
       const { activeIndex, link } = e;
       if (link === "/pages/orderList/index") {
-        this.$router.push(`${link}?activeIndex=${activeIndex}`);
+        this.$push(`${link}?activeIndex=${activeIndex}`);
       } else {
-        this.$router.push(link);
+        this.$push(link);
       }
     },
     goMember() {
@@ -283,7 +283,7 @@ export default {
         Toast("商家未设置会员");
         return;
       }
-      this.$router.push("/pages/membersCenter/index");
+      this.$push("/pages/membersCenter/index");
     },
     // 获取会员卡详情
     async getMemberDetail() {

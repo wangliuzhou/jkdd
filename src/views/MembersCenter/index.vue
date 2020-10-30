@@ -136,7 +136,7 @@ export default {
         return;
       }
       if (memberLevelInfoForce === 1) {
-        this.$router.push("/pages/joinMember/index");
+        this.$push("/pages/joinMember/index");
       } else {
         this.getMemberCard();
       }
@@ -181,7 +181,7 @@ export default {
       this.getMemberDetail();
     },
     goHome() {
-      this.$router.replace("/");
+      this.$replace("/");
     },
     onPageScroll({ scrollTop }) {
       this.scrollTop = scrollTop;
