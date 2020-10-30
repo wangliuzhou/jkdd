@@ -1,8 +1,24 @@
 import axios from "axios";
 import { Toast } from "vant";
 import { getUrl } from "@/config/url";
-import { getRequestHeader, login } from "@/utils/account";
+import { login } from "@/utils/account";
 import store from "@/store/index";
+import cfg from "@/config/index";
+import { StoresysCookieGet } from "@/utils/cookie";
+import storesys from "@/utils/storesys";
+
+//生成请求头
+export const getRequestHeader = () => {
+  return {
+    // 店铺ID
+    "x-store-id": cfg.mainStoreId,
+    // 系统ID
+    "x-storesys-id": storesys.storesysId,
+    "x-user-id": StoresysCookieGet("userId"),
+    "x-access-token": StoresysCookieGet("accessToken"),
+    "x-token-time": StoresysCookieGet("tokenTime")
+  };
+};
 
 // 请求前拦截
 axios.interceptors.request.use(
@@ -31,7 +47,13 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   data => {
     let { data: { code } = {} } = data;
-    if (code === 500001 || code === 500002 || code === 500003) {
+    if (
+      code === 500001 ||
+      code === 500002 ||
+      code === 500003 ||
+      code === 500004 ||
+      code === 500005
+    ) {
       //跳转到登录页面前，取消其他所有网络请求
       cancelAllRequest();
       login();

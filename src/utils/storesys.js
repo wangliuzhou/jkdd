@@ -1,20 +1,5 @@
 import { getPageQuery } from "@/utils/index";
-
-export const shopUrlRegExp = /^shop_([^.]+)\.m\.xzintl\.com$/;
-
-// 从url中获取storesysId
-const getStoresysIdFromUrl = () => {
-  let shopRes = location.host.match(shopUrlRegExp);
-  let { storesysId } = getPageQuery();
-
-  if (shopRes && shopRes[1]) {
-    return shopRes[1].toUpperCase();
-  } else if (storesysId) {
-    return storesysId.toUpperCase();
-  }
-
-  return null;
-};
+import { shopOriginRegExp } from "@/utils/regexp";
 
 const sotresys = {};
 
@@ -25,3 +10,18 @@ Object.defineProperty(sotresys, "storesysId", {
 });
 
 export default sotresys;
+
+// 从url中获取storesysId
+const getStoresysIdFromUrl = () => {
+  let shopRes = location.origin.match(shopOriginRegExp);
+  if (shopRes && shopRes[1]) {
+    return shopRes[1].toUpperCase();
+  }
+
+  let { storesysId } = getPageQuery();
+  if (storesysId) {
+    return storesysId.toUpperCase();
+  }
+
+  return null;
+};

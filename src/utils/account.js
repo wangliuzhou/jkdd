@@ -1,9 +1,4 @@
-import cfg from "@/config/index";
-import {
-  CookieSet,
-  StoresysCookieSet,
-  StoresysCookieGet
-} from "@/utils/cookie";
+import { StoresysCookieGet } from "@/utils/cookie";
 import storesys from "@/utils/storesys";
 import router from "@/utils/router";
 
@@ -11,24 +6,24 @@ export const getUserId = () => {
   return StoresysCookieGet("userId") || 0;
 };
 
-export const isLogin = () => {
-  return !!getUserId();
-};
+const account = {};
+// 用户id
+Object.defineProperty(account, "userId", {
+  get() {
+    return getUserId();
+  }
+});
+// 是否登录
+Object.defineProperty(account, "isLogin", {
+  get() {
+    return !!getUserId();
+  }
+});
+export default account;
 
 // 判断路由是否需要登录
 export const needLogin = to => {
-  return to && to.meta && to.meta.needLogin === true && !isLogin();
-};
-
-//生成请求头
-export const getRequestHeader = () => {
-  return {
-    "x-store-id": cfg.mainStoreId,
-    "x-storesys-id": storesys.storesysId,
-    "x-user-id": StoresysCookieGet("userId"),
-    "x-access-token": StoresysCookieGet("accessToken"),
-    "x-token-time": StoresysCookieGet("tokenTime")
-  };
+  return to && to.meta && to.meta.needLogin === true && !account.isLogin;
 };
 
 //登录

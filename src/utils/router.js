@@ -1,5 +1,10 @@
 import router from "@/router/index";
-import storesys, { shopUrlRegExp } from "@/utils/storesys";
+import storesys from "@/utils/storesys";
+import {
+  shopOriginRegExp,
+  cashierOriginRegExp,
+  passportOriginRegExp
+} from "@/utils/regexp";
 import { joinPath } from "@/utils/index";
 import Cfg from "@/config/index";
 
@@ -13,11 +18,9 @@ const hrefOrReplace = ({ path, replace = false }) => {
 
 const pushOrReplace = ({ location, onComplete, onAbort, replace = false }) => {
   // 当前是否在shop开头的域名下
-  let curIsShopOrigin = shopUrlRegExp.test(window.location.host);
-  let curIsCashierOrigin = /^cashier\.xzintl\.com$/.test(window.location.host);
-  let curIsPassportOrigin = /^passport\.xzintl\.com$/.test(
-    window.location.host
-  );
+  let curIsShopOrigin = shopOriginRegExp.test(window.location.origin);
+  let curIsCashierOrigin = cashierOriginRegExp.test(window.location.origin);
+  let curIsPassportOrigin = passportOriginRegExp.test(window.location.origin);
   // 拼装要跳转的url
   let path = "";
   if (typeof location === "string") {

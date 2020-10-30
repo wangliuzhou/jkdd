@@ -35,7 +35,7 @@
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
-import { isLogin, login } from "@/utils/account";
+import account, { login } from "@/utils/account";
 
 export default {
   computed: {
@@ -49,16 +49,14 @@ export default {
       setShowSku: "pageGoodsDetail/setShowSku"
     }),
     handleAddCart() {
-      console.log("isLogin=", isLogin);
-      if (!isLogin()) {
+      if (!account.isLogin) {
         return login();
       }
       this.setBtnStatus(1);
       this.setShowSku(true);
     },
     handleGoBuy() {
-      console.log("isLogin=", isLogin);
-      if (!isLogin()) {
+      if (!account.isLogin) {
         return login();
       }
       this.setBtnStatus(2);
