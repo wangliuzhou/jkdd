@@ -1,5 +1,5 @@
 import router from "@/router/index";
-import { shopUrlRegExp, storesysId } from "@/utils/storesys";
+import storesys, { shopUrlRegExp } from "@/utils/storesys";
 import { joinPath } from "@/utils/index";
 import Cfg from "@/config/index";
 
@@ -59,8 +59,10 @@ const pushOrReplace = ({ location, onComplete, onAbort, replace = false }) => {
     if (item.originTest && path.indexOf(item.pathPre) !== 0) {
       return hrefOrReplace({
         path:
-          Cfg.shopOrigin.replace("${storesysId}", storesysId.toLowerCase()) +
-          path,
+          Cfg.shopOrigin.replace(
+            "${storesysId}",
+            storesys.storesysId.toLowerCase()
+          ) + path,
         replace
       });
     }

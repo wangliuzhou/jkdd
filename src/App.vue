@@ -4,7 +4,7 @@
       <router-view v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive"></router-view>
-
+    <!-- 全局loading -->
     <van-loading
       class="loading"
       type="spinner"
@@ -15,15 +15,12 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import { initContext } from "@/utils/account";
+
 export default {
   computed: {
     ...mapState({
       global: "global"
     })
-  },
-  created() {
-    initContext();
   }
 };
 </script>

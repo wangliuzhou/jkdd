@@ -1,21 +1,24 @@
 import Vue from "vue";
-import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import App from "./App.vue";
+// 懒加载
 import VueLazyload from "vue-lazyload";
+// 轮播图
 import VueAwesomeSwiper from "vue-awesome-swiper";
+// 粘贴板
 import VueClipboard from "vue-clipboard2";
 
 // import FastClick from "fastclick";
+// 移动端适配
 import "lib-flexible/flexible.js";
-
-//axios
+// axios请求
 import request from "@/config/request";
+// 全局mixin
 import mixins from "@/mixins/index";
-import ali from "@/config/ali";
-
+// 全局组件
 import Components from "@/components/index";
-
+// vant组件
 import {
   Toast,
   Switch,
@@ -54,9 +57,8 @@ if (process.env.VUE_APP_API_ENV === "dev") {
   const vConsole = new Vconsole();
   Vue.use(vConsole);
 }
-
+// 注册自定义全局组件
 Vue.use(Components);
-
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   attempt: 1
@@ -64,7 +66,6 @@ Vue.use(VueLazyload, {
 Vue.use(VueAwesomeSwiper);
 Vue.use(mixins);
 Vue.use(request);
-Vue.use(ali);
 // 复制到剪切板
 Vue.use(VueClipboard);
 //vant

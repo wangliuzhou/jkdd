@@ -1,5 +1,5 @@
 import Cookie from "js-cookie";
-import { storesysId } from "@/utils/storesys";
+import storesys from "@/utils/storesys";
 
 export const CookieSet = (key, value) => {
   Cookie.set(key, value, {
@@ -8,11 +8,11 @@ export const CookieSet = (key, value) => {
 };
 
 export const StoresysCookieSet = (key, value) => {
-  Cookie.set(`${key}_${storesysId}`, value, {
+  Cookie.set(`${key}_${storesys.storesysId}`, value, {
     domain: ".xzintl.com"
   });
 };
 
 export const StoresysCookieGet = key => {
-  return Cookie.get(`${key}_${storesysId}`);
+  return Cookie.get(`${key}_${storesys.storesysId}`);
 };

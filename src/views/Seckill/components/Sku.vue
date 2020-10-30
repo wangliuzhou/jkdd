@@ -67,7 +67,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import { Toast } from "vant";
-import { storesysId } from "@/utils/storesys";
+import storesys from "@/utils/storesys";
 
 export default {
   computed: {
@@ -267,7 +267,7 @@ export default {
       } else if (btnStatus == 2) {
         //立即购买
         this.$push({
-          path: `/pay/orderSettle?storesysId=${storesysId}&skuIds=${sku.singleProductOuterId}&skuNums=${num}`
+          path: `/pay/orderSettle?storesysId=${storesys.storesysId}&skuIds=${sku.singleProductOuterId}&skuNums=${num}`
         });
       }
     }

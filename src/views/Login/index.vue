@@ -25,13 +25,12 @@
   </div>
 </template>
 <script>
+import { Toast } from "vant";
 import {
   CookieSet,
   StoresysCookieSet,
   StoresysCookieGet
 } from "@/utils/cookie";
-import { storesysId } from "@/utils/storesys";
-import { Toast } from "vant";
 
 export default {
   props: {

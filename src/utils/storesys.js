@@ -2,6 +2,7 @@ import { getPageQuery } from "@/utils/index";
 
 export const shopUrlRegExp = /^shop_([^.]+)\.m\.xzintl\.com$/;
 
+// 从url中获取storesysId
 const getStoresysIdFromUrl = () => {
   let shopRes = location.host.match(shopUrlRegExp);
   let { storesysId } = getPageQuery();
@@ -15,4 +16,12 @@ const getStoresysIdFromUrl = () => {
   return null;
 };
 
-export const storesysId = getStoresysIdFromUrl();
+const sotresys = {};
+
+Object.defineProperty(sotresys, "storesysId", {
+  get() {
+    return getStoresysIdFromUrl();
+  }
+});
+
+export default sotresys;
