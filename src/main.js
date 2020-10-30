@@ -9,7 +9,7 @@ import VueAwesomeSwiper from "vue-awesome-swiper";
 // 粘贴板
 import VueClipboard from "vue-clipboard2";
 
-// import FastClick from "fastclick";
+import FastClick from "fastclick";
 // 移动端适配
 import "lib-flexible/flexible.js";
 // axios请求
@@ -85,7 +85,7 @@ Vue.use(List);
 Vue.use(VanImage);
 Vue.use(Button);
 
-// FastClick.attach(document.body);
+FastClick.attach(document.body);
 
 Vue.config.productionTip = false;
 

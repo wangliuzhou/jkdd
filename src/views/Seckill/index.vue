@@ -46,6 +46,10 @@ import EmptyTip from "./components/EmptyTip";
 import Sku from "./components/Sku";
 
 export default {
+  props: {
+    id: String,
+    activityId: String
+  },
   components: {
     NavBar,
     GoodsImgs,
@@ -71,7 +75,7 @@ export default {
     }
   },
   mounted() {
-    this.loadData(this.$attrs.id);
+    this.loadData(this.id);
   },
   methods: {
     ...mapMutations({

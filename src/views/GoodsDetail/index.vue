@@ -22,7 +22,14 @@
 
       <!-- sku -->
 
-      <Sku :show.sync="showSku" :btnStatus="btnStatus" />
+      <Sku
+        :show.sync="showSku"
+        :btnStatus="btnStatus"
+        :goodsDetail="goodsDetail"
+        :chooseInfo="chooseInfo"
+        @updateChooseInfo="updateChooseInfo"
+        @confirm="handleConfirm"
+      />
 
       <!-- cms -->
       <!-- <Cms /> -->
@@ -35,6 +42,8 @@
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
+import { Toast } from "vant";
+import storesys from "@/utils/storesys";
 import NavBar from "./components/NavBar";
 import GoodsImgs from "./components/GoodsImgs";
 import GoodsInfo from "./components/GoodsInfo";
@@ -59,6 +68,7 @@ export default {
     ...mapState({
       dataIsLoad: state => state.pageGoodsDetail.dataIsLoad,
       goodsDetail: state => state.pageGoodsDetail.goodsDetail,
+      chooseInfo: state => state.pageGoodsDetail.chooseInfo,
       btnStatus: state => state.pageGoodsDetail.btnStatus
     }),
     showSku: {
@@ -75,11 +85,45 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setShowSku: "pageGoodsDetail/setShowSku"
+      setShowSku: "pageGoodsDetail/setShowSku",
+      updateChooseInfo: "pageGoodsDetail/updateChooseInfo"
     }),
     ...mapActions({
       loadData: "pageGoodsDetail/loadData"
-    })
+    }),
+    handleConfirm() {
+      let {
+        btnStatus,
+        chooseInfo: { sku, num },
+        goodsDetail: { isMultiAttr, valueVoList }
+      } = this;
+      //有sku
+      if (isMultiAttr != 1) {
+        sku = valueVoList[0];
+      }
+
+      if (!sku) {
+        return Toast({ position: "bottom", message: "请选择商品规格" });
+      }
+
+      this.setShowSku(false);
+
+      if (btnStatus == 1) {
+        //加入购物车
+        this.$fetchPost("/order/mobile/tenantCart/insert", {
+          storeOutId: "TSRORVZ17ZXD9",
+          onlinestoreSingleProductOuterId: sku.singleProductOuterId,
+          count: num
+        }).then(() => {
+          Toast({ message: "添加成功" });
+        });
+      } else if (btnStatus == 2) {
+        //立即购买
+        this.$push({
+          path: `/pay/orderSettle?storesysId=${storesys.storesysId}&skuIds=${sku.singleProductOuterId}&skuNums=${num}`
+        });
+      }
+    }
   }
 };
 </script>

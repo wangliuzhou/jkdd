@@ -98,7 +98,6 @@ export default {
     return {
       activeIndex: 0,
       list: [],
-      rightScrollIntoViewId: null,
       leftScrollTop: null
     };
   },

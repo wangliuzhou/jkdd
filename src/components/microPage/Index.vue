@@ -87,8 +87,16 @@
         :index="index"
         :key="item.pageComponentId"
       />
+      <!-- 外卖模版 -->
+      <TakeOut
+        v-else-if="item.type == 'take-out'"
+        :item="item"
+        :index="index"
+        :key="item.pageComponentId"
+        @handleReload="handleReload"
+      />
     </template>
-    <SkuBox ref="skuBox" />
+    <!-- <SkuBox ref="skuBox" /> -->
   </div>
 </template>
 <script>
@@ -102,7 +110,8 @@ import XzImage from "@/components/microPage/XzImage";
 import XzGoods from "@/components/microPage/XzGoods";
 import IncreaseFans from "@/components/microPage/IncreaseFans";
 import XzSeckill from "@/components/microPage/XzSeckill";
-import SkuBox from "@/components/microPage/SkuBox";
+import TakeOut from "@/components/microPage/TakeOut/index";
+// import SkuBox from "@/components/microPage/SkuBox";
 
 export default {
   components: {
@@ -116,7 +125,8 @@ export default {
     XzGoods,
     IncreaseFans,
     XzSeckill,
-    SkuBox
+    TakeOut
+    // SkuBox
   },
   props: {
     components: {
@@ -133,6 +143,9 @@ export default {
     },
     onBuy({ e, item }) {
       this.$refs.skuBox.onBuy({ e, item });
+    },
+    handleReload() {
+      this.$emit("handleReload");
     }
   }
 };

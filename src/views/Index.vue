@@ -1,34 +1,36 @@
 <template>
   <div class="page-index">
-    <MicroPage class="micro-page-component" :components="components" />
+    <MicroPage
+      class="micro-page-component"
+      :components="components"
+      @handleReload="handleReload"
+    />
     <Tabbar />
   </div>
 </template>
 <script>
 import MicroPage from "@/components/microPage/Index";
 import Tabbar from "@/components/Tabbar";
+import { mapActions, mapState } from "vuex";
 export default {
   components: {
     MicroPage,
     Tabbar
   },
-  data() {
-    return {
-      components: []
-    };
+  computed: {
+    ...mapState({
+      components: state => state.pageIndex.components
+    })
   },
   mounted() {
     this.loadData();
   },
   methods: {
-    loadData() {
-      this.$fetchGet("/store/mobile/tenantPage/findMainPage").then(
-        ({ data: { componentArray } }) => {
-          this.components = componentArray.map(item => {
-            return JSON.parse(item.componentContent || {});
-          });
-        }
-      );
+    ...mapActions({
+      loadData: "pageIndex/loadData"
+    }),
+    handleReload() {
+      this.loadData();
     }
   }
 };

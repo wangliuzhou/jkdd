@@ -4,6 +4,7 @@
     position="bottom"
     closeable
     :style="{ overflow: 'visible' }"
+    @close="handleCloseSku"
   >
     <div class="goods-sku-wrap">
       <div class="goods-info">
@@ -81,11 +82,6 @@
   </van-popup>
 </template>
 <script>
-import { mapState, mapMutations } from "vuex";
-import { Toast } from "vant";
-import { fetchPost } from "@/config/request";
-import storesys from "@/utils/storesys";
-
 export default {
   props: {
     show: {
@@ -96,14 +92,11 @@ export default {
     btnStatus: {
       type: Number,
       value: 1
-    }
+    },
+    goodsDetail: Object,
+    chooseInfo: Object
   },
   computed: {
-    ...mapState({
-      goodsDetail: state => state.pageGoodsDetail.goodsDetail,
-      chooseInfo: state => state.pageGoodsDetail.chooseInfo
-      // btnStatus: state => state.pageGoodsDetail.btnStatus
-    }),
     showSku: {
       get() {
         return this.show;
@@ -159,10 +152,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations({
-      setShowSku: "pageGoodsDetail/setShowSku",
-      updateChooseInfo: "pageGoodsDetail/updateChooseInfo"
-    }),
     hasStock(skuList, selectSkuAttr, attr, item) {
       let hasStock = false;
       for (let i = 0; i < skuList.length; i++) {
@@ -265,7 +254,7 @@ export default {
         num = sku.availStock;
       }
 
-      this.updateChooseInfo({
+      this.$emit("updateChooseInfo", {
         ...chooseInfo,
         selectSkuAttr,
         sku,
@@ -286,43 +275,16 @@ export default {
         num++;
       }
 
-      this.updateChooseInfo({
+      this.$emit("updateChooseInfo", {
         ...chooseInfo,
         num
       });
     },
+    handleCloseSku() {
+      this.$emit("closeSku");
+    },
     handleConfirm() {
-      let {
-        btnStatus,
-        chooseInfo: { sku, num },
-        goodsDetail: { isMultiAttr, valueVoList }
-      } = this;
-      //有sku
-      if (isMultiAttr != 1) {
-        sku = valueVoList[0];
-      }
-
-      if (!sku) {
-        return Toast({ position: "bottom", message: "请选择商品规格" });
-      }
-
-      this.setShowSku(false);
-
-      if (btnStatus == 1) {
-        //加入购物车
-        fetchPost("/order/mobile/tenantCart/insert", {
-          storeOutId: "TSRORVZ17ZXD9",
-          onlinestoreSingleProductOuterId: sku.singleProductOuterId,
-          count: num
-        }).then(() => {
-          Toast({ position: "bottom", message: "添加成功" });
-        });
-      } else if (btnStatus == 2) {
-        //立即购买
-        this.$push({
-          path: `/pay/orderSettle?storesysId=${storesys.storesysId}&skuIds=${sku.singleProductOuterId}&skuNums=${num}`
-        });
-      }
+      this.$emit("confirm");
     }
   }
 };

@@ -19,7 +19,7 @@ const routes = [
     path: "/microPage/:id",
     name: "MicroPage",
     props: route => ({
-      id: route.params.id
+      id: Number(route.params.id)
     }),
     meta: {
       needLogin: false
@@ -38,10 +38,11 @@ const routes = [
     component: () => import("@/views/GoodsDetail/index.vue")
   },
   {
-    path: "/seckill/:id",
+    path: "/seckill/:id/:activityId",
     name: "Seckill",
     props: route => ({
-      id: route.params.id
+      id: route.params.id,
+      activityId: route.params.activityId
     }),
     meta: {
       needLogin: false
