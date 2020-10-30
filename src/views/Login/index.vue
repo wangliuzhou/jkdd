@@ -38,10 +38,10 @@ export default {
   },
   data() {
     return {
-      userId: "oJjHK6mVxKdg6iC0z1ZiPeYF4hXE",
+      userId: "294ZKOG2WMNGLL1ZJ31L",
       storeId: "TSRORVZ17ZXD9",
-      accessToken: "dc7ce26270658541a11592b5ace01ec1cf426eb2",
-      tokenTime: "1604228787610"
+      accessToken: "d2b0f03e45437a186b12318b1900f004f7001775",
+      tokenTime: "1604296670032"
     };
   },
   methods: {
