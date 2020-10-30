@@ -15,33 +15,23 @@ export default function jumpLink(link) {
       break;
     case 1:
       // 1: '创作页面',
-      router.push({
-        path: `/microPage?id=${linkId}`
-      });
+      router.push(`/microPage/${linkId}`);
       break;
     case 2:
       //商品组
       if (linkId) {
-        router.push({
-          url: `/goodsGroup?productGroupId=${linkId}`
-        });
+        router.push(`/goodsGroup?productGroupId=${linkId}`);
       } else {
-        router.push({
-          url: `/goodsGroup?productIds=${productIds.join(",")}`
-        });
+        router.push(`/goodsGroup?productIds=${productIds.join(",")}`);
       }
       break;
     case 3:
       //前台类目
-      router.push({
-        url: `/goodsGroup?frontCateOutId=${linkId}`
-      });
+      router.push(`/goodsGroup?frontCateOutId=${linkId}`);
       break;
     case 4:
       // 4: '商品详情',
-      router.push({
-        path: `/goodsDetail/${linkId}`
-      });
+      router.push(`/goodsDetail/${linkId}`);
       break;
     case 5:
       //自定义链接

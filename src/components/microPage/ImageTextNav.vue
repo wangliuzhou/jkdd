@@ -8,6 +8,7 @@
             v-for="item in subEntry"
             :key="item.fId"
             :style="itemStyle"
+            @click="handleJump(item)"
           >
             <div
               class="imageTextNav-image-item-image"
@@ -27,6 +28,7 @@
             v-for="item in subEntry"
             :key="item.fId"
             :style="itemStyle"
+            @click="handleJump(item)"
           >
             {{ item.title }}
           </div>
@@ -37,6 +39,7 @@
 </template>
 <script>
 import { px2rem } from "@/utils/index";
+import jumpLink from "@/utils/jumpLink";
 
 export default {
   props: ["item"],
@@ -67,6 +70,11 @@ export default {
         );
       }
       return "";
+    }
+  },
+  methods: {
+    handleJump(item) {
+      jumpLink(item.link);
     }
   }
 };

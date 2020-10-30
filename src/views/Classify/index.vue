@@ -137,7 +137,7 @@ export default {
       let { activeIndex } = this;
       for (let i = 0, len = this.list.length; i < len; i++) {
         let item = this.list[i];
-        let oClassify = this.$refs[`classify_${item.pageCateId}`][0];
+        let oClassify = this.$refs[`goods_${item.pageCateId}`][0];
         if (getOffsetTop(oClassify) - getOffsetTop(oRight) < oRight.scrollTop) {
           activeIndex = i;
         }
@@ -295,6 +295,7 @@ export default {
     height: 100%;
     flex: auto;
     background: white;
+    overflow-y: auto;
     .classify-content-right-content {
       padding: 8px 15px;
       padding-right: 0;
