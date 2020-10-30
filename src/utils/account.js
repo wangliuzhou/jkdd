@@ -23,10 +23,10 @@ export const needLogin = to => {
 //生成请求头
 export const getRequestHeader = () => {
   return {
+    "x-store-id": cfg.mainStoreId,
+    "x-storesys-id": storesysId,
     "x-user-id": StoresysCookieGet("userId"),
     "x-access-token": StoresysCookieGet("accessToken"),
-    "x-store-id": StoresysCookieGet("storeId"),
-    "x-storesys-id": storesysId,
     "x-token-time": StoresysCookieGet("tokenTime")
   };
 };
