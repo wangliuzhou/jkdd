@@ -23,9 +23,11 @@
             </div>
           </van-swipe-item>
         </van-swipe>
-
         <!-- 指示器 -->
-        <div v-if="detail.indicatorTpye === 1" class="indicator-dots-1">
+        <div
+          v-if="detail.indicatorTpye === 1 && detail.imageList.length > 1"
+          class="indicator-dots-1"
+        >
           <div
             v-for="(item, index) in detail.imageList"
             :key="item.id"
@@ -33,7 +35,10 @@
             :class="{ 'active-indicators': current === index }"
           ></div>
         </div>
-        <div v-if="detail.indicatorTpye === 2" class="indicator-dots-2">
+        <div
+          v-if="detail.indicatorTpye === 2 && detail.imageList.length > 1"
+          class="indicator-dots-2"
+        >
           <div
             v-for="(item, index) in detail.imageList"
             :key="item.id"
@@ -41,7 +46,10 @@
             :class="{ 'active-indicators': current === index }"
           ></div>
         </div>
-        <div v-if="detail.indicatorTpye === 3" class="indicator-dots-3">
+        <div
+          v-if="detail.indicatorTpye === 3 && detail.imageList.length > 1"
+          class="indicator-dots-3"
+        >
           <div
             v-for="(item, index) in detail.imageList"
             :key="item.id"
@@ -49,7 +57,10 @@
             :class="{ 'active-indicators': current === index }"
           ></div>
         </div>
-        <div v-if="detail.indicatorTpye === 4" class="indicator-dots-4">
+        <div
+          v-if="detail.indicatorTpye === 4 && detail.imageList.length > 1"
+          class="indicator-dots-4"
+        >
           <div class="indicator-dots-4-item">
             <span class="active-indicators">{{ current + 1 }}</span>
             <span>/ {{ detail.imageList.length }}</span>

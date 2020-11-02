@@ -74,7 +74,7 @@
               class="goodsList-item-original-price"
               v-if="detail.isShowGoodsOriginalPrice"
             >
-              ¥{{ item.minDelPrice }}
+              ¥{{ item.retailPrice }}
             </div>
           </div>
           <div class="goodsList-item-sale-box">
