@@ -5,18 +5,15 @@
       :components="components"
       @handleReload="handleReload"
     />
-
-    <Tabbar />
   </div>
 </template>
 <script>
 import MicroPage from "@/components/microPage/Index";
-import Tabbar from "@/components/Tabbar";
 import { mapActions, mapState } from "vuex";
+
 export default {
   components: {
-    MicroPage,
-    Tabbar
+    MicroPage
   },
   props: {
     id: {
