@@ -80,6 +80,13 @@
         :index="index"
         :key="item.pageComponentId"
       />
+      <!-- 优惠券 -->
+      <Coupon
+        v-else-if="item.type == 'coupon'"
+        :item="item"
+        :index="index"
+        :key="item.pageComponentId"
+      />
       <!-- 秒杀 -->
       <XzSeckill
         v-else-if="item.type == 'seckill'"
@@ -109,6 +116,7 @@ import Notice from "@/components/microPage/Notice";
 import XzImage from "@/components/microPage/XzImage";
 import XzGoods from "@/components/microPage/XzGoods";
 import IncreaseFans from "@/components/microPage/IncreaseFans";
+import Coupon from "@/components/microPage/Coupon";
 import XzSeckill from "@/components/microPage/XzSeckill";
 import TakeOut from "@/components/microPage/TakeOut/index";
 // import SkuBox from "@/components/microPage/SkuBox";
@@ -124,6 +132,7 @@ export default {
     XzImage,
     XzGoods,
     IncreaseFans,
+    Coupon,
     XzSeckill,
     TakeOut
     // SkuBox
