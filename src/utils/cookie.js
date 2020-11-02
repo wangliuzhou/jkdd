@@ -7,6 +7,10 @@ export const CookieSet = (key, value) => {
   });
 };
 
+export const CookieGet = (key, value) => {
+  return Cookie.get(key);
+};
+
 export const StoresysCookieSet = (key, value) => {
   Cookie.set(`${key}_${storesys.storesysId}`, value, {
     domain: ".xzintl.com"

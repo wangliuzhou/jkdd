@@ -1,9 +1,9 @@
-import { StoresysCookieGet } from "@/utils/cookie";
+import { CookieGet } from "@/utils/cookie";
 import storesys from "@/utils/storesys";
 import router from "@/utils/router";
 
 export const getUserId = () => {
-  return StoresysCookieGet("userId") || 0;
+  return CookieGet("userId") || 0;
 };
 
 const account = {};

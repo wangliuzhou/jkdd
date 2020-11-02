@@ -4,7 +4,7 @@ import { getUrl } from "@/config/url";
 import { login } from "@/utils/account";
 import store from "@/store/index";
 import cfg from "@/config/index";
-import { StoresysCookieGet } from "@/utils/cookie";
+import { CookieGet } from "@/utils/cookie";
 import storesys from "@/utils/storesys";
 
 //生成请求头
@@ -14,9 +14,9 @@ export const getRequestHeader = () => {
     "x-store-id": cfg.mainStoreId,
     // 系统ID
     "x-storesys-id": storesys.storesysId,
-    "x-user-id": StoresysCookieGet("userId"),
-    "x-access-token": StoresysCookieGet("accessToken"),
-    "x-token-time": StoresysCookieGet("tokenTime")
+    "x-user-id": CookieGet("userId"),
+    "x-access-token": CookieGet("accessToken"),
+    "x-token-time": CookieGet("tokenTime")
   };
 };
 

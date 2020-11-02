@@ -26,11 +26,7 @@
 </template>
 <script>
 import { Toast } from "vant";
-import {
-  CookieSet,
-  StoresysCookieSet,
-  StoresysCookieGet
-} from "@/utils/cookie";
+import { CookieSet } from "@/utils/cookie";
 
 export default {
   props: {
@@ -50,8 +46,8 @@ export default {
       let { redirectUrl } = this.$route.query;
       redirectUrl = decodeURIComponent(redirectUrl);
 
-      StoresysCookieSet("userId", userId);
-      StoresysCookieSet("userInfo", {
+      CookieSet("userId", userId);
+      CookieSet("userInfo", {
         userInnerId: 2,
         userUnionId: "oJjHK6mVxKdg6iC0z1ZiPeYF4hXE",
         userAvatar: "wechatimage/2020/09/08/j3odql6w54_wximage.png",
@@ -61,10 +57,10 @@ export default {
         userName: "陶新华",
         userBirthday: 780336000000
       });
-      StoresysCookieSet("accessToken", accessToken);
-      StoresysCookieSet("storeId", storeId);
-      StoresysCookieSet("storesysId", storesysId);
-      StoresysCookieSet("tokenTime", tokenTime);
+      CookieSet("accessToken", accessToken);
+      CookieSet("storeId", storeId);
+      CookieSet("storesysId", storesysId);
+      CookieSet("tokenTime", tokenTime);
 
       Toast("登录成功");
 
