@@ -17,6 +17,7 @@ const hrefOrReplace = ({ path, replace = false }) => {
 };
 
 const pushOrReplace = ({ location, onComplete, onAbort, replace = false }) => {
+  let testfillStr = /test/.test(window.location.origin) ? "test" : "";
   // 当前是否在shop开头的域名下
   let curIsShopOrigin = shopOriginRegExp.test(window.location.origin);
   let curIsCashierOrigin = cashierOriginRegExp.test(window.location.origin);
@@ -52,7 +53,10 @@ const pushOrReplace = ({ location, onComplete, onAbort, replace = false }) => {
     let item = specialOrigin[i];
     // 从shop域名跳转到其他域名
     if (curIsShopOrigin && path.indexOf(item.pathPre) === 0) {
-      return hrefOrReplace({ path: item.origin + path, replace });
+      return hrefOrReplace({
+        path: item.origin.replace("${test}", testfillStr) + path,
+        replace
+      });
     }
   }
 
@@ -62,10 +66,9 @@ const pushOrReplace = ({ location, onComplete, onAbort, replace = false }) => {
     if (item.originTest && path.indexOf(item.pathPre) !== 0) {
       return hrefOrReplace({
         path:
-          Cfg.shopOrigin.replace(
-            "${storesysId}",
-            storesys.storesysId.toLowerCase()
-          ) + path,
+          Cfg.shopOrigin
+            .replace("${storesysId}", storesys.storesysId.toLowerCase())
+            .replace("${test}", testfillStr) + path,
         replace
       });
     }
