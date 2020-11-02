@@ -5,6 +5,7 @@ import global from "./modules/global";
 import pageIndex from "./modules/pageIndex";
 import pageMicroPage from "./modules/pageMicroPage";
 import pageGoodsDetail from "./modules/pageGoodsDetail";
+import pageSeckillGoodsDetail from "./modules/pageSeckillGoodsDetail";
 
 Vue.use(Vuex);
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     global,
     pageIndex,
     pageMicroPage,
-    pageGoodsDetail
+    pageGoodsDetail,
+    pageSeckillGoodsDetail
   }
 });

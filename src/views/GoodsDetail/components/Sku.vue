@@ -355,6 +355,10 @@ export default {
         color: #333;
         border: 1px solid #f8f8f8;
         background: #f8f8f8;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
 
         &.active {
           color: #ff6a00;

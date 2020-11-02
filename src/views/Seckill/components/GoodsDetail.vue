@@ -20,7 +20,7 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState({
-      goodsDetail: state => state.pageGoodsDetail.goodsDetail
+      goodsDetail: state => state.pageSeckillGoodsDetail.goodsDetail
     }),
     detailPic() {
       let {

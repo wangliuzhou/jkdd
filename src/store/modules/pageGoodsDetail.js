@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import Cfg from "@/config/index";
 import { fetchGet } from "@/config/request";
 
 const defaultState = {
@@ -58,10 +59,14 @@ export default {
 
       fetchGet("/mobile/tenantProduct/selectProductDetailById", {
         dealerProductOutId: payload,
-        storeId: "TSRORVZ17ZXD9"
+        storeId: Cfg.mainStoreId
       })
         .then(({ data }) => {
-          commit("setGoodsDetail", data);
+          if (data && data.dealerProductJoinId) {
+            document.title = data.productName;
+
+            commit("setGoodsDetail", data);
+          }
         })
         .catch(({ message }) => {})
         .then(() => {

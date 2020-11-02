@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     ...mapState({
-      goodsDetail: state => state.pageGoodsDetail.goodsDetail
+      goodsDetail: state => state.pageSeckillGoodsDetail.goodsDetail
     }),
     imgs() {
       let {
@@ -56,7 +56,7 @@ export default {
         height: 100%;
         background-repeat: no-repeat;
         background-position: center center;
-        background-size: cover;
+        background-size: contain;
       }
     }
   }

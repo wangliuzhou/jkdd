@@ -56,6 +56,15 @@
           <div class="left">合计</div>
           <div class="right">¥{{ orderInfo.actuallyPaid * 1 }}</div>
         </div>
+        <div class="price-item ly">
+          <div class="left">留言</div>
+          <div class="right">
+            <input
+              placeholder="选填，请在此处添加您的留言"
+              v-model="userMessage"
+            />
+          </div>
+        </div>
       </div>
 
       <div class="bottom-bar">
@@ -92,9 +101,10 @@ export default {
   },
   data() {
     return {
-      orderInfo: null,
       addressInfo: null,
-      couponInfo: null
+      orderInfo: null,
+      couponInfo: null,
+      userMessage: ""
     };
   },
   computed: {
@@ -219,7 +229,8 @@ export default {
         orderInfo,
         skus,
         seckillActivityId,
-        fromCart
+        fromCart,
+        userMessage
       } = this;
 
       if (!addressInfo) {
@@ -234,7 +245,8 @@ export default {
             : null,
           onlineStoreSingleProductOutIdList: skus,
           actuallyPaid: orderInfo.actuallyPaid,
-          fromCart
+          fromCart,
+          userMessage
         };
 
       //秒杀
@@ -339,10 +351,13 @@ page {
           font-size: 13px;
           line-height: 13px;
           color: #999999;
-          white-space: wrap;
-          text-overflow: ellipsis;
+          text-overflow: -o-ellipsis-lastline;
           overflow: hidden;
-          word-break: break-all;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
+          -webkit-box-orient: vertical;
         }
         .goods-price {
           color: #ff6a00;
@@ -386,6 +401,36 @@ page {
       color: #333333;
       flex: 0 0 100px;
       text-align: right;
+    }
+    &.coupon {
+      .right {
+        color: #cccccc;
+        .price {
+          color: #ff6a00;
+          margin-right: 5px;
+          &.no-coupon {
+            color: #949496;
+          }
+        }
+      }
+    }
+    &.ly {
+      .right {
+        display: flex;
+        align-items: center;
+        flex: 0 0 290px;
+        text-align: left;
+        input {
+          font-size: 13px;
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          height: 33px;
+          line-height: 33px;
+          border: none;
+          outline: none;
+        }
+      }
     }
   }
 }

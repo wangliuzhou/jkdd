@@ -18,12 +18,17 @@
       <GoodsDetail />
 
       <!-- 底部button -->
-      <BottomBtns />
+      <BottomBtns :id="id" />
 
       <!-- sku -->
-      <van-popup v-model="showSku" position="bottom" closeable>
-        <Sku />
-      </van-popup>
+      <Sku
+        :show.sync="showSku"
+        :btnStatus="btnStatus"
+        :goodsDetail="goodsDetail"
+        :chooseInfo="chooseInfo"
+        @updateChooseInfo="updateChooseInfo"
+        @confirm="handleConfirm"
+      />
 
       <!-- cms -->
       <!-- <Cms /> -->
@@ -36,6 +41,8 @@
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
+import { Toast } from "vant";
+import storesys from "@/utils/storesys";
 import NavBar from "./components/NavBar";
 import GoodsImgs from "./components/GoodsImgs";
 import GoodsInfo from "./components/GoodsInfo";
@@ -48,7 +55,7 @@ import Sku from "./components/Sku";
 export default {
   props: {
     id: String,
-    activityId: String
+    seckillOutId: String
   },
   components: {
     NavBar,
@@ -62,12 +69,14 @@ export default {
   },
   computed: {
     ...mapState({
-      dataIsLoad: state => state.pageGoodsDetail.dataIsLoad,
-      goodsDetail: state => state.pageGoodsDetail.goodsDetail
+      dataIsLoad: state => state.pageSeckillGoodsDetail.dataIsLoad,
+      goodsDetail: state => state.pageSeckillGoodsDetail.goodsDetail,
+      chooseInfo: state => state.pageSeckillGoodsDetail.chooseInfo,
+      btnStatus: state => state.pageSeckillGoodsDetail.btnStatus
     }),
     showSku: {
       get() {
-        return this.$store.state.pageGoodsDetail.showSku;
+        return this.$store.state.pageSeckillGoodsDetail.showSku;
       },
       set(value) {
         this.setShowSku(value);
@@ -75,15 +84,42 @@ export default {
     }
   },
   mounted() {
-    this.loadData(this.id);
+    this.loadData({ id: this.id, seckillOutId: this.seckillOutId });
   },
   methods: {
     ...mapMutations({
-      setShowSku: "pageGoodsDetail/setShowSku"
+      setShowSku: "pageSeckillGoodsDetail/setShowSku",
+      updateChooseInfo: "pageSeckillGoodsDetail/updateChooseInfo"
     }),
     ...mapActions({
-      loadData: "pageGoodsDetail/loadData"
-    })
+      loadData: "pageSeckillGoodsDetail/loadData"
+    }),
+    handleConfirm() {
+      let {
+        btnStatus,
+        chooseInfo: { sku, num },
+        goodsDetail: { isMultiAttr, valueVoList, seckillOutId }
+      } = this;
+      //有sku
+      if (isMultiAttr != 1) {
+        sku = valueVoList[0];
+      }
+
+      if (!sku) {
+        return Toast({ position: "bottom", message: "请选择商品规格" });
+      }
+
+      this.setShowSku(false);
+
+      if (btnStatus == 1) {
+        //加入购物车
+      } else if (btnStatus == 2) {
+        //立即购买
+        this.$push({
+          path: `/pay/orderSettle?storesysId=${storesys.storesysId}&skuIds=${sku.singleProductOuterId}&skuNums=${num}&seckillActivityId=${seckillOutId}`
+        });
+      }
+    }
   }
 };
 </script>

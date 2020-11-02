@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scrollTop: state => state.pageGoodsDetail.scrollTop
+      scrollTop: state => state.pageSeckillGoodsDetail.scrollTop
     }),
     navBarStyle() {
       let { scrollTop } = this;
@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setScrollTop: "pageGoodsDetail/setScrollTop"
+      setScrollTop: "pageSeckillGoodsDetail/setScrollTop"
     }),
     handleScrollChangeNavBar() {
       if (this.scrollTo.running) return;

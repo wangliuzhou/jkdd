@@ -8,14 +8,31 @@
       />
       <div class="price-wrap">
         <span class="msj">秒杀价</span>
-        <span class="sell-price">¥{{ goodsDetail.minPrice }}</span>
-        <span class="yj-price"
-          >原价<span class="del">¥{{ goodsDetail.minPrice }}</span></span
+        <span class="sell-price"
+          >¥{{
+            activityInfo.activityStatus == 3
+              ? goodsDetail.minPrice * 1
+              : goodsDetail.secKillPrice * 1
+          }}</span
         >
-        <div class="time">
-          <span class="item">05</span><span>:</span> <span class="item">53</span
-          ><span>:</span>
-          <span class="item">39</span>
+        <span
+          class="yj-price"
+          v-if="activityInfo.activityStatus != 3 && goodsDetail.minPrice * 1"
+          >原价<span class="del">¥{{ goodsDetail.minPrice * 1 }}</span></span
+        >
+        <div class="right-info">
+          <div class="time-title" v-if="activityInfo.activityStatus == 2">
+            距结束
+          </div>
+          <div class="time-title yjs" v-if="activityInfo.activityStatus == 3">
+            秒杀已结束
+          </div>
+          <div class="time" v-if="activityInfo.activityStatus == 2">
+            <span class="item">{{ formatTime[1] }}</span
+            ><span>:</span> <span class="item">{{ formatTime[2] }}</span
+            ><span>:</span>
+            <span class="item">{{ formatTime[3] }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -26,7 +43,7 @@
           {{ goodsDetail.sellingPoint }}
         </div>
       </div>
-      <div class="ms-surplus">
+      <!-- <div class="ms-surplus">
         <div class="ms-surplus-progress">
           <div class="ms-surplus-bar">
             <div class="progress"></div>
@@ -39,17 +56,41 @@
           </div>
         </div>
         <div class="ms-surplus-num">剩余336件</div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
+import { formatNumber } from "@/utils/util.js";
+
 export default {
   computed: {
     ...mapState({
-      goodsDetail: state => state.pageGoodsDetail.goodsDetail
-    })
+      goodsDetail: state => state.pageSeckillGoodsDetail.goodsDetail,
+      activityInfo: state => state.pageSeckillGoodsDetail.activityInfo
+    }),
+    formatTime() {
+      let { activityInfo } = this;
+      if (activityInfo) {
+        let { remainingTime } = activityInfo;
+        if (remainingTime >= 0) {
+          if (remainingTime) {
+            let day = parseInt(remainingTime / (60 * 60 * 24 * 1000));
+            let hour = parseInt((remainingTime / (60 * 60 * 1000)) % 24);
+            let minu = parseInt((remainingTime / (60 * 1000)) % 60);
+            let sec = parseInt((remainingTime / 1000) % 60);
+            return [day, day * 24 + hour, minu, sec].map(formatNumber);
+          }
+        }
+      }
+      return null;
+    }
+    // progressPointStyle() {
+    //   let { activityInfo } = this;
+    //   if (activityInfo) {
+    //   }
+    // }
   }
 };
 </script>
@@ -102,28 +143,45 @@ export default {
       text-decoration: line-through;
     }
   }
-  .time {
+  .right-info {
     position: absolute;
-    top: 17.5px;
+    top: 0;
     right: 0;
-    display: flex;
     width: 125px;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 12px;
-    font-size: 18px;
-    span {
-      flex: 0 0 18px;
+    height: 59.5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .time-title {
+      font-size: 15px;
+      line-height: 21px;
+      &.yjs {
+        text-align: right;
+        padding-right: 12px;
+      }
+    }
+    .time {
+      top: 17.5px;
       display: flex;
       align-items: center;
-      justify-content: center;
-    }
-    .item {
-      flex: 0 0 27px;
-      height: 27px;
-      background: white;
-      color: #ff6a00;
-      border-radius: 8px;
+      justify-content: flex-end;
+      flex-wrap: nowrap;
+      padding-right: 12px;
+      font-size: 18px;
+      margin-top: 2.5px;
+      span {
+        flex: 0 0 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .item {
+        flex: 0 0 27px;
+        height: 27px;
+        background: white;
+        color: #ff6a00;
+        border-radius: 8px;
+      }
     }
   }
 }
@@ -156,7 +214,7 @@ export default {
     -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;
-    font-size: 15px;
+    font-size: 18px;
     line-height: 21px;
     max-height: 42px;
   }

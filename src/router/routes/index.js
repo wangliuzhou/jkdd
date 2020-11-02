@@ -38,11 +38,11 @@ const routes = [
     component: () => import("@/views/GoodsDetail/index.vue")
   },
   {
-    path: "/seckill/:id/:activityId",
+    path: "/seckill/:id/:seckillOutId",
     name: "Seckill",
     props: route => ({
       id: route.params.id,
-      activityId: route.params.activityId
+      seckillOutId: route.params.seckillOutId
     }),
     meta: {
       needLogin: false

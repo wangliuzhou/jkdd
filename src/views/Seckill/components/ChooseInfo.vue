@@ -19,8 +19,8 @@ import { mapState, mapMutations } from "vuex";
 export default {
   computed: {
     ...mapState({
-      goodsDetail: state => state.pageGoodsDetail.goodsDetail,
-      chooseInfo: state => state.pageGoodsDetail.chooseInfo
+      goodsDetail: state => state.pageSeckillGoodsDetail.goodsDetail,
+      chooseInfo: state => state.pageSeckillGoodsDetail.chooseInfo
     }),
     selectSkuStr() {
       let {
@@ -61,8 +61,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setShowSku: "pageGoodsDetail/setShowSku",
-      setBtnStatus: "pageGoodsDetail/setBtnStatus"
+      setShowSku: "pageSeckillGoodsDetail/setShowSku",
+      setBtnStatus: "pageSeckillGoodsDetail/setBtnStatus"
     }),
     handleOpenSku() {
       this.setBtnStatus(null);
