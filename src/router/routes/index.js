@@ -2,17 +2,11 @@ const routes = [
   {
     path: "/",
     name: "Index",
-    meta: {
-      needLogin: false
-    },
     component: () => import("@/views/Index.vue")
   },
   {
     path: "/classify",
     name: "Classify",
-    meta: {
-      needLogin: false
-    },
     component: () => import("@/views/Classify/index.vue")
   },
   {
@@ -21,9 +15,6 @@ const routes = [
     props: route => ({
       id: Number(route.params.id)
     }),
-    meta: {
-      needLogin: false
-    },
     component: () => import("@/views/MicroPage.vue")
   },
   {
@@ -32,9 +23,6 @@ const routes = [
     props: route => ({
       id: route.params.id
     }),
-    meta: {
-      needLogin: false
-    },
     component: () => import("@/views/GoodsDetail/index.vue")
   },
   {
@@ -44,16 +32,13 @@ const routes = [
       id: route.params.id,
       seckillOutId: route.params.seckillOutId
     }),
-    meta: {
-      needLogin: false
-    },
     component: () => import("@/views/Seckill/index.vue")
   },
   {
     path: "/orderList",
     name: "OrderList",
     meta: {
-      needLogin: false
+      needLogin: true
     },
     component: () => import("@/views/OrderList/index.vue")
   },
@@ -61,7 +46,7 @@ const routes = [
     path: "/orderDetail",
     name: "OrderDetail",
     meta: {
-      needLogin: false
+      needLogin: true
     },
     component: () => import("@/views/OrderDetail/index.vue")
   },
@@ -69,7 +54,7 @@ const routes = [
     path: "/addressList",
     name: "AddressList",
     meta: {
-      needLogin: false
+      needLogin: true
     },
     component: () => import("@/views/AddressList/index.vue")
   },
@@ -77,23 +62,20 @@ const routes = [
     path: "/addAddress",
     name: "AddAddress",
     meta: {
-      needLogin: false
+      needLogin: true
     },
     component: () => import("@/views/AddAddress/index.vue")
   },
   {
     path: "/goodsGroup",
     name: "GoodsGroup",
-    meta: {
-      needLogin: false
-    },
     component: () => import("@/views/GoodsGroup/index.vue")
   },
   {
     path: "/orderLogistics",
     name: "OrderLogistics",
     meta: {
-      needLogin: false
+      needLogin: true
     },
     component: () => import("@/views/OrderLogistics/index.vue")
   },
@@ -109,7 +91,7 @@ const routes = [
       fromCart: Boolean(route.query.fromCart)
     }),
     meta: {
-      needLogin: false
+      needLogin: true
     },
     component: () => import("@/views/OrderSettle/index.vue")
   },
@@ -120,16 +102,13 @@ const routes = [
       price: Number(route.query.price)
     }),
     meta: {
-      needLogin: false
+      needLogin: true
     },
     component: () => import("@/views/PayResult/index.vue")
   },
   {
     path: "/test",
     name: "Test",
-    meta: {
-      needLogin: false
-    },
     component: () => import(/* webpackChunkName: "Test" */ "@/views/Test.vue")
   },
   {
@@ -141,43 +120,40 @@ const routes = [
   {
     path: "/userCenter",
     name: "UserCenter",
-    meta: {},
+    meta: {
+      needLogin: true
+    },
     component: () => import("@/views/UserCenter/index.vue")
   },
   {
     path: "/membersCenter",
     name: "MembersCenter",
-    meta: {},
+    meta: {
+      needLogin: true
+    },
     component: () => import("@/views/MembersCenter/index.vue")
   },
   {
     path: "/joinMember",
     name: "JoinMember",
-    meta: {},
+    meta: {
+      needLogin: true
+    },
     component: () => import("@/views/JoinMember/index.vue")
   },
   {
     path: "/qrcodeIntroduction",
     name: "QrcodeIntroduction",
-    meta: {
-      needLogin: false
-    },
     component: () => import("@/views/QrcodeIntroduction/index.vue")
   },
   {
     path: "/qrcodeMissing",
     name: "QrcodeMissing",
-    meta: {
-      needLogin: false
-    },
     component: () => import("@/views/QrcodeMissing/index.vue")
   },
   {
     path: "/qrcodeDetail",
     name: "QrcodeDetail",
-    meta: {
-      needLogin: false
-    },
     component: () => import("@/views/QrcodeDetail/index.vue")
   },
   {
@@ -187,16 +163,13 @@ const routes = [
       gzhName: route.query.gzhName,
       gzhQrcode: route.query.gzhQrcode
     }),
-    meta: {
-      needLogin: false
-    },
     component: () => import("@/views/OfficialAccountQrcode/index.vue")
   },
   {
     path: "/coupons",
     name: "Coupons",
     meta: {
-      needLogin: false
+      needLogin: true
     },
     component: () => import("@/views/Coupons/index.vue")
   },
@@ -204,7 +177,7 @@ const routes = [
     path: "/couponsInvalid",
     name: "CouponsInvalid",
     meta: {
-      needLogin: false
+      needLogin: true
     },
     component: () => import("@/views/CouponsInvalid/index.vue")
   },
@@ -214,9 +187,6 @@ const routes = [
     props: route => ({
       storesysId: route.query.storesysId
     }),
-    meta: {
-      needLogin: false
-    },
     component: () => import("@/views/Login/index.vue")
   }
 ];
