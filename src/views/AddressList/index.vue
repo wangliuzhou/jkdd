@@ -145,7 +145,6 @@ export default {
         userConsigneePhone: telNumber,
         userAddressDetail: detailInfo,
         isDefault: 0,
-        tenantUserReceivingAddressLabel: {},
         userAddressProvince: provinceName,
         userAddressCity: cityName,
         userAddressDistrict: countyName
@@ -191,7 +190,7 @@ export default {
       let { redirectUrl } = this.$route.query;
       redirectUrl = decodeURIComponent(redirectUrl);
 
-      if (redirectUrl) {
+      if (redirectUrl && redirectUrl !== "undefined") {
         let path = redirectUrl.split("?")[0];
         let query = parse(redirectUrl.split("?")[1]);
 

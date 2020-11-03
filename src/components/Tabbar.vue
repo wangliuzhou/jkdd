@@ -36,7 +36,7 @@ const list = [
     text: "分类"
   },
   {
-    pagePath: "/cart",
+    pagePath: "/shoppingCart",
     iconPath: require("@/assets/images/tabbar/cart.png"),
     selectedIconPath: require("@/assets/images/tabbar/cart-selected.png"),
     text: "购物车"

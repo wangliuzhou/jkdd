@@ -71,9 +71,16 @@
   </div>-->
     <div class="order-card">
       <div class="header">
-        <div class="left-label">我的订单</div>
+        <div
+          class="left-label"
+          @click="goPage({ path: '/orderList', activeIndex: undefined })"
+        >
+          我的订单
+        </div>
         <div class="right-go-all">
-          <text class="text" @click="goPage" data-link="/pages/orderList/index"
+          <text
+            class="text"
+            @click="goPage({ path: '/orderList', activeIndex: undefined })"
             >查看全部订单</text
           >
           <IconFont
@@ -87,7 +94,7 @@
           v-for="(item, index) in orderList"
           :key="index"
           class="item"
-          @click="goPage(item.link, item.activeIndex)"
+          @click="goPage({ path: item.link, activeIndex: item.activeIndex })"
         >
           <div
             v-if="item.num"
@@ -107,7 +114,7 @@
         v-for="(item, index) in functionList"
         :key="index"
         class="item"
-        @click="goPage(item.link)"
+        @click="goPage({ path: item.link })"
       >
         <IconFont
           :type="item.icon"
@@ -132,7 +139,7 @@
 </template>
 <script>
 import { Toast } from "vant";
-import IconFont from "@/components/IconFont";
+// import IconFont from "@/components/IconFont";
 import Tabbar from "@/components/Tabbar";
 import CustomNavigation from "@/components/CustomNavigation";
 export default {
@@ -141,31 +148,31 @@ export default {
       orderList: [
         {
           icon: "/assets/images/order/payment.png",
-          link: "/pages/orderList/index",
+          link: "/orderList",
           label: "待付款",
           activeIndex: 1
         },
         {
           icon: "/assets/images/order/send.png",
-          link: "/pages/orderList/index",
+          link: "/orderList",
           label: "待发货",
           activeIndex: 2
         },
         {
           icon: "/assets/images/order/take.png",
-          link: "/pages/orderList/index",
+          link: "/orderList",
           label: "待收货",
           activeIndex: 3
         },
         {
           icon: "/assets/images/order/comments.png",
-          link: "/pages/orderList/index",
+          link: "/orderList",
           label: "评价",
           activeIndex: 4
         },
         {
           icon: "/assets/images/order/refund.png",
-          link: "/pages/orderList/index",
+          link: "/orderList",
           label: "退款/售后",
           activeIndex: 5
         }
@@ -269,12 +276,12 @@ export default {
     onPageScroll({ scrollTop }) {
       this.scrollTop = scrollTop;
     },
-    goPage(e) {
-      const { activeIndex, link } = e;
-      if (link === "/pages/orderList/index") {
-        this.$push(`${link}?activeIndex=${activeIndex}`);
+    goPage(obj) {
+      console.log(obj);
+      if (obj.path === "/orderList") {
+        this.$push(`${obj.path}?activeIndex=${obj.activeIndex}`);
       } else {
-        this.$push(link);
+        this.$push(obj.path);
       }
     },
     goMember() {

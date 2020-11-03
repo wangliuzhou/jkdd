@@ -188,6 +188,14 @@ const routes = [
       storesysId: route.query.storesysId
     }),
     component: () => import("@/views/Login/index.vue")
+  },
+  {
+    path: "/shoppingCart",
+    name: "ShoppingCart",
+    meta: {
+      needLogin: true
+    },
+    component: () => import("@/views/ShoppingCart/index.vue")
   }
 ];
 

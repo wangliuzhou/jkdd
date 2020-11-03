@@ -115,6 +115,7 @@ export default {
     getList(type) {
       const api = "/order/mobile/tenantOrder/findOrderPageMiniProgram";
       const { tabs, currentPage, activeTabIndex } = this;
+
       const statusType = tabs[activeTabIndex].id;
       this.loading = true;
       this.$fetchGet(api, { statusType, currentPage })
@@ -125,10 +126,8 @@ export default {
             // 是为了让页面在请求时间内不变成空白
             if (type === 1) {
               this.list = [];
-              this.setFetchList(pages, records);
-            } else {
-              this.setFetchList(pages, records);
             }
+            this.setFetchList(pages, records);
           }
         })
         .catch(() => {
@@ -142,6 +141,8 @@ export default {
       this.list = this.formatData(records);
       this.loading = false;
       this.showNoOrderImg = this.list.length === 0 ? true : false;
+      console.log(123, pages, this.currentPage);
+
       if (pages <= this.currentPage) {
         this.finished = true;
       }
@@ -164,8 +165,10 @@ export default {
     // 初始化判断是否有状态代进页面，触发请求
     init() {
       const { activeIndex } = this.$route.query;
-      if (activeIndex != undefined) {
-        this.activeTabIndex = Number(activeIndex);
+      if (activeIndex && activeIndex !== "undefined") {
+        this.activeTabIndex = activeIndex;
+      } else {
+        this.activeTabIndex = 0;
       }
       this.getList();
     },
@@ -184,7 +187,7 @@ export default {
 
     // 点击跳转到详情页
     handleGoDetail(id) {
-      this.$push({ path: "/orderDetial", query: { id } });
+      this.$push({ path: "/orderDetail", query: { id } });
     }
   }
 };

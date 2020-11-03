@@ -173,7 +173,6 @@ export default {
         userPcds: this.userPcds,
         userAddressDetail: this.userAddressDetail,
         isDefault: Number(isDefault),
-        tenantUserReceivingAddressLabel: {},
         userAddressProvince: this.userAddressProvince,
         userAddressCity: this.userAddressCity,
         userAddressDistrict: this.userAddressDistrict

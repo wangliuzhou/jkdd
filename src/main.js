@@ -34,7 +34,10 @@ import {
   Area,
   List,
   Image as VanImage,
-  Button
+  Button,
+  SwipeCell,
+  Cell,
+  Checkbox
 } from "vant";
 
 // import * as fundebug from "fundebug-javascript";
@@ -84,6 +87,9 @@ Vue.use(Area);
 Vue.use(List);
 Vue.use(VanImage);
 Vue.use(Button);
+Vue.use(SwipeCell);
+Vue.use(Cell);
+Vue.use(Checkbox);
 
 FastClick.attach(document.body);
 
