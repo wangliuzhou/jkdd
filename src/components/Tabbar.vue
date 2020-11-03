@@ -74,6 +74,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .tabbar {
-  z-index: 1;
+  z-index: 90;
 }
 </style>
