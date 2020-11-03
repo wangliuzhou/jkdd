@@ -7,6 +7,7 @@ module.exports = {
     };
   },
   chainWebpack: config => {
+    config.resolve.symlinks(true);
     config.devServer.disableHostCheck(true);
     // config.module
     //   .rule("less")

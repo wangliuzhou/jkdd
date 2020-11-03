@@ -201,20 +201,20 @@ export default {
         {
           icon: "iconyouhuiquan",
           label: "我的优惠券",
-          link: "/pages/coupons/index"
+          link: "/coupons"
         },
         {
           img: "/assets/image/userCenter/shouhuodizhi.png",
           icon: "iconweizhi",
           label: "收货地址",
-          link: "/pages/addressList/index",
+          link: "/addressList",
           fontSize: "36rpx"
         },
         {
           img: "/assets/image/userCenter/kefuliaotian.png",
           icon: "iconkefuliaotian1",
           label: "客服聊天",
-          link: "/page/index/index"
+          link: "/index"
         }
         // {
         //   icon: "/assets/image/userCenter/zhanghaoyuanquan.png",

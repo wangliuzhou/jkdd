@@ -37,7 +37,9 @@ import {
   Button,
   SwipeCell,
   Cell,
-  Checkbox
+  Checkbox,
+  Tab,
+  Tabs
 } from "vant";
 
 // import * as fundebug from "fundebug-javascript";
@@ -90,6 +92,8 @@ Vue.use(Button);
 Vue.use(SwipeCell);
 Vue.use(Cell);
 Vue.use(Checkbox);
+Vue.use(Tab);
+Vue.use(Tabs);
 
 FastClick.attach(document.body);
 

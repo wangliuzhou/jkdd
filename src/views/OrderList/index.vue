@@ -13,14 +13,14 @@
         </div>
       </div>
     </div>
+    <!-- finished-text="没有更多了" -->
     <van-list
       v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      offset="100"
-      @load="getList"
-      :error.sync="error"
       error-text="请求失败，点击重新加载"
+      offset="100"
+      :finished="finished"
+      :error.sync="error"
+      @load="getList"
     >
       <div v-if="list.length" class="order-list">
         <div class="order-item" v-for="(item, index) in list" :key="index">
@@ -57,11 +57,10 @@
         </div>
       </div>
     </van-list>
-    <div v-if="showNoOrderImg" class="no-order-wrap">
+    <div v-if="showNoOrderImg && !loading" class="no-order-wrap">
       <img
         class="no-order-img"
         :src="require('@/assets/images/empty-oreder.png')"
-        mode="widthFix"
         alt=""
       />
       <span>暂无订单</span>
@@ -70,6 +69,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -105,7 +105,6 @@ export default {
   created() {
     this.init();
   },
-  mounted() {},
   methods: {
     /**
      * 请求列表数据
@@ -113,15 +112,18 @@ export default {
      * @param {*} 下拉触底触发请求,type=undefined
      */
     getList(type) {
-      const api = "/order/mobile/tenantOrder/findOrderPageMiniProgram";
       const { tabs, currentPage, activeTabIndex } = this;
-
       const statusType = tabs[activeTabIndex].id;
       this.loading = true;
-      this.$fetchGet(api, { statusType, currentPage })
+      this.$fetchGet("/order/mobile/tenantOrder/findOrderPageMiniProgram", {
+        statusType,
+        currentPage
+      })
         .then(({ data: { pages, records } }) => {
           // 解决频繁切换tabs，响应次序不对问题
-          if (this.lastChoosedStatusType === statusType) {
+          if (activeTabIndex === this.activeTabIndex) {
+            console.log(222);
+
             // 在这里把list置空，而不是点击tab时置空，
             // 是为了让页面在请求时间内不变成空白
             if (type === 1) {
@@ -131,8 +133,9 @@ export default {
           }
         })
         .catch(() => {
-          this.error = true;
           this.loading = false;
+          this.error = true;
+          Toast("请求失败~");
         });
     },
 
@@ -141,8 +144,6 @@ export default {
       this.list = this.formatData(records);
       this.loading = false;
       this.showNoOrderImg = this.list.length === 0 ? true : false;
-      console.log(123, pages, this.currentPage);
-
       if (pages <= this.currentPage) {
         this.finished = true;
       }

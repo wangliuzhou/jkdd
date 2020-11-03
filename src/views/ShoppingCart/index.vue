@@ -33,7 +33,7 @@
               </div>
               <div class="item-image">
                 <van-image
-                  :src="$ali(item.pic, 80, dpr)"
+                  :src="$ali(item.pic, 80)"
                   alt="商品图片"
                   fit="cover"
                   class="van-image "
@@ -67,16 +67,11 @@
                         'btn-public',
                         { 'one-decrease-btn': item.count === 1 }
                       ]"
-                      data-item="{{item}}"
                     >
                       -
                     </div>
                     <div class="count">{{ item.count }}</div>
-                    <div
-                      class="btn-public"
-                      @click.stop="increase(index, item)"
-                      data-item="{{item}}"
-                    >
+                    <div class="btn-public" @click.stop="increase(index, item)">
                       +
                     </div>
                   </div>
@@ -112,7 +107,7 @@
               <div class="item invalid-item">
                 <div class="item-image">
                   <van-image
-                    :src="$ali(item.pic, 80, dpr)"
+                    :src="$ali(item.pic, 80)"
                     alt="商品图片"
                     fit="cover"
                     class="van-image"
