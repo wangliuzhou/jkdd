@@ -38,7 +38,7 @@
           <div class="left">商品金额</div>
           <div class="right">¥{{ orderInfo.totalPrice * 1 }}</div>
         </div>
-        <div class="price-item coupon">
+        <div class="price-item coupon" v-if="!seckillActivityId">
           <div class="left">优惠券</div>
           <ChooseCoupon
             :text="couponText"
