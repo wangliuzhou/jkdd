@@ -269,14 +269,14 @@ export default {
         height: 100%;
         display: flex;
         align-items: center;
-        justify-content: start;
+        justify-content: flex-start;
         background: #373d41;
         border-radius: 8px 8px 0 0;
 
         .interests-item {
           display: flex;
           align-items: center;
-          justify-content: start;
+          justify-content: flex-start;
           flex-direction: column;
           width: 20%;
           height: 100%;
@@ -321,7 +321,7 @@ export default {
         .form-header {
           display: flex;
           align-items: center;
-          justify-content: start;
+          justify-content: flex-start;
           margin-bottom: 7px;
 
           .title {

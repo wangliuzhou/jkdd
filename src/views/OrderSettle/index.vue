@@ -122,7 +122,7 @@ export default {
         };
       });
     },
-    couponText(data) {
+    couponText() {
       let { orderInfo } = this;
       if (orderInfo) {
         if (orderInfo.discountPrice) {

@@ -7,7 +7,7 @@ export const CookieSet = (key, value) => {
   });
 };
 
-export const CookieGet = (key, value) => {
+export const CookieGet = key => {
   return Cookie.get(key);
 };
 
