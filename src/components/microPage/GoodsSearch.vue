@@ -1,5 +1,5 @@
 <template>
-  <div class="goodsSearch-container-wrap">
+  <div class="goodsSearch-container-wrap" ref="wrap">
     <!-- <div
       class="goodsSearch-container-seize"
       :style="seizeStyle"
@@ -21,9 +21,15 @@
   </div>
 </template>
 <script>
+import { getOffsetTop } from "@/utils/dom";
 import { px2rem } from "@/utils/index";
 export default {
   props: ["item"],
+  data() {
+    return {
+      fixed: false
+    };
+  },
   computed: {
     seizeStyle() {
       let { item } = this;
@@ -71,6 +77,20 @@ export default {
         )}; color: ${color};`;
       }
       return "";
+    }
+  },
+  mounted() {
+    window.addEventListener("scroll", this.scrollFn, false);
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.scrollFn, false);
+  },
+  methods: {
+    scrollFn() {
+      let scrollTop =
+        document.body.scrollTop || document.documentElement.scrollTop || 0;
+
+      this.fixed = scrollTop >= getOffsetTop(this.$refs.wrap);
     }
   }
 };
