@@ -79,7 +79,9 @@
           <div class="goodsList-item-sale-box">
             <div class="goodsList-item-sale">
               {{
-                detail.isShowGoodsNum ? "仅剩" + item.seckillStock + "件" : ""
+                detail.isShowGoodsNum
+                  ? "仅剩" + item.seckillStock.toFixed(0) + "件"
+                  : ""
               }}
             </div>
             <div v-if="detail.buy.show" class="xz-goods__buy-box">
