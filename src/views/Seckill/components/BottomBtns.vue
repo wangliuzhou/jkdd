@@ -96,5 +96,21 @@ export default {
       border: none;
     }
   }
+  .ysq,
+  .yxj {
+    padding-top: 6px;
+    margin: 0 12px;
+    button {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 20px;
+      padding: 0;
+      background: #cccccc;
+      color: white;
+      font-size: 15px;
+      border: none;
+    }
+  }
 }
 </style>

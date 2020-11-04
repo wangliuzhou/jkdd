@@ -79,6 +79,14 @@ export default {
             //秒杀价格
             data.secKillPrice = parseFloat(data.secKillPrice);
 
+            data.secKillStock = ~~data.secKillStock;
+            data.valueVoList = data.valueVoList.map(it => {
+              return {
+                ...it,
+                secKillStock: ~~it.secKillStock
+              };
+            });
+
             commit("setGoodsDetail", data);
 
             dispatch("genActivityStatus", data);

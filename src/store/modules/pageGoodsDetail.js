@@ -65,6 +65,14 @@ export default {
           if (data && data.dealerProductJoinId) {
             document.title = data.productName;
 
+            data.stockSum = ~~data.stockSum;
+            data.valueVoList = data.valueVoList.map(it => {
+              return {
+                ...it,
+                availStock: ~~it.availStock
+              };
+            });
+
             commit("setGoodsDetail", data);
           }
         })
