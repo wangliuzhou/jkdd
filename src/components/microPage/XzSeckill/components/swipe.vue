@@ -55,12 +55,13 @@
               {{ item.marketingSeckillName || "" }}
             </div>
           </div>
-          <!-- <div
-            v-if="detail.isShowGoodsDescribe"
-            class="goodsList-item-describe-box"
-          >
-            {{ item.sellingPoint || "" }}
-          </div> -->
+          <div class="goodsList-item-describe-box">
+            {{
+              detail.isShowGoodsDescribe && item.sellingPoint
+                ? item.sellingPoint
+                : ""
+            }}
+          </div>
           <div class="goodsList-item-price-box">
             <div
               class="goodsList-item-sale-price"
