@@ -120,13 +120,13 @@ export default {
     //商品价格
     goodsPrice() {
       let {
-        goodsDetail: { minPrice },
+        goodsDetail: { secKillPrice },
         chooseInfo: { sku }
       } = this;
       if (sku && sku.secKillPrice) {
         return sku.secKillPrice;
       }
-      return minPrice;
+      return secKillPrice;
     },
     propList() {
       let {
