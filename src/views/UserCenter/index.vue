@@ -66,17 +66,14 @@
   </div>-->
     <div class="order-card">
       <div class="header">
-        <div
-          class="left-label"
-          @click="goPage({ path: '/orderList', activeIndex: undefined })"
-        >
+        <div class="left-label">
           我的订单
         </div>
         <div class="right-go-all">
-          <text
+          <span
             class="text"
             @click="goPage({ path: '/orderList', activeIndex: undefined })"
-            >查看全部订单</text
+            >查看全部订单</span
           >
           <IconFont
             type="iconright"

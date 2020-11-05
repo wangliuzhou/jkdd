@@ -16,7 +16,7 @@
           <div class="order-logistics">
             <div>配送企业：{{ info.shipperName }}</div>
             <div>快递单号：{{ logisticsCode }}</div>
-            <div>联系电话：没字段</div>
+            <!-- <div>联系电话：没字段</div> -->
           </div>
         </div>
       </div>
@@ -28,13 +28,33 @@
         <div v-for="(item, index) in info.maps" :key="item.AcceptStation">
           <div class="order-logistics-item">
             <div :class="['order-logistics-content', { active: index === 0 }]">
-              <div class="pint">
+              <view class="pint">
+                <img
+                  v-if="item.Action === '1' && index !== 0"
+                  :src="require('@/assets/images/logistics/logistics1.png')"
+                  class="logistics-status-icon"
+                />
+                <img
+                  v-if="item.Action === '2' && index !== 0"
+                  :src="require('@/assets/images/logistics/logistics2.png')"
+                  class="logistics-status-icon"
+                />
+                <img
+                  v-if="item.Action === '201' && index !== 0"
+                  :src="require('@/assets/images/logistics/logistics201.png')"
+                  class="logistics-status-icon"
+                />
+                <img
+                  v-if="item.Action === '202' && index !== 0"
+                  :src="require('@/assets/images/logistics/logistics202.png')"
+                  class="logistics-status-icon"
+                />
                 <IconFont
                   v-if="index === 0"
                   type="iconyiqianshou"
-                  fontStyle="font-size:36rpx;"
+                  fontStyle="font-size:36rpx"
                 />
-              </div>
+              </view>
               <div class="order-logistics-item-title" v-if="index === 0">
                 {{ getStatus }}
               </div>
@@ -55,7 +75,10 @@ import logisticsStatus from "@/utils/logisticsStatus";
 export default {
   name: "",
   data() {
-    return { logisticsCode: "", info: { maps: [] } };
+    return {
+      info: { maps: [] },
+      logisticsCode: ""
+    };
   },
   computed: {
     getStatus() {
@@ -78,12 +101,19 @@ export default {
      * 请求得到页面数据
      */
     async getInitData() {
-      const api = "/express/kdniaoSubscribe/selectExpressInfoByCode";
-      const { code } = this.$route.query;
-      this.logisticsCode = code;
-      const { data } = await this.$fetchGet(api, { code });
-      console.log(data);
+      const { expCode, shipmentNumber, orderOutId } = this.$route.query;
+      const { data } = await this.$fetchGet(
+        "/express/kdniaoSubscribe/selectExpressInfoByCode",
+        {
+          expCode,
+          expNo: shipmentNumber,
+          orderOutId
+        }
+      );
+      console.log("物流信息", data);
+      data.maps = data.maps.reverse();
       this.info = data;
+      this.logisticsCode = shipmentNumber;
     }
   }
 };
@@ -166,7 +196,7 @@ page {
   margin-top: 8px;
   background: white;
   border-radius: 8px;
-  padding-top: 8px;
+  padding-top: 7.5px;
   .order-logistics-detail-title {
     padding-left: 8px;
     color: #333333;
@@ -186,7 +216,7 @@ page {
       }
       .order-logistics-content {
         position: relative;
-        top: -10px;
+        top: -10.5px;
         &.active {
           .pint {
             color: #ff6a00;
@@ -208,12 +238,20 @@ page {
       .pint {
         position: absolute;
         left: -25px;
-        top: 10px;
+        top: 10.5px;
         transform: translateX(-50%) translateY(-50%);
-        width: 7px;
-        height: 7px;
+        width: 7.5px;
+        height: 7.5px;
         border-radius: 100%;
         background: #e5e5e5;
+      }
+      .logistics-status-icon {
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        left: 3px;
+        top: 5px;
+        transform: translateX(-50%) translateY(-50%);
       }
       .order-logistics-item-title {
         font-size: 15px;
@@ -222,7 +260,7 @@ page {
       .order-logistics-item-content {
         margin-top: 4px;
         font-size: 13px;
-        line-height: 18px;
+        line-height: 18.5px;
       }
       .order-logistics-item-time {
         margin-top: 2px;

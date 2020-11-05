@@ -21,6 +21,8 @@
       :finished="finished"
       :error.sync="error"
       @load="getList"
+      :immediate-check="false"
+      style="heigth:100%"
     >
       <div v-if="list.length" class="order-list">
         <div class="order-item" v-for="(item, index) in list" :key="index">
@@ -30,12 +32,17 @@
           </div>
           <div class="goods-list" @click="handleGoDetail(item.orderOuterId)">
             <div
-              v-for="it in item.tenantOrderProdctDetails"
+              v-for="it in item.tenantOrderProductDetails"
               :key="it.orderProdctDetailId"
             >
               <div class="goods-item">
                 <div class="goods-img">
-                  <img :src="$ali(it.productSkuThumb, 80)" alt />
+                  <van-image
+                    :src="$ali(it.mainCover, 80)"
+                    alt
+                    fit="cover"
+                    class="van-image"
+                  />
                 </div>
                 <div class="goods-info">
                   <div class="goods-title">{{ it.productName }}</div>
@@ -47,12 +54,53 @@
             </div>
           </div>
           <div class="order-price">
-            已付金额：
-            <span class="price">¥ {{ item.orderTotalPrice }}</span>
+            {{ item.orderStatus === 0 ? "应付金额:" : "总金额：" }}
+            <span class="price">¥ {{ item.actuallyPaid }}</span>
           </div>
           <div class="order-btns">
-            <button class="ckwl" v-if="item.orderStatus === 0">取消订单</button>
-            <button class="ycsh" v-if="item.orderStatus === 0">立即付款</button>
+            <div
+              v-if="item.orderStatus === 0"
+              @click="cancelOrder(item.orderOuterId)"
+            >
+              取消订单
+            </div>
+            <div
+              class="active"
+              v-if="item.orderStatus === 0"
+              @click="handlePayDebounce(item.orderOuterId)"
+            >
+              立即付款
+            </div>
+            <div
+              v-if="item.orderStatus === 1 || item.orderStatus === 2"
+              @click="handleRemind(item.orderOuterId)"
+            >
+              提醒发货
+            </div>
+            <!-- 订单状态 0待付款 1待发货 2部分发货 3待收货 4交易完成-N天无理由内 5交易完成-7天无理由外 6交易关闭7支付中 8支付失败 -->
+            <div
+              class="active"
+              v-if="
+                item.orderStatus === 2 ||
+                  item.orderStatus === 3 ||
+                  item.orderStatus === 4 ||
+                  item.orderStatus === 5
+              "
+              @click="goLogisticsPackagePage(item)"
+            >
+              查看物流
+            </div>
+            <!-- <div v-if="1" data-order-out-id="{{item.orderOuterId}}">评价商品</div>
+      <div v-if="1" class="active" data-order-out-id="{{item.orderOuterId}}">再次购买</div>
+      <div v-if="1" data-order-out-id="{{item.orderOuterId}}">延长收货</div>
+      <div v-if="1" data-order-out-id="{{item.orderOuterId}}">删除订单</div>-->
+            <div
+              class="active"
+              v-if="item.orderStatus === 3"
+              @click="onConfrimGoods(item.orderOuterId)"
+            >
+              确认收货
+            </div>
           </div>
         </div>
       </div>
@@ -69,7 +117,9 @@
 </template>
 
 <script>
-import { Toast } from "vant";
+import { Toast, Dialog } from "vant";
+import Cfg from "@/config/index";
+let timer;
 export default {
   data() {
     return {
@@ -78,14 +128,15 @@ export default {
       finished: false,
       error: false,
       tabsList: [
-        { name: "全部", id: "" },
         { name: "待付款", id: "0" },
         { name: "待发货", id: "1" },
         { name: "部分发货", id: "2" },
         { name: "待收货", id: "3" },
         { name: "交易完成", id: "4" },
-        { name: "交易关闭", id: "5" },
-        { name: "待评价", id: "100" }
+        { name: "交易完成", id: "5" },
+        { name: "交易关闭", id: "6" },
+        { name: "付款中", id: "7" },
+        { name: "付款失败", id: "8" }
       ],
       activeTabIndex: 0,
       list: [],
@@ -96,8 +147,8 @@ export default {
         { name: "全部", id: "" },
         { name: "待付款", id: "0" },
         { name: "待发货", id: "1" },
-        { name: "待收货", id: "3" },
-        { name: "待评价", id: "100" },
+        { name: "待收货", id: "2" },
+        { name: "待评价", id: "3" },
         { name: "售后", id: "4" }
       ]
     };
@@ -114,7 +165,6 @@ export default {
     getList(type) {
       const { tabs, currentPage, activeTabIndex } = this;
       const statusType = tabs[activeTabIndex].id;
-      this.loading = true;
       this.$fetchGet("/order/mobile/tenantOrder/findOrderPageMiniProgram", {
         statusType,
         currentPage
@@ -122,8 +172,6 @@ export default {
         .then(({ data: { pages, records } }) => {
           // 解决频繁切换tabs，响应次序不对问题
           if (activeTabIndex === this.activeTabIndex) {
-            console.log(222);
-
             // 在这里把list置空，而不是点击tab时置空，
             // 是为了让页面在请求时间内不变成空白
             if (type === 1) {
@@ -133,7 +181,6 @@ export default {
           }
         })
         .catch(() => {
-          this.loading = false;
           this.error = true;
           Toast("请求失败~");
         });
@@ -141,9 +188,9 @@ export default {
 
     // 设置请求到数据
     setFetchList(pages, records) {
-      this.list = this.formatData(records);
       this.loading = false;
-      this.showNoOrderImg = this.list.length === 0 ? true : false;
+      this.list = this.formatData(records);
+      this.showNoOrderImg = this.list.length === 0;
       if (pages <= this.currentPage) {
         this.finished = true;
       }
@@ -158,7 +205,6 @@ export default {
         this.currentPage = 1;
         this.finished = false;
         this.loading = false;
-        // this.list = [];
         this.getList(1);
       }
     },
@@ -167,7 +213,7 @@ export default {
     init() {
       const { activeIndex } = this.$route.query;
       if (activeIndex && activeIndex !== "undefined") {
-        this.activeTabIndex = activeIndex;
+        this.activeTabIndex = Number(activeIndex);
       } else {
         this.activeTabIndex = 0;
       }
@@ -189,6 +235,115 @@ export default {
     // 点击跳转到详情页
     handleGoDetail(id) {
       this.$push({ path: "/orderDetail", query: { id } });
+    },
+    //取消订单
+    cancelOrder(orderOuterId) {
+      Dialog.confirm({
+        title: "提示",
+        message: "确定要取消订单吗？"
+      })
+        .then(() => {
+          this.cancelOrderApi(orderOuterId);
+        })
+        .catch(() => {
+          // on cancel
+        });
+    },
+    // 用户点击取消订单，点击弹窗中的确认后
+    cancelOrderApi(orderOuterId) {
+      this.$fetchPost("/order/mobile/tenantOrder/cancelOrder", { orderOuterId })
+        .then(() => {
+          Toast("订单取消成功");
+          this.initFetch();
+        })
+        .catch(err => {
+          Toast(err.message);
+        });
+    },
+    initFetch() {
+      this.currentPage = 1;
+      this.list = [];
+      this.getList();
+    },
+    handlePayDebounce(orderOutId) {
+      this.debounce(this.handlePay, 300, orderOutId)();
+    },
+    debounce(fn, wait = 500, orderOutId) {
+      return function() {
+        if (timer) {
+          clearTimeout(timer);
+        }
+        timer = setTimeout(() => {
+          fn(orderOutId);
+        }, wait);
+      };
+    },
+    //点击立即支付按钮
+    handlePay(orderOutId) {
+      this.$fetchPost("/order/mobile/tenantOrder/payOrder", {
+        orderOutId,
+        appid: Cfg.appid
+      }).then(({ data: { jsapi_pay_info, total_amount } }) => {
+        //唤起支付
+        "xzwx"
+          .requestPayment({
+            ...jsapi_pay_info
+          })
+          .then(() => {
+            Toast("支付成功");
+            this.initFetch();
+            this.updateOrderStatus(orderOutId);
+
+            setTimeout(() => {
+              this.$router.replace(
+                `/pages/payResult/index?price=${total_amount}`
+              );
+            }, 200);
+          })
+          .catch(() => {
+            // Toast( "支付异常");
+          });
+      });
+    },
+    //点击提醒发货按钮
+    handleRemind() {
+      Toast("提醒发货成功");
+    },
+    //判断并跳转到多包裹页面
+    goLogisticsPackagePage(item) {
+      const {
+        orderOutId,
+        multiplePackage,
+        tenantOrderProductShipmentNumbers
+      } = item;
+      const { expCode, shipmentNumber } = tenantOrderProductShipmentNumbers[0];
+      if (multiplePackage) {
+        //跳转到多包裹页
+        this.$push(`/pages/logisticsPackage/index?orderOutId=${orderOutId}`);
+      } else {
+        //跳转到订单物流页
+        this.$push(
+          `/pages/orderLogistics/index?expCode=${expCode}&shipmentNumber=${shipmentNumber}&orderOutId=${orderOutId}`
+        );
+      }
+    },
+    //点击确认收货按钮
+    onConfrimGoods(orderId) {
+      Dialog.confirm({
+        title: "提示",
+        message: "确定要收货吗？"
+      }).then(() => {
+        this.$fetchGet("/order/mobile/tenantOrder/affirmReceivingOrder", {
+          orderId
+        })
+          .then(() => {
+            Toast("确认收货成功");
+            this.initFetch();
+          })
+          .catch(() => {
+            // on cancel
+          });
+      });
     }
   }
 };
@@ -197,14 +352,16 @@ export default {
 /* @import url(); 引入css类 */
 .order-list-wrap {
   position: relative;
+  padding-top: 60px;
   .order-list-tabs {
     width: 100%;
     overflow-x: auto;
     border-radius: 0 0 8px 8px;
     margin-bottom: 10px;
     background: #fff;
-    position: sticky;
+    position: fixed;
     top: 0px;
+    left: 0;
     z-index: 2;
     .order-list-box {
       display: flex;
@@ -237,22 +394,23 @@ export default {
     }
   }
   .order-list {
-    height: calc(100vh - 140rpx);
+    padding-bottom: calc(env(safe-area-inset-bottom));
+    height: 100%;
     width: 100%;
-    overflow: hidden;
 
     .order-item {
       background: white;
       margin-bottom: 8px;
-
+      border-radius: 8px 8px 0px 0px;
+      overflow: hidden;
       .order-no {
         padding-left: 15px;
         height: 46px;
-        line-height: 46rpx;
-        color: #999;
+        line-height: 46px;
+        color: #909399;
         position: relative;
-        font-size: 15px;
-        margin-bottom: 1px;
+        font-size: 13px;
+        border-bottom: 1px solid #efefef;
 
         .order-status {
           position: absolute;
@@ -260,25 +418,27 @@ export default {
           right: 12px;
           top: 50%;
           transform: translateY(-50%);
+          font-size: 15px;
         }
       }
 
       .goods-list {
+        border-bottom: 1px solid #efefef;
         .goods-item {
           padding: 10px 14px;
           display: flex;
           position: relative;
-          border-bottom: 1px solid #eee;
 
           .goods-img {
             flex: 0 0 80px;
             height: 80px;
-            background: #f0f0f0;
             border-radius: 8px;
+            background: #f0f0f0;
 
-            image {
+            .van-image {
               width: 100%;
               height: 100%;
+              overflow: hidden;
             }
           }
 
@@ -289,17 +449,16 @@ export default {
 
             .goods-title {
               font-size: 15px;
-              line-height: 1;
               width: 225px;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
+              color: #333;
             }
 
             .goods-desc {
               margin-top: 10px;
               font-size: 13px;
-              line-height: 1;
               color: #999999;
               width: 225px;
               overflow: hidden;
@@ -345,28 +504,28 @@ export default {
         padding-top: 4px;
         padding-bottom: 7px;
         display: flex;
+        flex-wrap: wrap;
         justify-content: flex-end;
         background: white;
         padding-bottom: 7px;
 
-        button {
+        div {
+          margin-right: 9px;
+          margin-bottom: 6px;
           flex: 0 0 80px;
           height: 28px;
           line-height: 28px;
+          text-align: center;
           background: #ffffff;
           border-radius: 20px;
           border: 1px solid #cccccc;
-          padding: 0;
-          margin: 0;
           font-size: 13px;
           color: #999999;
-          margin-right: 12px;
-
           &:after {
             border: none;
           }
 
-          &.ycsh {
+          &.active {
             border: 1px solid #ff6a00;
             color: #ff6a00;
           }
@@ -381,13 +540,13 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     font-size: 15px;
     color: rgba(102, 102, 102, 1);
 
     .no-order-img {
-      width: 100px;
-      height: 135px;
+      margin-top: 35%;
+      width: 69px;
+      height: 95px;
       margin-bottom: 20px;
     }
   }
