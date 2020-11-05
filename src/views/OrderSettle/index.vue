@@ -6,7 +6,13 @@
         :skuIds="skuIds"
         :skuNums="skuNums"
       />
-      <div class="shop-list">
+      <div
+        class="shop-list"
+        v-if="
+          orderInfo.onLineStoreSingleProductList &&
+            orderInfo.onLineStoreSingleProductList.length
+        "
+      >
         <div class="shop-title">{{ orderInfo.storeName }}</div>
         <div class="goods-list">
           <div
@@ -33,7 +39,54 @@
         </div>
       </div>
 
-      <div class="price-info">
+      <!-- 以下商品不可购买 -->
+      <div
+        class="invalid-goods"
+        v-if="
+          orderInfo.disableOnLineStoreSingleProductList &&
+            orderInfo.disableOnLineStoreSingleProductList.length
+        "
+      >
+        <div class="invalid-title">以下商品不可购买</div>
+        <div class="goods-list">
+          <div
+            class="goods-item"
+            v-for="item in orderInfo.disableOnLineStoreSingleProductList"
+            :key="item.onlineStoreSingleProductOutId"
+          >
+            <div
+              class="goods-img"
+              :style="'background-image:url(' + $ali(item.mainCover, 200) + ')'"
+            ></div>
+            <div class="goods-info">
+              <div class="goods-title">{{ item.dealerProductName }}</div>
+              <div class="goods-desc" v-if="item.attrText">
+                {{ item.attrText }}
+              </div>
+              <div class="invalid-reason">
+                <IconFont
+                  type="icontishi"
+                  fontStyle="font-size:0.32rem;color:#cccccc;margin-right:0.13rem;"
+                ></IconFont
+                >{{ item.disableRemark }}
+              </div>
+            </div>
+            <div class="goods-price">¥{{ item.retailPrice * 1 }}</div>
+            <div class="goods-number">
+              x
+              <text>{{ item.count }}</text>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="price-info"
+        v-if="
+          orderInfo.onLineStoreSingleProductList &&
+            orderInfo.onLineStoreSingleProductList.length
+        "
+      >
         <div class="price-item">
           <div class="left">商品金额</div>
           <div class="right">¥{{ orderInfo.totalPrice * 1 }}</div>
@@ -72,7 +125,7 @@
           <span class="desc">应付金额：</span>
           <span class="price">¥{{ orderInfo.actuallyPaid * 1 }}</span>
         </div>
-        <button @click="handleCommit" :disabled="global.loading">
+        <button @click="handleCommit" :disabled="submitDisabled">
           提交订单
         </button>
       </div>
@@ -134,6 +187,16 @@ export default {
         }
       }
       return "暂无可用";
+    },
+    submitDisabled() {
+      let { global, orderInfo } = this;
+
+      return (
+        global.loading ||
+        orderInfo.actuallyPaid <= 0 ||
+        !orderInfo.onLineStoreSingleProductList ||
+        !orderInfo.onLineStoreSingleProductList.length
+      );
     }
   },
   mounted() {
@@ -377,6 +440,94 @@ page {
         transform: translateY(-50%);
         span {
           font-size: 20px;
+        }
+      }
+    }
+  }
+}
+
+.invalid-goods {
+  width: 363px;
+  margin: 8px auto 0px auto;
+  border-radius: 8px;
+  background: white;
+  .invalid-title {
+    height: 46px;
+    line-height: 46px;
+    font-size: 15px;
+    padding-left: 15px;
+  }
+  .goods-list {
+    .goods-item {
+      padding: 10px 0 10px 14px;
+      display: flex;
+      position: relative;
+      .goods-img {
+        flex: 0 0 80px;
+        width: 80px;
+        height: 80px;
+        background: #f0f0f0;
+        border-radius: 8px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+      }
+      .goods-info {
+        margin-left: 12px;
+        // padding-top: 5px;
+        position: relative;
+        flex: auto;
+        padding-right: 30px;
+        max-width: 180px;
+        .goods-title {
+          font-size: 15px;
+          line-height: 17.5px;
+          max-height: 40px;
+          text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
+          -webkit-box-orient: vertical;
+          color: #999999;
+        }
+        .goods-desc {
+          font-size: 13px;
+          line-height: 16px;
+          color: #bbb;
+          text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+        .invalid-reason {
+          margin-top: 9px;
+          font-size: 15px;
+          line-height: 15px;
+          color: #555555;
+        }
+      }
+      .goods-price {
+        position: absolute;
+        top: 10px;
+        right: 7px;
+        color: #999999;
+        font-size: 15px;
+        line-height: 20px;
+      }
+      .goods-number {
+        color: #bbbbbb;
+        font-size: 9px;
+        position: absolute;
+        right: 7px;
+        top: 48px;
+        transform: translateY(-50%);
+        text {
+          font-size: 13px;
         }
       }
     }
