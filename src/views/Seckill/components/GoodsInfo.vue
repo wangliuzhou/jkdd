@@ -51,8 +51,8 @@
       <div class="ms-surplus">
         <div class="ms-surplus-progress">
           <div class="ms-surplus-bar">
-            <div class="progress">
-              <div class="progress-point" :style="progressStyle">
+            <div class="progress" :style="progressStyle">
+              <div class="progress-point">
                 <IconFont
                   type="iconmiaosha"
                   fontStyle="font-size:0.48rem;color:white;"
