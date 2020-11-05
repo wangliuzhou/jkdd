@@ -279,7 +279,7 @@ export default {
     goPage(obj) {
       console.log(obj);
       if (obj.path === "/orderList") {
-        this.$push(`${obj.path}?activeIndex=${obj.activeIndex}`);
+        this.$push({ path: obj.path, query: { activeIndex: obj.activeIndex } });
       } else {
         this.$push(obj.path);
       }
