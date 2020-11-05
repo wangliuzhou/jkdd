@@ -8,18 +8,13 @@
       }"
     >
       <div class="icon-group">
-        <div class="icon-item" v-if="back && pageLength > 1">
-          <IconFont
-            type="iconleft"
-            fontStyle="font-size:17px;color:#ffffff"
-            @click="goBack"
-          />
+        <div class="icon-item" v-if="back && pageLength > 1" @click="goBack">
+          <IconFont type="iconleft" fontStyle="font-size:17px;color:#ffffff" />
         </div>
-        <div class="icon-item" v-if="home && pageLength === 1">
+        <div class="icon-item" v-if="home && pageLength === 1" @click="goHome">
           <IconFont
             type="iconshouye"
             fontStyle="font-size:17px;color:#ffffff"
-            @click="goHome"
           />
         </div>
       </div>
@@ -86,7 +81,7 @@ export default {
       this.$router.go(-1);
     },
     goHome() {
-      this.$push({ path: "/pages/index/index" });
+      this.$replace("/");
     }
   }
 };

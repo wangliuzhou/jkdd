@@ -30,11 +30,7 @@
             />
           </div>
         </div>
-        <!-- <AuthAll type="userInfo"></AuthAll> -->
       </div>
-      <!-- <AuthAll type="phone"></AuthAll> -->
-      <!-- <button v-if="{{!$state.userInfo.userAvatar}}" open-type="getUserInfo" class="get-user-info-btn" bindgetuserinfo="checkSession"></button> -->
-      <!-- <button v-if="{{!$state.userInfo}}" open-type="getPhoneNumber" class="get-user-info-btn" style="z-index:4" bindgetphonenumber="checkSession"></button> -->
       <div class="member-card" @click="goMember">
         <div class="icon">{{ storeSysName }}</div>
         <div class="join-member">
@@ -106,7 +102,6 @@
           <div class="label">{{ item.label }}</div>
         </div>
       </div>
-      <!-- <AuthAll type="phone"></AuthAll> -->
     </div>
     <div class="function-card function-card-list-style">
       <div
@@ -133,6 +128,7 @@
         ></button>
       </div>
     </div>
+    <div v-if="!isLogin" class="no-auth" @click="goLogin"></div>
     <Tabbar />
   </div>
 </template>
@@ -255,7 +251,8 @@ export default {
       storeSysName: "",
       isMmember: 0,
       orderNums: {},
-      userInfo: null
+      userInfo: null,
+      isLogin: account.isLogin
     };
   },
   components: {
@@ -268,10 +265,14 @@ export default {
   methods: {
     init() {
       if (!account.isLogin) {
-        return login();
+        this.goLogin();
+        return;
       }
       this.getMemberDetail();
       this.getOrderNum();
+    },
+    goLogin() {
+      login();
     },
     goPage(obj) {
       if (obj.path === "/orderList") {
@@ -317,6 +318,7 @@ export default {
     },
     // 登录回调
     loginCallback() {
+      this.isLogin = true;
       this.getMemberDetail();
       this.getOrderNum();
     }
@@ -746,6 +748,14 @@ export default {
         }
       }
     }
+  }
+  .no-auth {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 100;
   }
 }
 </style>

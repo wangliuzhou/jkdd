@@ -148,6 +148,7 @@ export default {
     color: rgba(255, 255, 255, 1);
     line-height: 19px;
     text-align: center;
+    box-sizing: border-box;
   }
 
   .separator {

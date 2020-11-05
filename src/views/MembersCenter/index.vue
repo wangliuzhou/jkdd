@@ -53,6 +53,7 @@
         </div>
       </div>
     </div>
+    <div v-if="!isLogin" class="no-auth" @click="goLogin"></div>
     <CouponsModal ref="couponsModal" />
   </div>
 </template>
@@ -119,17 +120,22 @@ export default {
       detail: {},
       cardList: [{}],
       userInfo: {},
-      storeOuterId: Cfg.mainStoreId
+      storeOuterId: Cfg.mainStoreId,
+      isLogin: account.isLogin
     };
   },
   mounted() {
     if (!account.isLogin) {
-      return login();
+      this.goLogin();
+      return;
     }
     this.getMemberDetail();
   },
   computed: {},
   methods: {
+    goLogin() {
+      login();
+    },
     goJoinMember(e) {
       const { userGrowthValue, memberLevelScore, memberLevelInfoForce } = e;
       if (userGrowthValue < memberLevelScore) {
@@ -179,6 +185,7 @@ export default {
     },
     // 登录回调
     loginCallback() {
+      this.isLogin = true;
       this.getMemberDetail();
     },
     goHome() {
@@ -385,6 +392,14 @@ export default {
         }
       }
     }
+  }
+  .no-auth {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 100;
   }
 }
 </style>
