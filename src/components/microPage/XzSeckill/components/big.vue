@@ -213,7 +213,25 @@ export default {
       .goodsList-item-cover-box {
         position: relative;
         width: 100%;
-
+        .sold-out {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 159px;
+          height: 159px;
+          background: #000000;
+          opacity: 0.65;
+          z-index: 2;
+          border-radius: 50%;
+          color: #ffffff;
+          transform: translate(-50%, -50%);
+          text-align: center;
+          line-height: 159px;
+          font-size: 15px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #ffffff;
+        }
         .goodsList-item-cover-img {
           position: absolute;
           top: 0;
