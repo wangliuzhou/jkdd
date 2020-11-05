@@ -7,7 +7,7 @@
       />
       <span>客服</span>
     </div>
-    <div class="cart">
+    <div class="cart" @click="handleGoCart">
       <img :src="require('@/assets/images/cart-icon.png')" alt="购物车" />
       <span>购物车</span>
     </div>
@@ -48,6 +48,9 @@ export default {
       setBtnStatus: "pageGoodsDetail/setBtnStatus",
       setShowSku: "pageGoodsDetail/setShowSku"
     }),
+    handleGoCart() {
+      this.$push("/shoppingCart");
+    },
     handleAddCart() {
       if (!account.isLogin) {
         return login();
