@@ -137,15 +137,16 @@ export default {
   word-break: break-all;
   .time {
     display: inline-block;
-    width: 17px;
-    height: 17px;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 2px;
     background: #ff6a00;
     border-radius: 5px;
     font-size: 11px;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: rgba(255, 255, 255, 1);
-    line-height: 17px;
+    line-height: 19px;
     text-align: center;
   }
 
@@ -155,7 +156,7 @@ export default {
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: #ff6a00;
-    line-height: 17px;
+    line-height: 19px;
   }
 }
 
