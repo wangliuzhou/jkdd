@@ -36,8 +36,8 @@ export default {
     return {
       userId: "294ZKOG2WMNGLL1ZJ31L",
       storeId: "TSRORVZ17ZXD9",
-      accessToken: "d2b0f03e45437a186b12318b1900f004f7001775",
-      tokenTime: "1604296670032"
+      accessToken: "93c51a983ca05d81b3acab5971df0fed86254bbc",
+      tokenTime: "1604807480963"
     };
   },
   methods: {

@@ -9,6 +9,9 @@
       <span class="del-price" v-if="goodsDetail.minDelPrice * 1"
         >¥{{ goodsDetail.minDelPrice * 1 }}</span
       >
+      <span class="xg" v-if="goodsDetail.saleLimit"
+        >限购{{ goodsDetail.saleLimit }}件</span
+      >
     </div>
     <div class="goods-title">{{ goodsDetail.productName }}</div>
     <div class="goods-desc-wrap">
@@ -62,6 +65,11 @@ export default {
       color: #999999;
       text-decoration: line-through;
       font-size: 15px;
+    }
+    .xg {
+      color: #ff6a00;
+      font-size: 12px;
+      margin-left: 9.5px;
     }
   }
   .goods-title {

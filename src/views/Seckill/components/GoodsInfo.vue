@@ -20,19 +20,24 @@
           v-if="activityInfo.activityStatus != 3 && goodsDetail.minPrice * 1"
           >原价<span class="del">¥{{ goodsDetail.minPrice * 1 }}</span></span
         >
-        <div class="right-info">
-          <div class="time-title" v-if="activityInfo.activityStatus == 2">
-            距结束
+      </div>
+      <div class="right-info">
+        <template v-if="activityInfo.activityStatus == 2">
+          <div class="time-title xg" v-if="goodsDetail.saleLimit">
+            限购{{ goodsDetail.saleLimit }}件
           </div>
-          <div class="time-title yjs" v-if="activityInfo.activityStatus == 3">
-            秒杀已结束
+          <div class="time-wrap">
+            <div class="jjs">距结束</div>
+            <div class="time">
+              <span class="item">{{ formatTime[1] }}</span
+              ><span>:</span> <span class="item">{{ formatTime[2] }}</span
+              ><span>:</span>
+              <span class="item">{{ formatTime[3] }}</span>
+            </div>
           </div>
-          <div class="time" v-if="activityInfo.activityStatus == 2">
-            <span class="item">{{ formatTime[1] }}</span
-            ><span>:</span> <span class="item">{{ formatTime[2] }}</span
-            ><span>:</span>
-            <span class="item">{{ formatTime[3] }}</span>
-          </div>
+        </template>
+        <div class="time-title yjs" v-if="activityInfo.activityStatus == 3">
+          秒杀已结束
         </div>
       </div>
     </div>
@@ -43,20 +48,21 @@
           {{ goodsDetail.sellingPoint }}
         </div>
       </div>
-      <!-- <div class="ms-surplus">
+      <div class="ms-surplus">
         <div class="ms-surplus-progress">
           <div class="ms-surplus-bar">
-            <div class="progress"></div>
-            <div class="progress-point">
-              <IconFont
-                type="iconmiaosha"
-                fontStyle="font-size:0.48rem;color:white;"
-              />
+            <div class="progress">
+              <div class="progress-point" :style="progressStyle">
+                <IconFont
+                  type="iconmiaosha"
+                  fontStyle="font-size:0.48rem;color:white;"
+                />
+              </div>
             </div>
           </div>
         </div>
-        <div class="ms-surplus-num">剩余336件</div>
-      </div> -->
+        <div class="ms-surplus-num">剩余{{ leftStock }}件</div>
+      </div>
     </div>
   </div>
 </template>
@@ -85,12 +91,25 @@ export default {
         }
       }
       return null;
+    },
+    progressStyle() {
+      let { goodsDetail } = this;
+      if (goodsDetail) {
+        return `width:${((goodsDetail.seckillTotal - goodsDetail.seckillLeft) /
+          goodsDetail.seckillTotal) *
+          100}%`;
+      }
+      return null;
+    },
+    leftStock() {
+      let { goodsDetail } = this;
+      if (goodsDetail) {
+        return goodsDetail.seckillLeft > 10000
+          ? ~~(goodsDetail.seckillLeft / 10000) + "w+"
+          : goodsDetail.seckillLeft;
+      }
+      return null;
     }
-    // progressPointStyle() {
-    //   let { activityInfo } = this;
-    //   if (activityInfo) {
-    //   }
-    // }
   }
 };
 </script>
@@ -109,11 +128,11 @@ export default {
   }
   .price-wrap {
     padding-left: 12px;
-    height: 41px;
+    height: 100%;
     position: relative;
     z-index: 1;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
   }
   .msj {
     font-size: 15px;
@@ -143,22 +162,38 @@ export default {
       text-decoration: line-through;
     }
   }
-  .right-info {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 125px;
-    height: 59.5px;
+}
+.right-info {
+  position: absolute;
+  z-index: 2;
+  top: 0px;
+  right: 0px;
+  width: 125px;
+  padding-right: 4.5px;
+  height: 59.5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .time-title {
+    font-size: 15px;
+    line-height: 21px;
+    &.xg {
+      text-align: right;
+      font-size: 12px;
+      line-height: 16.5px;
+    }
+    &.yjs {
+      text-align: right;
+      padding-right: 12px;
+    }
+  }
+  .time-wrap {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    .time-title {
-      font-size: 15px;
-      line-height: 21px;
-      &.yjs {
-        text-align: right;
-        padding-right: 12px;
-      }
+    font-size: 12px;
+    margin-top: 6px;
+    .jjs {
+      flex: 0 0 40px;
+      line-height: 19px;
     }
     .time {
       top: 17.5px;
@@ -166,21 +201,19 @@ export default {
       align-items: center;
       justify-content: flex-end;
       flex-wrap: nowrap;
-      padding-right: 12px;
-      font-size: 18px;
-      margin-top: 2.5px;
+      flex: auto;
       span {
-        flex: 0 0 18px;
+        flex: 0 0 13px;
         display: flex;
         align-items: center;
         justify-content: center;
       }
       .item {
-        flex: 0 0 27px;
-        height: 27px;
+        flex: 0 0 19px;
+        height: 19px;
         background: white;
         color: #ff6a00;
-        border-radius: 8px;
+        border-radius: 5.5px;
       }
     }
   }
@@ -249,29 +282,29 @@ export default {
         position: relative;
         .progress {
           background: #ff6a00;
-          width: 50%;
           height: 100%;
           border-radius: 4px;
-        }
-        .progress-point {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translateX(-50%) translateY(-50%);
-          width: 15px;
-          height: 15px;
-          line-height: 15px;
-          border-radius: 100%;
-          background: #ff6a00;
-          border: 1.5px solid white;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          position: relative;
+          .progress-point {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateX(50%) translateY(-50%);
+            width: 15px;
+            height: 15px;
+            line-height: 15px;
+            border-radius: 100%;
+            background: #ff6a00;
+            border: 1.5px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
         }
       }
     }
     .ms-surplus-num {
-      flex: 0 0 65px;
+      flex: 0 0 80px;
       text-align: right;
       color: #ff6a00;
       font-size: 12px;

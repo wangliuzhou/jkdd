@@ -590,6 +590,7 @@ page {
   background: white;
   height: 52px;
   position: fixed;
+  z-index: 1;
   width: 100%;
   left: 0;
   bottom: 0;
