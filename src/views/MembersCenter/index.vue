@@ -8,23 +8,23 @@
     ></CustomNavigation>
     <div class="member-header">
       <div class="user-card">
-        <div class="bg-wrap" :style="{ height: `${tabbarBarHeight + 118}px` }">
+        <div class="bg-wrap" :style="{ height: `${statusBarHeight + 118}px` }">
           <div class="member-card-bg-color"></div>
         </div>
         <div
           class="user-info"
-          :style="{ 'padding-top': `${tabbarBarHeight + 8}px` }"
+          :style="{ 'padding-top': `${statusBarHeight + 8}px` }"
         >
           <div class="user-avatar-box">
             <van-image
               v-if="userInfo.userAvatar"
-              :src="$ali(ossDomain + userInfo.userAvatar, 120)"
+              :src="$ali(userInfo.userAvatar, 120)"
               class="user-avatar"
               fit="cover"
             />
           </div>
           <span class="user-name">{{
-            !!userInfo ? userInfo.userNickname : "立即登录"
+            !!userInfo.userNickname ? userInfo.userNickname : "立即登录"
           }}</span>
         </div>
         <CardList @goJoinMember="goJoinMember" :cardList="cardList"></CardList>
@@ -35,12 +35,7 @@
       <div class="privilege-list">
         <div v-for="(item, index) in privilegeList" :key="index" class="item">
           <div class="icon-wrap">
-            <van-image
-              v-if="userInfo.userAvatar"
-              :src="$ali(item.icon, 120)"
-              class="icon"
-              fit="cover"
-            />
+            <van-image :src="item.icon" class="icon" fit="contain" />
           </div>
           <div class="label">{{ item.label }}</div>
         </div>
@@ -65,26 +60,33 @@
 import CustomNavigation from "@/components/CustomNavigation";
 import CouponsModal from "./components/CouponsModal";
 import CardList from "./components/CardList";
+import jifenbeishuaiIcon from "@/assets/images/members/icon/jifenbeishuai.png";
+import songyouhuiquanIcon from "@/assets/images/members/icon/songyouhuiquan.png";
+import songjifenIcon from "@/assets/images/members/icon/songjifen.png";
+import songzengpinIcon from "@/assets/images/members/icon/songzengpin.png";
 import { Toast } from "vant";
+import Cfg from "@/config/index";
+import account, { login } from "@/utils/account";
+
 export default {
   components: { CustomNavigation, CouponsModal, CardList },
   data() {
     return {
       privilegeList: [
         {
-          icon: "/assets/image/members/icon/jifenbeishuai.png",
+          icon: jifenbeishuaiIcon,
           label: "积分倍率"
         },
         {
-          icon: "/assets/image/members/icon/songyouhuiquan.png",
+          icon: songyouhuiquanIcon,
           label: "送优惠券"
         },
         {
-          icon: "/assets/image/members/icon/songjifen.png",
+          icon: songjifenIcon,
           label: "送积分"
         },
         {
-          icon: "/assets/image/members/icon/songzengpin.png",
+          icon: songzengpinIcon,
           label: "送赠品"
         }
         // {
@@ -113,19 +115,18 @@ export default {
         // },
       ],
       scrollTop: 0,
-      ossDomain: "",
-      tabbarBarHeight: 20 + 45,
+      statusBarHeight: 60,
       detail: {},
-      storeOuterId: "TSRORVZ17ZXD9",
       cardList: [{}],
-      isLogin: true,
-      userInfo: {}
+      userInfo: {},
+      storeOuterId: Cfg.mainStoreId
     };
   },
   mounted() {
-    if (this.isLogin) {
-      this.getMemberDetail();
+    if (!account.isLogin) {
+      return login();
     }
+    this.getMemberDetail();
   },
   computed: {},
   methods: {

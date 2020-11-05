@@ -35,6 +35,7 @@
 </template>
 <script>
 import { px2rem } from "@/utils/index";
+import jumpLink from "@/utils/jumpLink";
 export default {
   props: ["detail"],
   data: () => {
@@ -88,12 +89,10 @@ export default {
       return 0;
     }
   },
-  mounted() {
-    console.log(this.detail);
-  },
+  mounted() {},
   methods: {
     goPage(item) {
-      console.log(item);
+      jumpLink(item.link);
     }
   }
 };

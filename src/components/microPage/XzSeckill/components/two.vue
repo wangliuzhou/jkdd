@@ -189,9 +189,7 @@ export default {
       return "";
     }
   },
-  mounted() {
-    console.log(this.detail);
-  },
+  mounted() {},
   methods: {
     goPage(item) {
       this.$emit("goPage", item);

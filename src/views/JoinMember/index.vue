@@ -24,7 +24,7 @@
             v-for="item in interestsList"
             :key="item.name"
           >
-            <img :src="item.icon" class="icon" fit="cover" />
+            <van-image :src="item.icon" class="icon" fit="cover" />
             <div class="label">{{ item.name }}</div>
           </div>
         </div>
@@ -80,7 +80,7 @@
               </div>
             </div>
           </div>
-          <div class="sumibt-btn" bind:tap="onSubmit">确定</div>
+          <div class="sumibt-btn" @click="onSubmit">确定</div>
         </div>
       </div>
       <CouponsModal ref="couponsModal" />
@@ -91,6 +91,11 @@
 import CouponsModal from "../MembersCenter/components/CouponsModal";
 import XzPicker from "./components/xzPicker";
 import XzRadio from "./components/xzRadio";
+import jifenbeilvIcon from "@/assets/images/members/joinMember/jifenbeilv.png";
+import songyouhuiquanIcon from "@/assets/images/members/joinMember/songyouhuiquan.png";
+import songjifenIcon from "@/assets/images/members/joinMember/songjifen.png";
+import songzengpinIcon from "@/assets/images/members/joinMember/songzengpin.png";
+import gengduoquanyiIcon from "@/assets/images/members/joinMember/gengduoquanyi.png";
 import { Toast } from "vant";
 export default {
   components: { CouponsModal, XzPicker, XzRadio },
@@ -103,23 +108,23 @@ export default {
       interestsList: [
         {
           name: "积分倍率",
-          icon: "../../assets/images/members/joinMember/jifenbeilv.png"
+          icon: jifenbeilvIcon
         },
         {
           name: "送优惠券",
-          icon: "../../assets/images/members/joinMember/songyouhuiquan.png"
+          icon: songyouhuiquanIcon
         },
         {
           name: "送积分",
-          icon: "../../assets/images/members/joinMember/songjifen.png"
+          icon: songjifenIcon
         },
         {
           name: "送赠品",
-          icon: "../../assets/images/members/joinMember/songzengpin.png"
+          icon: songzengpinIcon
         },
         {
           name: "更多权益",
-          icon: "../../assets/images/members/joinMember/gengduoquanyi.png"
+          icon: gengduoquanyiIcon
         }
       ]
     };
@@ -175,7 +180,7 @@ export default {
           }, 1500);
         }
       } catch (err) {
-        Toast.clear();
+        console.log(err);
       }
     },
     checkFormValues() {
@@ -193,7 +198,6 @@ export default {
     handleSelectorChange(e, type) {
       let values = { ...this.formValues };
       values[type] = e;
-      console.log(values);
       this.formValues = values;
     }
   }

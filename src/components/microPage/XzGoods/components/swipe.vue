@@ -201,9 +201,7 @@ export default {
       return [];
     }
   },
-  mounted() {
-    console.log(this.detail);
-  },
+  mounted() {},
   methods: {
     goPage(e) {
       this.$emit("goPage", e);

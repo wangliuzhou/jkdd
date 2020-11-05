@@ -7,15 +7,14 @@
     <div
       class="user-info-card"
       :style="{
-        height: `${statusBarHeight + 187}px`,
-        'padding-top': `${tabbarBarHeight + 15}px`
+        height: `${statusBarHeight + 187}px`
       }"
     >
       <div class="user-info">
         <div class="user-avatar-box">
           <!-- <van-image
             v-if="userInfo.userAvatar"
-            :src="$ali(ossDomain + userInfo.userAvatar, 375)"
+            :src="$ali(userInfo.userAvatar, 375)"
             class="user-avatar"
             :fit="calcImageStyle"
           /> -->
@@ -142,36 +141,44 @@ import { Toast } from "vant";
 // import IconFont from "@/components/IconFont";
 import Tabbar from "@/components/Tabbar";
 import CustomNavigation from "@/components/CustomNavigation";
+import paymentIcon from "@/assets/images/order/payment.png";
+import sendIcon from "@/assets/images/order/send.png";
+import takeIcon from "@/assets/images/order/take.png";
+import commentsIcon from "@/assets/images/order/comments.png";
+import refundIcon from "@/assets/images/order/refund.png";
+import Cfg from "@/config/index";
+import account, { login } from "@/utils/account";
+
 export default {
   data() {
     return {
       orderList: [
         {
-          icon: "/assets/images/order/payment.png",
+          icon: paymentIcon,
           link: "/orderList",
           label: "待付款",
           activeIndex: 1
         },
         {
-          icon: "/assets/images/order/send.png",
+          icon: sendIcon,
           link: "/orderList",
           label: "待发货",
           activeIndex: 2
         },
         {
-          icon: "/assets/images/order/take.png",
+          icon: takeIcon,
           link: "/orderList",
           label: "待收货",
           activeIndex: 3
         },
         {
-          icon: "/assets/images/order/comments.png",
+          icon: commentsIcon,
           link: "/orderList",
           label: "评价",
           activeIndex: 4
         },
         {
-          icon: "/assets/images/order/refund.png",
+          icon: refundIcon,
           link: "/orderList",
           label: "退款/售后",
           activeIndex: 5
@@ -243,41 +250,30 @@ export default {
         // }
       ],
       statusBarHeight: 20,
-      tabbarBarHeight: 20 + 45,
-      ratio: 2,
       scrollTop: 0,
-      ossDomain: "",
-      dpr: 2,
-      storeOuterId: "TSRORVZ17ZXD9",
+      storeOuterId: Cfg.mainStoreId,
       storeSysName: "",
       isMmember: 0,
       orderNums: {},
-      isLogin: true,
-      userInfo: {
-        userNickname: ""
-      }
+      userInfo: null
     };
   },
   components: {
     Tabbar,
     CustomNavigation
   },
-  onShow() {
+  mounted() {
     this.init();
   },
-  mounted() {},
   methods: {
     init() {
-      if (this.isLogin) {
-        this.getMemberDetail();
-        this.getOrderNum();
+      if (!account.isLogin) {
+        return login();
       }
-    },
-    onPageScroll({ scrollTop }) {
-      this.scrollTop = scrollTop;
+      this.getMemberDetail();
+      this.getOrderNum();
     },
     goPage(obj) {
-      console.log(obj);
       if (obj.path === "/orderList") {
         this.$push({ path: obj.path, query: { activeIndex: obj.activeIndex } });
       } else {
@@ -290,7 +286,7 @@ export default {
         Toast("商家未设置会员");
         return;
       }
-      this.$push("/pages/membersCenter/index");
+      this.$push("/membersCenter");
     },
     // 获取会员卡详情
     async getMemberDetail() {
@@ -355,7 +351,7 @@ export default {
       position: relative;
       display: flex;
       align-items: center;
-      // height: 100%;
+      height: 100%;
 
       .user-avatar-box {
         width: 60px;

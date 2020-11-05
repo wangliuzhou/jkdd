@@ -1,6 +1,6 @@
 <template>
   <div class="card-list">
-    <Swipe style="height:100%">
+    <Swipe style="height:100%" :show-indicators="false">
       <SwipeItem v-for="(item, index) in cardList" :key="index">
         <div class="member-card">
           <div
