@@ -290,7 +290,6 @@ export default {
         addressInfo,
         couponId,
         orderInfo,
-        skus,
         seckillActivityId,
         fromCart,
         userMessage
@@ -306,7 +305,14 @@ export default {
           consigneeAddressId: addressInfo
             ? addressInfo.userReceivingAddressId
             : null,
-          onlineStoreSingleProductOutIdList: skus,
+          onlineStoreSingleProductOutIdList: orderInfo.onLineStoreSingleProductList.map(
+            ({ onlineStoreSingleProductOutId, count }) => {
+              return {
+                onlineStoreSingleProductOutId,
+                onlineStoreSingleProductOrderCount: count
+              };
+            }
+          ),
           actuallyPaid: orderInfo.actuallyPaid,
           fromCart,
           userMessage
