@@ -103,7 +103,7 @@
         @handleReload="handleReload"
       />
     </template>
-    <!-- <SkuBox ref="skuBox" /> -->
+    <SkuBox ref="skuBox" />
   </div>
 </template>
 <script>
@@ -119,7 +119,7 @@ import IncreaseFans from "@/components/microPage/IncreaseFans";
 import Coupon from "@/components/microPage/Coupon";
 import XzSeckill from "@/components/microPage/XzSeckill";
 import TakeOut from "@/components/microPage/TakeOut/index";
-// import SkuBox from "@/components/microPage/SkuBox";
+import SkuBox from "@/components/microPage/SkuBox";
 
 export default {
   components: {
@@ -134,8 +134,8 @@ export default {
     IncreaseFans,
     Coupon,
     XzSeckill,
-    TakeOut
-    // SkuBox
+    TakeOut,
+    SkuBox
   },
   props: {
     components: {

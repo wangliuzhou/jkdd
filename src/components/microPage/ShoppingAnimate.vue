@@ -1,10 +1,10 @@
 <template>
-  <view class="animate-box" :style="{ top: style.top, left: style.left }">
+  <div class="animate-box" :style="{ top: style.top, left: style.left }">
     <IconFont
       type="icongouwuche1"
       fontStyle="font-size:20px;color:#ff6a00;"
     ></IconFont>
-  </view>
+  </div>
 </template>
 
 <script>
@@ -27,8 +27,8 @@ export default {
   methods: {
     init() {
       let systemInfo = {
-        windowWidth: 750,
-        windowHeight: 1180
+        windowWidth: document.documentElement.clientWidth,
+        windowHeight: document.documentElement.clientHeight
       };
       this.busPos = {
         x: systemInfo.windowWidth * 0.6,
@@ -54,8 +54,8 @@ export default {
       }
       this.lock = true;
       let current = {
-        x: e.touches["0"].clientX,
-        y: e.touches["0"].clientY - 50
+        x: e.clientX,
+        y: e.clientY - 50
       };
       let top = {
         x: current.x - 100,
@@ -74,6 +74,7 @@ export default {
           this.style = { left: "-999px", top: "-999px" };
           this.lock = false;
           clearInterval(this.timer);
+          return;
         }
         this.style = keyframes.bezier_points[index];
         index++;
@@ -87,15 +88,15 @@ export default {
 </script>
 <style lang="less" scoped>
 .animate-box {
-  width: 60rpx;
-  height: 60rpx;
+  width: 30px;
+  height: 30px;
   position: fixed;
-  left: -9999px;
+  left: -999px;
   top: -999px;
   overflow: hidden;
   z-index: 99;
   opacity: 1;
   text-align: center;
-  line-height: 60rpx;
+  line-height: 30px;
 }
 </style>

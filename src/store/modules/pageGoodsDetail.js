@@ -51,6 +51,17 @@ export default {
     },
     updateChooseInfo(state, payload) {
       state.chooseInfo = { ...state.chooseInfo, ...payload };
+    },
+    resetData(state) {
+      state.chooseInfo = {
+        sku: null, //已选中的sku信息
+        selectSkuAttr: null, //选中的sku，map
+        num: 1, //数量
+        address: null, //选中的地址信息
+        freight: 0 //运费
+      };
+      state.goodsDetail = null;
+      state.btnStatus = null;
     }
   },
   actions: {
