@@ -102,14 +102,9 @@
             </div>
             <div class="order-detail-btns">
               <div
-                bindtap="handleApplyAfterSale"
+                @click.stop="handleApplyAfterSale"
                 style="margin:12px 0 0 0"
-                v-if="
-                  info.orderStatus === 1 ||
-                    info.orderStatus === 2 ||
-                    info.orderStatus === 3 ||
-                    info.orderStatus === 4
-                "
+                v-if="getShowAfterSaler"
               >
                 申请售后
               </div>
@@ -351,6 +346,13 @@ export default {
         );
       }
       return null;
+    },
+    getShowAfterSaler() {
+      const { info } = this;
+      if (info.orderStatus) {
+        return [1, 2, 3, 4].includes(info.orderStatus);
+      }
+      return false;
     }
   },
   created() {
@@ -514,6 +516,17 @@ export default {
     // 跳转商品详情
     goGoodsDetail(id) {
       this.$push(`/goodsDetail/${id}`);
+    },
+    //点击申请售后按钮
+    handleApplyAfterSale() {
+      Dialog.confirm({
+        title: "提示",
+        message: "该商户品类暂不支持直接申请售后，请联系客服处理。"
+      })
+        .then(() => {
+          this.$push("/index");
+        })
+        .catch(() => {});
     }
   }
 };

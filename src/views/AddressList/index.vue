@@ -1,6 +1,6 @@
 <template>
   <div class="address-list-container">
-    <div class="get-wx-address flex-between" @click="getWXAddress">
+    <!-- <div class="get-wx-address flex-between" @click="getWXAddress">
       <div class="get-wx-address-left">
         <img
           class="wx-icon"
@@ -12,7 +12,7 @@
       <div class="get-wx-address-right">
         <IconFont type="iconqianjin" fontStyle="font-size: 15px;color:#ccc" />
       </div>
-    </div>
+    </div> -->
     <div class="address-list">
       <div
         v-for="item in addressList"
@@ -205,14 +205,11 @@ export default {
 </script>
 <style lang="less" scoped>
 /* @import url(); 引入css类 */
-page {
-  background: #f8f8f8;
-  padding-bottom: calc(env(safe-area-inset-bottom) + 56px);
-}
 
 .address-list-container {
   position: relative;
-
+  background: #f8f8f8;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 56px);
   .get-wx-address {
     height: 50px;
     background: rgba(255, 255, 255, 1);
