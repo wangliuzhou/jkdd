@@ -1,9 +1,6 @@
 <template>
   <div class="user-content-page">
-    <CustomNavigation
-      title="个人中心"
-      :scrollTop="scrollTop"
-    ></CustomNavigation>
+    <CustomNavigation title="个人中心"></CustomNavigation>
     <div
       class="user-info-card"
       :style="{
@@ -237,7 +234,6 @@ export default {
         // }
       ],
       statusBarHeight: 20,
-      scrollTop: 0,
       storeOuterId: Cfg.mainStoreId,
       storeSysName: "",
       isMmember: 0,
@@ -280,6 +276,7 @@ export default {
       }
       this.$push("/membersCenter");
     },
+
     // 获取会员卡详情
     async getMemberDetail() {
       const { storeOuterId } = this;

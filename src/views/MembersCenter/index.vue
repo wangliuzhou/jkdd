@@ -1,11 +1,6 @@
 <template>
   <div class="member-center-page">
-    <CustomNavigation
-      title="会员中心"
-      :scrollTop="scrollTop"
-      back
-      home
-    ></CustomNavigation>
+    <CustomNavigation title="会员中心" back home></CustomNavigation>
     <div class="member-header">
       <div class="user-card">
         <div class="bg-wrap" :style="{ height: `${statusBarHeight + 118}px` }">
@@ -115,7 +110,6 @@ export default {
         // 	label: "急速客服",
         // },
       ],
-      scrollTop: 0,
       statusBarHeight: 60,
       detail: {},
       cardList: [{}],
@@ -190,9 +184,6 @@ export default {
     },
     goHome() {
       this.$replace("/");
-    },
-    onPageScroll({ scrollTop }) {
-      this.scrollTop = scrollTop;
     }
   }
 };

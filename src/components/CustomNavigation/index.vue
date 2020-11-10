@@ -49,17 +49,14 @@ export default {
     block: {
       type: Boolean,
       default: false
-    },
-    scrollTop: {
-      type: Number,
-      default: 0
     }
   },
   components: { IconFont },
   data() {
     return {
       statusBarHeight: 20,
-      pageLength: 1
+      pageLength: 1,
+      scrollTop: 0
     };
   },
   computed: {
@@ -75,8 +72,14 @@ export default {
     }
   },
   created() {},
-  mounted() {},
+  mounted() {
+    window.addEventListener("scroll", this.scrollHandle);
+  },
   methods: {
+    scrollHandle(e) {
+      let top = e.srcElement.scrollingElement.scrollTop;
+      this.scrollTop = top;
+    },
     goBack() {
       this.$router.go(-1);
     },
