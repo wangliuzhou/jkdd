@@ -9,7 +9,6 @@
             :error.sync="error"
             error-text="请求失败，点击重新加载"
             :finished="finished"
-            finished-text="暂无更多数据"
             @load="getCouponsList"
             :immediate-check="false"
           >
@@ -32,7 +31,6 @@
             :error.sync="error"
             error-text="请求失败，点击重新加载"
             :finished="finished"
-            finished-text="暂无更多数据"
             @load="getCouponsList"
             :immediate-check="false"
           >
@@ -134,18 +132,7 @@ export default {
   background: rgba(248, 248, 248, 1);
   // padding-bottom: calc(env(safe-area-inset-bottom) + 57px);
   padding-bottom: calc(env(safe-area-inset-bottom));
-  .tab-class {
-    font-size: 15px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: rgba(51, 51, 51, 1);
-  }
-  .tab-active-class {
-    font-size: 15px;
-    font-family: PingFangSC-Medium, PingFang SC;
-    font-weight: 500;
-    color: rgba(255, 94, 0, 1);
-  }
+
   .coupons-list {
     box-sizing: border-box;
     padding: 10px 12px;

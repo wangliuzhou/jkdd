@@ -4,8 +4,7 @@
     sticky
     color="#ff6a00"
     line-width="24"
-    tab-class="tab-class"
-    tab-active-class="tab-active-class"
+    title-active-color="#ff6a00"
   >
     <van-tab title="可用优惠券" :name="0">
       <slot name="canUse"></slot>
@@ -45,4 +44,16 @@ export default {
 </script>
 <style lang="less" scoped>
 /* @import url(); 引入css类 */
+.tab-class {
+  font-size: 15px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+}
+.tab-active-class {
+  font-size: 15px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(255, 94, 0, 1);
+}
 </style>

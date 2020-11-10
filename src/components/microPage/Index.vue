@@ -103,6 +103,8 @@
         @handleReload="handleReload"
       />
     </template>
+    <!-- 外卖模版页面不显示logo -->
+    <BottomLogo v-if="components && components.length && templateType !== 1" />
     <SkuBox ref="skuBox" />
   </div>
 </template>
@@ -120,6 +122,7 @@ import Coupon from "@/components/microPage/Coupon";
 import XzSeckill from "@/components/microPage/XzSeckill";
 import TakeOut from "@/components/microPage/TakeOut/index";
 import SkuBox from "@/components/microPage/SkuBox";
+import BottomLogo from "@/components/BottomLogo";
 
 export default {
   components: {
@@ -135,13 +138,15 @@ export default {
     Coupon,
     XzSeckill,
     TakeOut,
-    SkuBox
+    SkuBox,
+    BottomLogo
   },
   props: {
     components: {
       type: Array,
       default: () => []
-    }
+    },
+    templateType: Number
   },
   methods: {
     handleScroll(scrollTop) {

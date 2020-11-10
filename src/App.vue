@@ -14,13 +14,28 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   computed: {
     ...mapState({
       global: "global"
     })
+  },
+  methods: {
+    ...mapActions({
+      setBottomLogoInfo: "bottomLogo/setBottomLogoInfo"
+    }),
+    // 获取底部logo信息
+    async getBottomInfo() {
+      const { data } = await this.$fetchGet(
+        "/apply/mobile/storesysLogo/getLogoInfo"
+      );
+      this.setBottomLogoInfo(data || {});
+    }
+  },
+  created() {
+    this.getBottomInfo();
   }
 };
 </script>

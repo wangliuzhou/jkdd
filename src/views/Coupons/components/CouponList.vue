@@ -6,7 +6,7 @@
       :error.sync="error"
       error-text="请求失败，点击重新加载"
       :finished="finished"
-      finished-text="暂无更多数据"
+      finished-text="--"
       @load="onLoad"
       :immediate-check="false"
     >

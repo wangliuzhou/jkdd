@@ -38,6 +38,7 @@
         <div class="no-data-box" v-if="showNoDataImg">
           <image class src="./../../assets/image/order_no_oreder.png" />暂无数据
         </div>
+        <BottomLogo />
       </div>
     </van-list>
   </div>
@@ -45,8 +46,11 @@
 
 <script>
 import { Toast } from "vant";
+import BottomLogo from "@/components/BottomLogo";
 export default {
-  name: "",
+  components: {
+    BottomLogo
+  },
   data() {
     return {
       list: [],

@@ -113,12 +113,12 @@
         </div>
       </div>
       <div class="total-price-box">
-        <span class="goods-number"
-          >共{{
+        <span class="goods-number">
+          共{{
             info.tenantOrderProductDetails &&
               info.tenantOrderProductDetails.length
-          }}件，</span
-        >
+          }}件，
+        </span>
         <span class="computed-text">小计:</span>
         <span class="money">￥{{ getOriginTotalPrice }}</span>
       </div>
@@ -192,13 +192,6 @@
       </div>
     </div>
 
-    <div class="order-detail-pay">
-      <div class="item">
-        备注：
-        <span class="value">{{ info.userRemark || "无" }}</span>
-      </div>
-    </div>
-
     <div class="order-detail-bottom-btns">
       <div class="show-pay-price" v-if="info.orderStatus === 0">
         应付金额:
@@ -246,7 +239,7 @@
         <div>删除订单</div>
         <div>评价商品</div>
         <div>再次购买</div>
-      </block>-->
+        </block>-->
       </div>
     </div>
   </div>
@@ -415,7 +408,7 @@ export default {
               });
             }, 500);
           })
-          .catch(err => {
+          .catch(() => {
             // wx.showToast({
             //   title: "支付异常",
             //   icon: "none"

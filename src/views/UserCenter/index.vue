@@ -1,50 +1,54 @@
 <template>
-  <div class="user-content-page">
-    <CustomNavigation title="个人中心"></CustomNavigation>
-    <div
-      class="user-info-card"
-      :style="{
-        height: `${statusBarHeight + 187}px`
-      }"
-    >
-      <div class="user-info">
-        <div class="user-avatar-box">
-          <!-- <van-image
+  <div>
+    <div class="user-content-page">
+      <CustomNavigation title="个人中心"></CustomNavigation>
+      <div
+        class="user-info-card"
+        :style="{
+          height: `${statusBarHeight + 187}px`
+        }"
+      >
+        <div class="user-info">
+          <div class="user-avatar-box">
+            <!-- <van-image
             v-if="userInfo.userAvatar"
             :src="$ali(userInfo.userAvatar, 375)"
             class="user-avatar"
             :fit="calcImageStyle"
           /> -->
+          </div>
+          <div class="user-detail">
+            <div class="user-name">
+              <span class="name">{{
+                !!userInfo ? userInfo.userNickname : "立即登录"
+              }}</span>
+              <IconFont
+                type="iconhuiyuanma"
+                fontStyle="font-size:15px;color:#ffffff;"
+              />
+            </div>
+          </div>
         </div>
-        <div class="user-detail">
-          <div class="user-name">
-            <span class="name">{{
-              !!userInfo ? userInfo.userNickname : "立即登录"
+        <div class="member-card" @click="goMember">
+          <div class="icon">{{ storeSysName }}</div>
+          <div class="join-member">
+            <IconFont
+              type="iconhuiyuanxingbiao"
+              fontStyle="font-size:15px;color:#ffffff"
+            />
+            <span class="text">{{
+              isMmember === 2 ? "会员中心" : "成为会员"
             }}</span>
             <IconFont
-              type="iconhuiyuanma"
-              fontStyle="font-size:15px;color:#ffffff;"
+              type="iconright"
+              fontStyle="font-size:11px;color:#ffffff"
             />
           </div>
         </div>
+        <!-- <image class="member-background-img" src="/assets/image/members/ordinary_radius_card.png" /> -->
+        <!-- <image class="footer-img" src="/assets/image/members/footer_border.png" /> -->
       </div>
-      <div class="member-card" @click="goMember">
-        <div class="icon">{{ storeSysName }}</div>
-        <div class="join-member">
-          <IconFont
-            type="iconhuiyuanxingbiao"
-            fontStyle="font-size:15px;color:#ffffff"
-          />
-          <span class="text">{{
-            isMmember === 2 ? "会员中心" : "成为会员"
-          }}</span>
-          <IconFont type="iconright" fontStyle="font-size:11px;color:#ffffff" />
-        </div>
-      </div>
-      <!-- <image class="member-background-img" src="/assets/image/members/ordinary_radius_card.png" /> -->
-      <!-- <image class="footer-img" src="/assets/image/members/footer_border.png" /> -->
-    </div>
-    <!-- <div class="balance-card">
+      <!-- <div class="balance-card">
     <div class="item">
       <div class="value">1800</div>
       <div class="label">积分</div>
@@ -58,66 +62,76 @@
       <div class="label">余额</div>
     </div>
   </div>-->
-    <div class="order-card">
-      <div class="header">
-        <div class="left-label">
-          我的订单
+      <div class="order-card">
+        <div class="header">
+          <div class="left-label">
+            我的订单
+          </div>
+          <div class="right-go-all">
+            <span
+              class="text"
+              @click="goPage({ path: '/orderList', activeIndex: undefined })"
+              >查看全部订单</span
+            >
+            <IconFont
+              type="iconright"
+              fontStyle="font-size:11px;color:#999999"
+            />
+          </div>
         </div>
-        <div class="right-go-all">
-          <span
-            class="text"
-            @click="goPage({ path: '/orderList', activeIndex: undefined })"
-            >查看全部订单</span
+        <div class="order-types">
+          <div
+            v-for="(item, index) in orderList"
+            :key="index"
+            class="item"
+            @click="goPage({ path: item.link, activeIndex: item.activeIndex })"
           >
-          <IconFont type="iconright" fontStyle="font-size:11px;color:#999999" />
+            <div
+              v-if="item.num"
+              class="order-num"
+              :style="{ padding: `0 ${item.num > 9 ? '2px' : 0} ` }"
+            >
+              {{ item.num > 99 ? "99+" : item.num }}
+            </div>
+            <van-image :src="item.icon" class="icon" fit="aspectFill" />
+            <div class="label">{{ item.label }}</div>
+          </div>
         </div>
       </div>
-      <div class="order-types">
+      <div class="function-card function-card-list-style">
         <div
-          v-for="(item, index) in orderList"
+          v-for="(item, index) in functionList"
           :key="index"
           class="item"
-          @click="goPage({ path: item.link, activeIndex: item.activeIndex })"
+          @click="goPage({ path: item.link })"
         >
-          <div
-            v-if="item.num"
-            class="order-num"
-            :style="{ padding: `0 ${item.num > 9 ? '2px' : 0} ` }"
-          >
-            {{ item.num > 99 ? "99+" : item.num }}
+          <IconFont
+            :type="item.icon"
+            :fontStyle="{
+              'font-size': item.fontSize || '15px',
+              color: '#303133'
+            }"
+          />
+          <div class="label">
+            <div class="text">{{ item.label }}</div>
+            <IconFont
+              type="iconright"
+              fontStyle="font-size:12px;color:#999999"
+            />
           </div>
-          <van-image :src="item.icon" class="icon" fit="aspectFill" />
-          <div class="label">{{ item.label }}</div>
+          <button
+            v-if="item.label === '客服聊天'"
+            class="contact-btn"
+            open-type="contact"
+          ></button>
         </div>
       </div>
+      <div v-if="!isLogin" class="no-auth" @click="goLogin"></div>
+      <Tabbar />
     </div>
-    <div class="function-card function-card-list-style">
-      <div
-        v-for="(item, index) in functionList"
-        :key="index"
-        class="item"
-        @click="goPage({ path: item.link })"
-      >
-        <IconFont
-          :type="item.icon"
-          :fontStyle="{
-            'font-size': item.fontSize || '15px',
-            color: '#303133'
-          }"
-        />
-        <div class="label">
-          <div class="text">{{ item.label }}</div>
-          <IconFont type="iconright" fontStyle="font-size:12px;color:#999999" />
-        </div>
-        <button
-          v-if="item.label === '客服聊天'"
-          class="contact-btn"
-          open-type="contact"
-        ></button>
-      </div>
+    <div class="bottom-logo-box">
+      <BottomLogo />
     </div>
-    <div v-if="!isLogin" class="no-auth" @click="goLogin"></div>
-    <Tabbar />
   </div>
 </template>
 <script>
@@ -132,8 +146,14 @@ import commentsIcon from "@/assets/images/order/comments.png";
 import refundIcon from "@/assets/images/order/refund.png";
 import Cfg from "@/config/index";
 import account, { login } from "@/utils/account";
+import BottomLogo from "@/components/BottomLogo";
 
 export default {
+  components: {
+    BottomLogo,
+    Tabbar,
+    CustomNavigation
+  },
   data() {
     return {
       orderList: [
@@ -241,10 +261,6 @@ export default {
       userInfo: null,
       isLogin: account.isLogin
     };
-  },
-  components: {
-    Tabbar,
-    CustomNavigation
   },
   mounted() {
     this.init();
@@ -746,5 +762,9 @@ export default {
     right: 0;
     z-index: 100;
   }
+}
+.bottom-logo-box {
+  background: rgba(248, 248, 248, 1);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 58px);
 }
 </style>

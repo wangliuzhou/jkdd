@@ -12,7 +12,7 @@
       <div class="get-wx-address-right">
         <IconFont type="iconqianjin" fontStyle="font-size: 15px;color:#ccc" />
       </div>
-    </div> -->
+    </div>-->
     <div class="address-list">
       <div
         v-for="item in addressList"
@@ -40,7 +40,10 @@
           </div>
         </div>
         <div @click="goAddAddress({ id: item.userReceivingAddressId })">
-          <IconFont type="iconbianji" fontStyle="font-size: 15px;color:#ccc" />
+          <IconFont
+            type="iconbianji"
+            fontStyle="font-size: 15px;color:#ccc;margin-left:12px"
+          />
         </div>
       </div>
     </div>

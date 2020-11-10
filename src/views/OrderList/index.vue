@@ -353,6 +353,9 @@ export default {
 .order-list-wrap {
   position: relative;
   padding-top: 60px;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   .order-list-tabs {
     width: 100%;
     overflow-x: auto;
@@ -363,6 +366,7 @@ export default {
     top: 0px;
     left: 0;
     z-index: 2;
+
     .order-list-box {
       display: flex;
       align-items: center;
@@ -370,6 +374,7 @@ export default {
       overflow: hidden;
       height: 51px;
       width: 112%;
+
       .order-list-tab {
         font-size: 15px;
         text-align: center;
