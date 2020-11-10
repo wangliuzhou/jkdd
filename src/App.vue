@@ -24,15 +24,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      setBottomLogoInfo: "bottomLogo/setBottomLogoInfo"
-    }),
-    // 获取底部logo信息
-    async getBottomInfo() {
-      const { data } = await this.$fetchGet(
-        "/apply/mobile/storesysLogo/getLogoInfo"
-      );
-      this.setBottomLogoInfo(data || {});
-    }
+      getBottomInfo: "bottomLogo/getBottomInfo"
+    })
   },
   created() {
     this.getBottomInfo();

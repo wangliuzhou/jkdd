@@ -1,165 +1,170 @@
 <template>
   <div class="cart-page">
-    <!-- <div class="not-login-container" v-if="!$state.isLogin">
-      <span class="not-login-tips">看不到购物车内容？绑定手机号试试</span>
-      <PhoneLoginContainer>
-        <div class="login-btn">登录</div>
-      </PhoneLoginContainer>
-    </div>-->
-    <div
-      class="cart-empty-box"
-      v-if="invalidList.length + notInvalidList.length === 0"
-    >
-      <img class="cart-empty-img" src="~@/assets/images/cart-empty.png" />
-      <div>暂未添加商品哦～</div>
+    <div class="not-login-container" v-if="!isLogin">
+      <span class="not-login-tips"
+        >看不到购物车内容？
+        <div class="login-btn" @click="goLogin">去登录</div></span
+      >
     </div>
-
-    <div class="shopping-card-container" v-else>
-      <div class="list">
-        <div
-          v-for="(item, index) in notInvalidList"
-          :key="item.cartId"
-          class="item"
-        >
-          <van-swipe-cell class="van-swipe-cell">
-            <div class="item-content">
-              <div class="item-checkbox-wrap">
-                <van-checkbox
-                  @click="onCheckboxChange(index)"
-                  icon-size="18"
-                  checked-color="#FF6A00"
-                  v-model="item.checked"
-                />
-              </div>
-              <div class="item-image">
-                <van-image
-                  :src="$ali(item.pic, 80)"
-                  alt="商品图片"
-                  fit="cover"
-                  class="van-image "
-                  @click="goGoodsDetail(item.dealerProductOutId)"
-                />
-              </div>
-              <div
-                class="item-goods-detail"
-                @click="goGoodsDetail(item.dealerProductOutId)"
-              >
-                <div class="goods-name">{{ item.name }}</div>
-                <div class="attr-and-conut">
-                  <div class="goods-attr-value">{{ item.attrValue }}</div>
-                  <div class="goods-stock" v-if="item.stock < item.count">
-                    仅剩{{ item.stock }}件
-                  </div>
-                  <div
-                    class="goods-stock"
-                    v-if="item.stock < 10 && item.stock >= item.count"
-                  >
-                    库存紧张
-                  </div>
-                </div>
-
-                <div class="detail-bottom">
-                  <div class="goods-price">¥{{ item.price * 1 }}</div>
-                  <div class="item-right">
-                    <div
-                      @click.stop="decrease(index, item)"
-                      :class="[
-                        'btn-public',
-                        { 'one-decrease-btn': item.count === 1 }
-                      ]"
-                    >
-                      -
-                    </div>
-                    <div class="count">{{ item.count }}</div>
-                    <div class="btn-public" @click.stop="increase(index, item)">
-                      +
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <template #right>
-              <div
-                @click="handleDelCratItem(item)"
-                class="van-swipe-delete-icon"
-                style="padding-left:20px"
-              >
-                <IconFont type="iconshanchu" fontStyle="font-size:24px" />
-              </div>
-            </template>
-          </van-swipe-cell>
-        </div>
+    <div wx:else>
+      <div
+        class="cart-empty-box"
+        v-if="invalidList.length + notInvalidList.length === 0 && !loading"
+      >
+        <img class="cart-empty-img" src="~@/assets/images/cart-empty.png" />
+        <div>暂未添加商品哦～</div>
       </div>
 
-      <div class="card" v-if="invalidList.length">
-        <div class="invalid-top">
-          <div class="invalid-goods-count">
-            失效商品{{ invalidList.length }}件
-          </div>
-          <div class="invalid-clear-btn" @click="handleRemoveInvalidGoods">
-            清空失效商品
-          </div>
-        </div>
-        <div class="list invalid-list">
-          <div v-for="item in invalidList" :key="item.cartId">
+      <div class="shopping-card-container" v-else>
+        <div class="list">
+          <div
+            v-for="(item, index) in notInvalidList"
+            :key="item.cartId"
+            class="item"
+          >
             <van-swipe-cell class="van-swipe-cell">
-              <div class="item invalid-item">
+              <div class="item-content">
+                <div class="item-checkbox-wrap">
+                  <van-checkbox
+                    @click="onCheckboxChange(index)"
+                    icon-size="18"
+                    checked-color="#FF6A00"
+                    v-model="item.checked"
+                  />
+                </div>
                 <div class="item-image">
                   <van-image
                     :src="$ali(item.pic, 80)"
                     alt="商品图片"
                     fit="cover"
                     class="van-image"
+                    @click="goGoodsDetail(item.dealerProductOutId)"
                   />
                 </div>
-                <div class="item-goods-detail">
-                  <div class="goods-name invalid">{{ item.name }}</div>
+                <div
+                  class="item-goods-detail"
+                  @click="goGoodsDetail(item.dealerProductOutId)"
+                >
+                  <div class="goods-name">{{ item.name }}</div>
                   <div class="attr-and-conut">
-                    <div class="goods-attr-value invalid">
-                      {{ item.attrValue }}
+                    <div class="goods-attr-value">{{ item.attrValue }}</div>
+                    <div class="goods-stock" v-if="item.stock < item.count">
+                      仅剩{{ item.stock }}件
+                    </div>
+                    <div
+                      class="goods-stock"
+                      v-if="item.stock < 10 && item.stock >= item.count"
+                    >
+                      库存紧张
                     </div>
                   </div>
-                  <div class="detail-bottom invalid">{{ item.result }}</div>
+
+                  <div class="detail-bottom">
+                    <div class="goods-price">¥{{ item.price * 1 }}</div>
+                    <div class="item-right">
+                      <div
+                        @click.stop="decrease(index, item)"
+                        :class="[
+                          'btn-public',
+                          { 'one-decrease-btn': item.count === 1 }
+                        ]"
+                      >
+                        -
+                      </div>
+                      <div class="count">{{ item.count }}</div>
+                      <div
+                        class="btn-public"
+                        @click.stop="increase(index, item)"
+                      >
+                        +
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <template #right>
                 <div
                   @click="handleDelCratItem(item)"
-                  class="van-swipe-delete-icon invalid"
+                  class="van-swipe-delete-icon"
+                  style="padding-left:20px"
                 >
-                  删除
+                  <IconFont type="iconshanchu" fontStyle="font-size:24px" />
                 </div>
               </template>
             </van-swipe-cell>
           </div>
         </div>
-      </div>
-      <div class="bottom-total">
-        <div class="bottom-total-checkbox-wrap">
-          <van-checkbox
-            icon-size="18"
-            :value="getToTalGoodsChecked"
-            checked-color="#FF6A00"
-            @click="onTotalChange"
-            v-if="notInvalidList.length"
-            >全选</van-checkbox
-          >
-        </div>
-        <div class="bottom-total-right">
-          <div class="total-price-wrap">
-            <div class="total-price-text">
-              <div>合计:</div>
-              <div class="total-price-number">￥{{ getTotalPrice }}</div>
+
+        <div class="card" v-if="invalidList.length">
+          <div class="invalid-top">
+            <div class="invalid-goods-count">
+              失效商品{{ invalidList.length }}件
             </div>
-            <div class="is-free-post" v-if="false">已免运费</div>
+            <div class="invalid-clear-btn" @click="handleRemoveInvalidGoods">
+              清空失效商品
+            </div>
           </div>
-          <div
-            :class="['go-buy', { 'go-buy-active': choosedNumber > 0 }]"
-            @click="handleGoOrderSettle"
-          >
-            去结算({{ choosedNumber }})
+          <div class="list invalid-list">
+            <div v-for="item in invalidList" :key="item.cartId">
+              <van-swipe-cell class="van-swipe-cell">
+                <div class="item invalid-item">
+                  <div class="item-image">
+                    <van-image
+                      :src="$ali(item.pic, 80)"
+                      alt="商品图片"
+                      fit="cover"
+                      class="van-image"
+                    />
+                  </div>
+                  <div class="item-goods-detail">
+                    <div class="goods-name invalid">{{ item.name }}</div>
+                    <div class="attr-and-conut">
+                      <div class="goods-attr-value invalid">
+                        {{ item.attrValue }}
+                      </div>
+                    </div>
+                    <div class="detail-bottom invalid">{{ item.result }}</div>
+                  </div>
+                </div>
+
+                <template #right>
+                  <div
+                    @click="handleDelCratItem(item)"
+                    class="van-swipe-delete-icon invalid"
+                  >
+                    删除
+                  </div>
+                </template>
+              </van-swipe-cell>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-total">
+          <div class="bottom-total-checkbox-wrap">
+            <van-checkbox
+              icon-size="18"
+              :value="getToTalGoodsChecked"
+              checked-color="#FF6A00"
+              @click="onTotalChange"
+              v-if="notInvalidList.length"
+              >全选</van-checkbox
+            >
+          </div>
+          <div class="bottom-total-right">
+            <div class="total-price-wrap">
+              <div class="total-price-text">
+                <div>合计:</div>
+                <div class="total-price-number">￥{{ getTotalPrice }}</div>
+              </div>
+              <div class="is-free-post" v-if="false">已免运费</div>
+            </div>
+            <div
+              :class="['go-buy', { 'go-buy-active': choosedNumber > 0 }]"
+              @click="handleGoOrderSettle"
+            >
+              去结算({{ choosedNumber }})
+            </div>
           </div>
         </div>
       </div>
@@ -171,8 +176,10 @@
 <script>
 import Cfg from "@/config/index";
 import Tabbar from "@/components/Tabbar";
+import account, { login } from "@/utils/account";
 import { Toast } from "vant";
 import { del, batchDelete, add, batchAdd, checkUp } from "@/utils/cart";
+import { mapState, mapActions } from "vuex";
 
 var timer;
 export default {
@@ -182,11 +189,16 @@ export default {
   data() {
     return {
       invalidList: [],
-      notInvalidList: [],
-      loading: true
+      notInvalidList: []
     };
   },
   computed: {
+    ...mapState({
+      loading: state => state.global.loading
+    }),
+    isLogin() {
+      return account.isLogin;
+    },
     // 获取选中商品个数
     choosedNumber() {
       const { notInvalidList } = this;
@@ -213,6 +225,14 @@ export default {
   },
   mounted() {},
   methods: {
+    ...mapActions({
+      setLoading: "global/setLoading"
+    }),
+    goLogin() {
+      if (!this.isLogin) {
+        login();
+      }
+    },
     formatData(data) {
       let unCheckedIdMaps = localStorage.getItem("cartUnCheckedIdMaps") || {};
       const unCheckedIds = Object.keys(JSON.parse(unCheckedIdMaps));
@@ -272,16 +292,17 @@ export default {
      */
     getCartList() {
       const storeOutId = Cfg.mainStoreId;
+      this.setLoading(true);
       this.$fetchGet("/order/mobile/tenantCart/list", { storeOutId })
         .then(({ data }) => {
           const { invalidList, notInvalidList } = this.formatData(data);
           console.log(invalidList, notInvalidList);
           this.invalidList = invalidList;
           this.notInvalidList = notInvalidList;
-          this.loading = false;
         })
-        .catch(() => {
-          this.loading = false;
+        .catch(() => {})
+        .then(() => {
+          this.setLoading(false);
         });
     },
     decrease(index, item) {
@@ -421,6 +442,5 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-/* @import url(); 引入css类 */
 @import url("./index.less");
 </style>

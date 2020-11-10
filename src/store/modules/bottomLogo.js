@@ -1,3 +1,5 @@
+import { fetchGet } from "@/config/request";
+
 export default {
   namespaced: true,
   state: {
@@ -9,8 +11,10 @@ export default {
     }
   },
   actions: {
-    setBottomLogoInfo({ commit }, payload) {
-      commit("setLogoInfo", payload);
+    getBottomInfo({ commit }) {
+      fetchGet("/apply/mobile/storesysLogo/getLogoInfo").then(({ data }) => {
+        commit("setLogoInfo", data || {});
+      });
     }
   },
   getters: {}
