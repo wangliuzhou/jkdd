@@ -43,11 +43,10 @@
         </div>
         <div class="goodsList-item-detail-box">
           <div class="goodsList-item-title-box">
-            <van-image
+            <img
               class="icon"
               v-if="detail.titleTag && detail.titleTag.show"
               :src="$ali(detail.titleTag.img)"
-              fit="contain"
             />
             <span>{{
               detail.isShowGoodsName ? item.dealerProductName : ""
@@ -71,10 +70,7 @@
             </div>
           </div>
           <div class="footer">
-            <div
-              v-if="detail.isShowGoodsPrice || detail.isShowGoodsOriginalPrice"
-              class="goodsList-item-price-box"
-            >
+            <div class="goodsList-item-price-box">
               <div
                 class="goodsList-item-sale-price"
                 v-if="detail.isShowGoodsPrice"

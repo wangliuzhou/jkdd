@@ -41,10 +41,7 @@
           <span class="text">{{
             isMmember === 2 ? "会员中心" : "成为会员"
           }}</span>
-          <IconFont
-            type="iconright"
-            fontStyle="font-size:20rpx;color:#ffffff"
-          />
+          <IconFont type="iconright" fontStyle="font-size:11px;color:#ffffff" />
         </div>
       </div>
       <!-- <image class="member-background-img" src="/assets/image/members/ordinary_radius_card.png" /> -->
@@ -75,10 +72,7 @@
             @click="goPage({ path: '/orderList', activeIndex: undefined })"
             >查看全部订单</span
           >
-          <IconFont
-            type="iconright"
-            fontStyle="font-size:22rpx;color:#999999"
-          />
+          <IconFont type="iconright" fontStyle="font-size:11px;color:#999999" />
         </div>
       </div>
       <div class="order-types">
@@ -209,13 +203,13 @@ export default {
           label: "收货地址",
           link: "/addressList",
           fontSize: "36rpx"
-        },
-        {
-          img: "/assets/image/userCenter/kefuliaotian.png",
-          icon: "iconkefuliaotian1",
-          label: "客服聊天",
-          link: "/index"
         }
+        // {
+        //   img: "/assets/image/userCenter/kefuliaotian.png",
+        //   icon: "iconkefuliaotian1",
+        //   label: "客服聊天",
+        //   link: "/index"
+        // }
         // {
         //   icon: "/assets/image/userCenter/zhanghaoyuanquan.png",
         //   label: "账号与安全",
@@ -605,6 +599,7 @@ export default {
           font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 500;
           color: #ffffff;
+          z-index: 1;
         }
 
         .label {

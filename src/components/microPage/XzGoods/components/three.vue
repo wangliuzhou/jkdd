@@ -41,11 +41,10 @@
         </div>
         <div class="goodsList-item-detail-box">
           <div class="goodsList-item-title-box">
-            <van-image
+            <img
               class="icon"
               v-if="detail.titleTag && detail.titleTag.show"
               :src="$ali(detail.titleTag.img)"
-              fit="contain"
             />
             <span>{{
               detail.isShowGoodsName ? item.dealerProductName : ""

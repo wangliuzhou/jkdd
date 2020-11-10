@@ -87,7 +87,7 @@
             <div v-if="detail.buy.show" class="xz-goods__buy-box">
               <IconFont
                 v-if="detail.buy.type == 1"
-                type="iconicon-jiagouwudai"
+                type="iconjiagouwudai"
                 class="xz-goods__icon-btn"
               ></IconFont>
               <div v-if="detail.buy.type == 2" class="xz-goods__buy-btn">
@@ -330,25 +330,30 @@ export default {
           -webkit-box-orient: vertical;
         }
         .goodsList-item-price-box {
-          margin-top: 2px;
+          margin-top: 4px;
+          height: 25px;
+          overflow: hidden;
+          white-space: nowrap;
+          word-break: break-all;
 
           .goodsList-item-sale-price {
-            height: 18px;
+            display: inline-block;
             font-size: 18px;
             font-family: PingFangSC-Medium, PingFang SC;
             font-weight: 500;
             color: rgba(255, 106, 0, 1);
-            line-height: 18px;
+            line-height: 25px;
           }
 
           .goodsList-item-original-price {
-            height: 13px;
+            display: inline-block;
+            margin-left: 8px;
             font-size: 13px;
-            font-family: PingFangSC-Regular, PingFang SC;
-            font-weight: 400;
-            color: rgba(153, 153, 153, 1);
-            line-height: 13px;
+            font-family: PingFangSC-Medium, PingFang SC;
+            font-weight: 500;
+            line-height: 25px;
             text-decoration: line-through;
+            color: #999;
           }
         }
 
@@ -363,7 +368,7 @@ export default {
             font-size: 13px;
             font-family: PingFangSC-Regular, PingFang SC;
             font-weight: 400;
-            color: rgba(255, 106, 0, 1);
+            color: rgba(153, 153, 153, 1);
             line-height: 19px;
             overflow: hidden;
             text-overflow: ellipsis;

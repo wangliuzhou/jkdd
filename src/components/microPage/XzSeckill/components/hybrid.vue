@@ -64,10 +64,7 @@
                 : ""
             }}
           </div>
-          <div
-            v-if="detail.isShowGoodsPrice || detail.isShowGoodsOriginalPrice"
-            class="goodsList-item-price-box"
-          >
+          <div class="goodsList-item-price-box">
             <div
               class="goodsList-item-sale-price"
               v-if="detail.isShowGoodsPrice"
@@ -92,7 +89,7 @@
             <div v-if="detail.buy.show" class="xz-goods__buy-box">
               <IconFont
                 v-if="detail.buy.type == 1"
-                type="iconicon-jiagouwudai"
+                type="iconjiagouwudai"
                 class="xz-goods__icon-btn"
               ></IconFont>
               <div v-if="detail.buy.type == 2" class="xz-goods__buy-btn">
@@ -334,11 +331,8 @@ export default {
           height: 25px;
           text-overflow: -o-ellipsis-lastline;
           overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          line-clamp: 2;
-          -webkit-box-orient: vertical;
+          white-space: nowrap;
+          word-break: break-all;
 
           .goodsList-item-sale-price {
             display: inline-block;
@@ -372,7 +366,7 @@ export default {
             font-size: 12px;
             font-family: PingFangSC-Regular, PingFang SC;
             font-weight: 400;
-            color: rgba(255, 106, 0, 1);
+            color: rgba(153, 153, 153, 1);
             line-height: 19px;
             overflow: hidden;
             text-overflow: ellipsis;

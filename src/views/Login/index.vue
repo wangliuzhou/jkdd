@@ -63,7 +63,6 @@ export default {
       CookieSet("tokenTime", tokenTime);
 
       Toast("登录成功");
-
       setTimeout(() => {
         if (redirectUrl) {
           this.$replace(redirectUrl);
