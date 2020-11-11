@@ -27,10 +27,13 @@
 <script>
 import { Toast } from "vant";
 import { CookieSet } from "@/utils/cookie";
+import { wechatLogin } from "@/utils/account";
+import { isWechat } from "@/utils/index";
 
 export default {
   props: {
-    storesysId: String
+    storesysId: String,
+    redirectUrl: String
   },
   data() {
     return {
@@ -40,11 +43,22 @@ export default {
       tokenTime: "1604807480963"
     };
   },
+  mounted() {
+    // 如果是微信环境自动登录
+    if (isWechat) {
+      wechatLogin(this.redirectUrl);
+    }
+  },
   methods: {
     login() {
-      let { userId, storeId, storesysId, accessToken, tokenTime } = this;
-      let { redirectUrl } = this.$route.query;
-      redirectUrl = decodeURIComponent(redirectUrl);
+      let {
+        userId,
+        storeId,
+        storesysId,
+        accessToken,
+        tokenTime,
+        redirectUrl
+      } = this;
 
       CookieSet("userId", userId);
       CookieSet("userInfo", {

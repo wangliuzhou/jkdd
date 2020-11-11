@@ -1,3 +1,4 @@
+import { parse, stringify } from "querystring";
 import router from "@/router/index";
 import storesys from "@/utils/storesys";
 import {
@@ -16,8 +17,15 @@ const hrefOrReplace = ({ path, replace = false }) => {
   }
 };
 
-const pushOrReplace = ({ location, onComplete, onAbort, replace = false }) => {
+export const getOrigin = origin => {
+  if (shopOriginRegExp.test(origin)) {
+    return storesys.shopOrigin;
+  }
   let testfillStr = /test/.test(window.location.origin) ? "test" : "";
+  return origin.replace("${test}", testfillStr);
+};
+
+const pushOrReplace = ({ location, onComplete, onAbort, replace = false }) => {
   // 当前是否在shop开头的域名下
   let curIsShopOrigin = shopOriginRegExp.test(window.location.origin);
   let curIsCashierOrigin = cashierOriginRegExp.test(window.location.origin);
@@ -46,15 +54,19 @@ const pushOrReplace = ({ location, onComplete, onAbort, replace = false }) => {
     {
       originTest: curIsPassportOrigin,
       origin: Cfg.passportOrigin,
-      pathPre: "/login"
+      pathPre: "/passport/"
     }
   ];
   for (let i = 0; i < specialOrigin.length; i++) {
     let item = specialOrigin[i];
-    // 从shop域名跳转到其他域名
+    // 从shop域名跳转到其他域名，需要加上一个系统id
     if (curIsShopOrigin && path.indexOf(item.pathPre) === 0) {
+      let query = parse(path.split("?")[1]);
+      query.storesysId = storesys.storesysId;
+
       return hrefOrReplace({
-        path: item.origin.replace("${test}", testfillStr) + path,
+        path:
+          getOrigin(item.origin) + path.split("?")[0] + "?" + stringify(query),
         replace
       });
     }
@@ -65,10 +77,7 @@ const pushOrReplace = ({ location, onComplete, onAbort, replace = false }) => {
     // 从其他域名跳转到shop域名
     if (item.originTest && path.indexOf(item.pathPre) !== 0) {
       return hrefOrReplace({
-        path:
-          Cfg.shopOrigin
-            .replace("${storesysId}", storesys.storesysId.toLowerCase())
-            .replace("${test}", testfillStr) + path,
+        path: storesys.shopOrigin + path,
         replace
       });
     }

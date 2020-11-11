@@ -182,10 +182,11 @@ const routes = [
     component: () => import("@/views/CouponsInvalid/index.vue")
   },
   {
-    path: "/login",
+    path: "/passport/login",
     name: "Login",
     props: route => ({
-      storesysId: route.query.storesysId
+      storesysId: route.query.storesysId,
+      redirectUrl: decodeURIComponent(route.query.redirectUrl)
     }),
     component: () => import("@/views/Login/index.vue")
   },

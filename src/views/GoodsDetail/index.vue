@@ -43,7 +43,6 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 import { Toast } from "vant";
-import storesys from "@/utils/storesys";
 import NavBar from "./components/NavBar";
 import GoodsImgs from "./components/GoodsImgs";
 import GoodsInfo from "./components/GoodsInfo";
@@ -123,7 +122,7 @@ export default {
       } else if (btnStatus == 2) {
         //立即购买
         this.$push({
-          path: `/pay/orderSettle?storesysId=${storesys.storesysId}&skuIds=${sku.singleProductOuterId}&skuNums=${num}`
+          path: `/pay/orderSettle?skuIds=${sku.singleProductOuterId}&skuNums=${num}`
         });
       }
     }
