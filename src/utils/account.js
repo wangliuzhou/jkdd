@@ -43,15 +43,24 @@ export const login = redirectUrl => {
 // 公众号登录
 export const wechatLogin = redirectUrl => {
   redirectUrl = redirectUrl || storesys.shopOrigin;
+  // 登录页面地址
+  let loginUrl =
+    getOrigin(Cfg.passportOrigin) +
+    `/passport/login?storesysId=${
+      storesys.storesysId
+    }&redirectUrl=${encodeURIComponent(redirectUrl)}`;
+  // 绑定手机号页面地址
+  let bindPhoneUrl = loginUrl + "&bindPhone=true";
+  //告诉微信的回调地址
   let redirect_uri = `${Cfg.loginRedirectUrl}?appid=${
     Cfg.appId
   }&terminal=terminal&success_url=${encodeURIComponent(
     redirectUrl
   )}&error_url=${encodeURIComponent(
-    `${location.origin}/passport/login`
-  )}&bind_phone_url=${encodeURIComponent(
-    getOrigin(Cfg.passportOrigin) + "/passport/login"
-  )}&storesys_id=${storesys.storesysId}&scope=snsapi_userinfo`;
+    loginUrl
+  )}&bind_phone_url=${encodeURIComponent(bindPhoneUrl)}&storesys_id=${
+    storesys.storesysId
+  }&scope=snsapi_userinfo`;
 
   window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${
     Cfg.appId

@@ -186,7 +186,9 @@ const routes = [
     name: "Login",
     props: route => ({
       storesysId: route.query.storesysId,
-      redirectUrl: decodeURIComponent(route.query.redirectUrl)
+      redirectUrl: decodeURIComponent(route.query.redirectUrl),
+      bindPhone: Boolean(route.query.bindPhone),
+      openidStr: route.query.openidStr
     }),
     component: () => import("@/views/Login/index.vue")
   },
