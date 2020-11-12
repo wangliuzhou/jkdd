@@ -1,10 +1,10 @@
 <template>
   <div class="cart-page">
     <div class="not-login-container" v-if="!isLogin">
-      <span class="not-login-tips"
-        >看不到购物车内容？
-        <div class="login-btn" @click="goLogin">去登录</div></span
-      >
+      <span class="not-login-tips">
+        看不到购物车内容？
+        <div class="login-btn" @click="goLogin">去登录</div>
+      </span>
     </div>
     <div wx:else>
       <div
@@ -234,8 +234,13 @@ export default {
       }
     },
     formatData(data) {
-      let unCheckedIdMaps = localStorage.getItem("cartUnCheckedIdMaps") || {};
-      const unCheckedIds = Object.keys(JSON.parse(unCheckedIdMaps));
+      let unCheckedIdMaps = localStorage.getItem("cartUnCheckedIdMaps");
+      if (!unCheckedIdMaps) {
+        localStorage.setItem("cartUnCheckedIdMaps", JSON.stringify({}));
+      }
+      const unCheckedIds = Object.keys(
+        JSON.parse(unCheckedIdMaps || JSON.stringify({}))
+      );
       const dataIds = data.map(item => item.singleProductOuterId);
       checkUp(dataIds);
 
@@ -259,8 +264,7 @@ export default {
         if (isInvalid) {
           item.disabled = true;
         } else {
-          const isInclude = unCheckedIds.includes(item.singleProductOuterId);
-          item.checked = !isInclude;
+          item.checked = !unCheckedIds.includes(item.singleProductOuterId);
         }
       });
       // 获取未失效列表

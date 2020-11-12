@@ -1,13 +1,14 @@
 <template>
   <div class="order-list-wrap">
     <div class="order-list-tabs">
-      <div class="order-list-box">
+      <div class="order-list-box" ref="box">
         <div
           v-for="(item, index) in tabs"
           :key="item.name"
           class="order-list-tab"
           :class="{ 'tab-active': activeTabIndex === index }"
           @click="handleTabTap(index)"
+          :ref="`item${index}`"
         >
           {{ item.name }}
         </div>
@@ -93,7 +94,7 @@
             <!-- <div v-if="1" data-order-out-id="{{item.orderOuterId}}">评价商品</div>
       <div v-if="1" class="active" data-order-out-id="{{item.orderOuterId}}">再次购买</div>
       <div v-if="1" data-order-out-id="{{item.orderOuterId}}">延长收货</div>
-      <div v-if="1" data-order-out-id="{{item.orderOuterId}}">删除订单</div>-->
+            <div v-if="1" data-order-out-id="{{item.orderOuterId}}">删除订单</div>-->
             <div
               class="active"
               v-if="item.orderStatus === 3"
@@ -109,7 +110,7 @@
       <img
         class="no-order-img"
         :src="require('@/assets/images/empty-oreder.png')"
-        alt=""
+        alt
       />
       <span>暂无订单</span>
     </div>
@@ -156,6 +157,11 @@ export default {
   created() {
     this.init();
   },
+  mounted() {
+    // const listBox = this.$refs["box"];
+    // const offset = listBox.offsetLeft;
+  },
+
   methods: {
     /**
      * 请求列表数据
@@ -378,7 +384,8 @@ export default {
       .order-list-tab {
         font-size: 15px;
         text-align: center;
-        margin: 0 15px;
+        // margin: 0 15px;
+        margin: 0 14px;
       }
       .tab-active {
         color: #ff6a00;
