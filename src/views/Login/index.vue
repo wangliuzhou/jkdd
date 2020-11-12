@@ -112,29 +112,44 @@ export default {
     //   }, 800);
     // }
     login() {
-      let { mobile, code, openidStr, redirectUrl } = this;
+      let { mobile, code, openidStr, redirectUrl, bindPhone } = this;
+      let postUrl, postData;
 
-      this.$fetchPost("/sysWechatThirdAuth/woaLoginBandMobile", {
-        mobile,
-        code,
-        openidStr,
-        storeOutId: Cfg.mainStoreId
-      }).then(({ data: { account, token, tokenTime } }) => {
-        CookieSet("userId", account.userUnionId);
-        CookieSet("userInfo", account);
-        CookieSet("accessToken", token);
-        CookieSet("tokenTime", tokenTime);
+      if (bindPhone) {
+        postUrl = "/sysWechatThirdAuth/woaLoginBandMobile";
+        postData = {
+          mobile,
+          code,
+          openidStr,
+          storeOutId: Cfg.mainStoreId
+        };
+      } else {
+        postUrl = "/sysWechatThirdAuth/woaLoginByMobile";
+        postData = {
+          mobile,
+          code,
+          storeOutId: Cfg.mainStoreId
+        };
+      }
 
-        Toast("登录成功");
+      this.$fetchPost(postUrl, postData).then(
+        ({ data: { account, token, tokenTime } }) => {
+          CookieSet("userId", account.userUnionId);
+          CookieSet("userInfo", account);
+          CookieSet("accessToken", token);
+          CookieSet("tokenTime", tokenTime);
 
-        setTimeout(() => {
-          if (redirectUrl) {
-            this.$replace(redirectUrl);
-          } else {
-            this.$replace("/");
-          }
-        }, 800);
-      });
+          Toast("登录成功");
+
+          setTimeout(() => {
+            if (redirectUrl) {
+              this.$replace(redirectUrl);
+            } else {
+              this.$replace("/");
+            }
+          }, 800);
+        }
+      );
     }
   }
 };
