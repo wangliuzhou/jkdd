@@ -124,10 +124,10 @@ export default {
     handleConfirm() {
       let {
         chooseInfo: { sku, num },
-        goodsDetail: { isMultiAttr, valueVoList }
+        goodsDetail: { valueVoList }
       } = this;
       //有sku
-      if (isMultiAttr != 1) {
+      if (valueVoList && valueVoList.length > 1) {
         sku = valueVoList[0];
       }
 
