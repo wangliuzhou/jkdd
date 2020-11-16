@@ -123,8 +123,8 @@ export default {
         goodsDetail: { minPrice },
         chooseInfo: { sku }
       } = this;
-      if (sku && sku.stdPrice) {
-        return sku.stdPrice;
+      if (sku && sku.retailPrice) {
+        return sku.retailPrice;
       }
       return minPrice;
     },
