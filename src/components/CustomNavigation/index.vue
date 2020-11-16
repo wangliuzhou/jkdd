@@ -3,16 +3,13 @@
     <div
       class="navigation-wrapper"
       :style="{
-        'padding-top': `${px2rem(statusBarHeight)}`,
+        'padding-top': `${statusBarHeight}px`,
         background: navBarStyle.bgColor
       }"
     >
       <div class="icon-group">
         <div class="icon-item" v-if="back && pageLength > 1" @click="goBack">
-          <IconFont
-            type="iconleft"
-            :fontStyle="`font-size:${px2rem(17)};color:#ffffff`"
-          />
+          <IconFont type="iconleft" fontStyle="font-size:17px;color:#ffffff" />
         </div>
         <div class="icon-item" v-if="home && pageLength === 1" @click="goHome">
           <IconFont
@@ -28,14 +25,13 @@
     <div
       v-if="block"
       class="empty"
-      :style="{ 'padding-top': `${px2rem(statusBarHeight)}` }"
+      :style="{ 'padding-top': `${statusBarHeight}px` }"
     ></div>
   </div>
 </template>
 
 <script>
 import IconFont from "../IconFont";
-import { px2rem } from "@/utils/index";
 export default {
   props: {
     title: {
