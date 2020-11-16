@@ -251,7 +251,7 @@ export default {
         return Toast("该商品已售罄");
       }
 
-      this.$push(`/goodsDetail/index?id=${item.productOuterId}`);
+      this.$push(`/goodsDetail/${item.productOuterId}`);
     },
     handleReduce(e) {
       this.handleReduceOrAdd({
