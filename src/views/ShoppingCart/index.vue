@@ -300,7 +300,7 @@ export default {
       this.$fetchGet("/order/mobile/tenantCart/list", { storeOutId })
         .then(({ data }) => {
           const { invalidList, notInvalidList } = this.formatData(data);
-          console.log(invalidList, notInvalidList);
+          // console.log(invalidList, notInvalidList);
           this.invalidList = invalidList;
           this.notInvalidList = notInvalidList;
         })
@@ -370,12 +370,12 @@ export default {
     onTotalChange() {
       const { notInvalidList } = this;
       const everyChecked = notInvalidList.every(item => item.checked);
-
       if (everyChecked) {
         notInvalidList.forEach(item => {
           item.checked = false;
         });
-        batchAdd();
+        const ids = notInvalidList.map(i => i.singleProductOuterId);
+        batchAdd(ids);
       } else {
         notInvalidList.forEach(item => {
           item.checked = true;
