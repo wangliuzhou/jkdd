@@ -366,7 +366,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-page {
+.page-order-settle {
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   background: #f8f8f8;
