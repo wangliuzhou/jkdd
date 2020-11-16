@@ -28,12 +28,12 @@
             </div>
             <!-- 如果已经领卡 -->
             <div v-if="item.isMemberCardOption" class="card-header">
-              <div class="label" style="font-size:44rpx">
+              <div class="label" :style="`font-size:${px2rem(22)}`">
                 {{ item.memberLevelName }}
               </div>
               <IconFont
                 type="iconhuiyuanma"
-                fontStyle="font-size:44rpx; color:white"
+                :fontStyle="`font-size:${px2rem(22)}; color:white`"
               />
             </div>
             <div class="card-main">
@@ -93,6 +93,7 @@
 import Progress from "./Progress";
 import IconFont from "@/components/IconFont";
 import { Swipe, SwipeItem } from "vant";
+import { px2rem } from "@/utils/index";
 export default {
   components: { Progress, IconFont, Swipe, SwipeItem },
   props: {

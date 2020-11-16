@@ -3,23 +3,28 @@
     <CustomNavigation title="会员中心" back home></CustomNavigation>
     <div class="member-header">
       <div class="user-card">
-        <div class="bg-wrap" :style="{ height: `${statusBarHeight + 118}px` }">
+        <div
+          class="bg-wrap"
+          :style="{ height: `${px2rem(statusBarHeight + 118)}` }"
+        >
           <div class="member-card-bg-color"></div>
         </div>
         <div
           class="user-info"
-          :style="{ 'padding-top': `${statusBarHeight + 8}px` }"
+          :style="{ 'padding-top': `${px2rem(statusBarHeight + 8)}` }"
         >
           <div class="user-avatar-box">
             <van-image
-              v-if="userInfo.userAvatar"
+              v-if="userInfo && userInfo.userAvatar"
               :src="$ali(userInfo.userAvatar, 120)"
               class="user-avatar"
               fit="cover"
             />
           </div>
           <span class="user-name">{{
-            !!userInfo.userNickname ? userInfo.userNickname : "立即登录"
+            userInfo && userInfo.userNickname
+              ? userInfo.userNickname
+              : "立即登录"
           }}</span>
         </div>
         <CardList @goJoinMember="goJoinMember" :cardList="cardList"></CardList>
@@ -63,7 +68,8 @@ import songzengpinIcon from "@/assets/images/members/icon/songzengpin.png";
 import { Toast } from "vant";
 import Cfg from "@/config/index";
 import account, { login } from "@/utils/account";
-
+import { CookieGet } from "@/utils/cookie";
+import { px2rem } from "@/utils/index";
 export default {
   components: { CustomNavigation, CouponsModal, CardList },
   data() {
@@ -113,12 +119,13 @@ export default {
       statusBarHeight: 60,
       detail: {},
       cardList: [{}],
-      userInfo: {},
+      userInfo: null,
       storeOuterId: Cfg.mainStoreId,
       isLogin: account.isLogin
     };
   },
   mounted() {
+    this.getUserInfo();
     if (!account.isLogin) {
       this.goLogin();
       return;
@@ -127,6 +134,10 @@ export default {
   },
   computed: {},
   methods: {
+    getUserInfo() {
+      const info = CookieGet("userInfo");
+      this.userInfo = info ? JSON.parse(CookieGet("userInfo")) : null;
+    },
     goLogin() {
       login();
     },
@@ -180,6 +191,7 @@ export default {
     // 登录回调
     loginCallback() {
       this.isLogin = true;
+      this.getUserInfo();
       this.getMemberDetail();
     },
     goHome() {

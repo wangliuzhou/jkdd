@@ -9,7 +9,7 @@
       <span class="del-price" v-if="goodsDetail.minDelPrice * 1"
         >¥{{ goodsDetail.minDelPrice * 1 }}</span
       >
-      <span class="xg" v-if="goodsDetail.saleLimit"
+      <span class="xg" v-if="goodsDetail.saleLimit && goodsDetail.saleLimit > 0"
         >限购{{ goodsDetail.saleLimit }}件</span
       >
     </div>

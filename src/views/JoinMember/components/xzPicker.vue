@@ -7,7 +7,7 @@
       </div>
       <IconFont
         type="iconqianjin"
-        fontStyle="color:#cccccc;font-size:26rpx"
+        :fontStyle="`color:#cccccc;font-size:${px2rem(13)}`"
       ></IconFont>
     </div>
     <Popup v-model="show" position="bottom">
@@ -27,6 +27,7 @@
   </div>
 </template>
 <script>
+import { px2rem } from "@/utils/index";
 import IconFont from "@/components/IconFont";
 import { DatetimePicker, Popup, Toast, Area } from "vant";
 import { formatTimeSimple } from "@/utils/index";

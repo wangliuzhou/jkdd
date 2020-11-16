@@ -8,7 +8,8 @@ const Config = {
       "http://saastest.xzintl.com/api/system/sysWechatThirdAuth/woaLoginCallBack",
     shopOrigin: "http://shop_${storesysId}.m${test}.xzintl.com",
     cashierOrigin: "http://cashier${test}.xzintl.com",
-    passportOrigin: "http://passport${test}.xzintl.com"
+    passportOrigin: "http://passport${test}.xzintl.com",
+    ossDomain: "http://static.xzintl.com/"
   },
   dev: {},
   beta: {
@@ -22,7 +23,8 @@ const Config = {
   pro: {
     appId: "wx1018d54aa9dbc9d7",
     loginRedirectUrl:
-      "http://saastest.xzintl.com/api/system/sysWechatThirdAuth/woaLoginCallBack"
+      "http://saastest.xzintl.com/api/system/sysWechatThirdAuth/woaLoginCallBack",
+    ossDomain: "https://saasoss.xzintl.com/"
   }
 };
 

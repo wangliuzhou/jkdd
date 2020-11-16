@@ -5,22 +5,24 @@
       <div
         class="user-info-card"
         :style="{
-          height: `${statusBarHeight + 187}px`
+          height: `${px2rem(statusBarHeight + 187)}`
         }"
       >
         <div class="user-info">
           <div class="user-avatar-box">
-            <!-- <van-image
-            v-if="userInfo.userAvatar"
-            :src="$ali(userInfo.userAvatar, 375)"
-            class="user-avatar"
-            :fit="calcImageStyle"
-          /> -->
+            <van-image
+              v-if="userInfo && userInfo.userAvatar"
+              :src="$ali(ossDomain + userInfo.userAvatar, 60)"
+              class="user-avatar"
+              :fit="calcImageStyle"
+            />
           </div>
           <div class="user-detail">
             <div class="user-name">
               <span class="name">{{
-                !!userInfo ? userInfo.userNickname : "立即登录"
+                userInfo && userInfo.userNickname
+                  ? userInfo.userNickname
+                  : "立即登录"
               }}</span>
               <IconFont
                 type="iconhuiyuanma"
@@ -34,14 +36,14 @@
           <div class="join-member">
             <IconFont
               type="iconhuiyuanxingbiao"
-              fontStyle="font-size:15px;color:#ffffff"
+              :fontStyle="`font-size:${px2rem(15)};color:#ffffff`"
             />
             <span class="text">{{
               isMmember === 2 ? "会员中心" : "成为会员"
             }}</span>
             <IconFont
               type="iconright"
-              fontStyle="font-size:11px;color:#ffffff"
+              :fontStyle="`font-size:${px2rem(11)};color:#ffffff`"
             />
           </div>
         </div>
@@ -75,7 +77,7 @@
             >
             <IconFont
               type="iconright"
-              fontStyle="font-size:11px;color:#999999"
+              :fontStyle="`font-size:${px2rem(11)};color:#999999`"
             />
           </div>
         </div>
@@ -89,7 +91,7 @@
             <div
               v-if="item.num"
               class="order-num"
-              :style="{ padding: `0 ${item.num > 9 ? '2px' : 0} ` }"
+              :style="{ padding: `0 ${item.num > 9 ? px2rem(2) : 0} ` }"
             >
               {{ item.num > 99 ? "99+" : item.num }}
             </div>
@@ -108,7 +110,7 @@
           <IconFont
             :type="item.icon"
             :fontStyle="{
-              'font-size': item.fontSize || '15px',
+              'font-size': item.fontSize || px2rem(15),
               color: '#303133'
             }"
           />
@@ -116,7 +118,7 @@
             <div class="text">{{ item.label }}</div>
             <IconFont
               type="iconright"
-              fontStyle="font-size:12px;color:#999999"
+              :fontStyle="`font-size:${px2rem(11)};color:#999999`"
             />
           </div>
           <button
@@ -136,6 +138,8 @@
 </template>
 <script>
 import { Toast } from "vant";
+import { CookieGet } from "@/utils/cookie";
+import { px2rem } from "@/utils/index";
 // import IconFont from "@/components/IconFont";
 import Tabbar from "@/components/Tabbar";
 import CustomNavigation from "@/components/CustomNavigation";
@@ -259,7 +263,8 @@ export default {
       isMmember: 0,
       orderNums: {},
       userInfo: null,
-      isLogin: account.isLogin
+      isLogin: account.isLogin,
+      ossDomain: Cfg.ossDomain
     };
   },
   mounted() {
@@ -267,12 +272,17 @@ export default {
   },
   methods: {
     init() {
+      this.getUserInfo();
       if (!account.isLogin) {
         this.goLogin();
         return;
       }
       this.getMemberDetail();
       this.getOrderNum();
+    },
+    getUserInfo() {
+      const info = CookieGet("userInfo");
+      this.userInfo = info ? JSON.parse(CookieGet("userInfo")) : null;
     },
     goLogin() {
       login();
@@ -322,6 +332,7 @@ export default {
     },
     // 登录回调
     loginCallback() {
+      this.getUserInfo();
       this.isLogin = true;
       this.getMemberDetail();
       this.getOrderNum();
