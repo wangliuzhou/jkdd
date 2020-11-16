@@ -28,7 +28,7 @@
         <div v-for="(item, index) in info.maps" :key="item.AcceptStation">
           <div class="order-logistics-item">
             <div :class="['order-logistics-content', { active: index === 0 }]">
-              <view class="pint">
+              <div class="pint">
                 <img
                   v-if="item.Action === '1' && index !== 0"
                   :src="require('@/assets/images/logistics/logistics1.png')"
@@ -54,7 +54,7 @@
                   type="iconyiqianshou"
                   fontStyle="font-size:36rpx"
                 />
-              </view>
+              </div>
               <div class="order-logistics-item-title" v-if="index === 0">
                 {{ getStatus }}
               </div>

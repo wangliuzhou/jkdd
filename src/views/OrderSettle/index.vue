@@ -74,7 +74,7 @@
             <div class="goods-price">¥{{ item.retailPrice * 1 }}</div>
             <div class="goods-number">
               x
-              <text>{{ item.count }}</text>
+              <span>{{ item.count }}</span>
             </div>
           </div>
         </div>
