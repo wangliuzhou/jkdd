@@ -140,7 +140,7 @@ const CONFIG = {
 
 const { VUE_APP_API_ENV } = process.env;
 
-let config = CONFIG["beta"];
+let config = CONFIG[VUE_APP_API_ENV];
 
 if (!config) {
   throw new Error(`请检查环境配置，当前环境：[${VUE_APP_API_ENV}]`);
