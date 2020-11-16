@@ -1,6 +1,7 @@
 <template>
-  <div class="address-list-container">
-    <!-- <div class="get-wx-address flex-between" @click="getWXAddress">
+  <div class="page-address-list">
+    <div class="address-list-container">
+      <!-- <div class="get-wx-address flex-between" @click="getWXAddress">
       <div class="get-wx-address-left">
         <img
           class="wx-icon"
@@ -13,42 +14,33 @@
         <IconFont type="iconqianjin" fontStyle="font-size: 15px;color:#ccc" />
       </div>
     </div>-->
-    <div class="address-list">
-      <div
-        v-for="item in addressList"
-        :key="item.userReceivingAddressId"
-        class="address-item flex-between"
-      >
-        <div
-          class="address-item-left"
-          @click="onTapAddress(item.userReceivingAddressId)"
-        >
-          <div class="name-phone-tags">
-            <span>{{ item.userConsigneeName }}</span>
-            <span class="phone">{{ item.userConsigneePhoneFormat }}</span>
-            <div class="tag default-tag" v-if="item.isDefault === 1">默认</div>
-            <div class="tag" v-if="item.tenantUserReceivingAddressLabel">
-              {{
-                item.tenantUserReceivingAddressLabel
-                  .userReceivingAddressLabelName || ""
-              }}
-            </div>
-          </div>
-          <div class="address-text">
-            {{ item.userAddressProvince }}{{ item.userAddressCity
-            }}{{ item.userAddressDistrict }}{{ item.userAddressDetail }}
-          </div>
-        </div>
-        <div @click="goAddAddress({ id: item.userReceivingAddressId })">
-          <IconFont
-            type="iconbianji"
-            fontStyle="font-size: 15px;color:#ccc;margin-left:12px"
+      <div class="address-list">
+        <template v-for="item in canUseList">
+          <AddressItem
+            :key="item.userReceivingAddressId"
+            :item="item"
+            @choose-address="onTapAddress"
           />
+        </template>
+      </div>
+
+      <!-- 超出配送范围 -->
+      <div class="invalid-list" v-if="notUseList && notUseList.length">
+        <div class="title">超出配送范围地址</div>
+        <div class="address-list">
+          <template v-for="item in notUseList">
+            <AddressItem
+              :key="item.userReceivingAddressId"
+              :item="item"
+              :invalid="true"
+            />
+          </template>
         </div>
       </div>
-    </div>
-    <div @click="goAddAddress({})" class="footer-btns">
-      <div>新增收货地址</div>
+
+      <div @click="goAddAddress({})" class="footer-btns">
+        <button>新增收货地址</button>
+      </div>
     </div>
   </div>
 </template>
@@ -56,27 +48,35 @@
 <script>
 import { parse } from "querystring";
 import areaList from "@/utils/area.js";
+import Cfg from "@/config/index";
+import AddressItem from "./components/AddressItem";
 
 export default {
+  props: ["redirectUrl", "type", "skuIds", "skuNums"],
+  components: {
+    AddressItem
+  },
   data() {
     return {
-      addressList: [
-        // {
-        //   userReceivingAddressId: 1,
-        //   isDefault: 1
-        // },
-        // {
-        //   userReceivingAddressId: 2,
-        //   isDefault: 0,
-        //   tenantUserReceivingAddressLabel: {
-        //     userReceivingAddressLabelName: "公司"
-        //   }
-        // }
-      ]
+      canUseList: [],
+      notUseList: []
     };
   },
+  computed: {
+    skus() {
+      let { skuIds, skuNums } = this;
+      skuIds = skuIds.split(",");
+      skuNums = skuNums.split(",");
+      return skuIds.map((skuId, i) => {
+        return {
+          onlineStoreSingleProductOutId: skuId,
+          onlineStoreSingleProductOrderCount: Number(skuNums[i])
+        };
+      });
+    }
+  },
   created() {
-    this.getAddressList();
+    this.loadData();
   },
   mounted() {},
   methods: {
@@ -87,20 +87,39 @@ export default {
 
     // 格式化列表
     formatAddressList(data) {
-      data.map(item => {
+      return data.map(item => {
         const phone = item.userConsigneePhone;
         const formatPhone = phone.replace(phone.substr(3, 4), "****");
         item.userConsigneePhoneFormat = formatPhone;
+        return item;
       });
-      this.addressList = data;
     },
 
+    loadData() {
+      if (this.type == 1) {
+        // type:1 代表是选择地址
+        this.checkconsigneeAddressList();
+      } else {
+        this.getAddressList();
+      }
+    },
+
+    checkconsigneeAddressList() {
+      this.$fetchPost("/order/mobile/tenantOrder/checkconsigneeAddressList", {
+        storeOutId: Cfg.mainStoreId,
+        onlineStoreSingleProductOutIdList: this.skus
+      }).then(({ data }) => {
+        this.canUseList = this.formatAddressList(data.canUseList);
+        this.notUseList = this.formatAddressList(data.notUseList);
+      });
+    },
     // 初始化请求获取地址列表
     getAddressList() {
       const api =
         "/order/mobile/tenantUserReceivingAddress/findUserReceivingAddressByUserId";
       this.$fetchGet(api).then(({ data }) => {
-        this.formatAddressList(data);
+        data = this.formatAddressList(data);
+        this.canUseList = data;
       });
     },
 
@@ -109,7 +128,7 @@ export default {
       const api =
         "/order/mobile/tenantUserReceivingAddress/addUserReceivingAddress";
       this.$fetchPost(api, params).then(() => {
-        this.getAddressList();
+        this.loadData();
       });
     },
 
@@ -186,12 +205,11 @@ export default {
     },
 
     // 点击某个地址
-    onTapAddress(addressId) {
+    onTapAddress({ item }) {
       // 需要上个页面配合
       // 1.query里面有redirectUrl地址  redirectUrl='/aaaPage'
       // 2.地址列表页带过去query里面有地址的addressId addressId:2
-      let { redirectUrl } = this.$route.query;
-      redirectUrl = decodeURIComponent(redirectUrl);
+      let { redirectUrl } = this;
 
       if (redirectUrl && redirectUrl !== "undefined") {
         let path = redirectUrl.split("?")[0];
@@ -199,7 +217,7 @@ export default {
 
         this.$push({
           path,
-          query: { ...query, addressId }
+          query: { ...query, addressId: item.userReceivingAddressId }
         });
       }
     }
@@ -207,12 +225,16 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-/* @import url(); 引入css类 */
+.page-address-list {
+  background: #f8f8f8;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 65px);
+  box-sizing: border-box;
+}
 
 .address-list-container {
   position: relative;
-  background: #f8f8f8;
-  padding-bottom: calc(env(safe-area-inset-bottom) + 56px);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 67px);
+
   .get-wx-address {
     height: 50px;
     background: rgba(255, 255, 255, 1);
@@ -223,7 +245,7 @@ export default {
       align-items: center;
 
       .wx-icon {
-        margin-right: 10px;
+        margin-right: 9.5px;
         width: 24px;
         height: 24px;
       }
@@ -238,53 +260,16 @@ export default {
   }
 
   .address-list {
-    .address-item {
-      font-size: 15px;
-      font-family: PingFangSC-Regular, PingFang SC;
-      font-weight: 400;
-      height: 78px;
-      margin-top: 8px;
+  }
 
-      &:nth-last-child(1) {
-        margin-bottom: 65px;
-      }
-
-      .address-item-left {
-        .name-phone-tags {
-          display: flex;
-          align-items: center;
-          color: #333333;
-
-          .phone {
-            margin: 0 6px;
-          }
-
-          .tag {
-            margin-right: 3px;
-            padding: 0 5px;
-            min-width: 32px;
-            box-sizing: border-box;
-            height: 16px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 106, 0, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #ffe9d9;
-            font-size: 12px;
-            color: rgba(255, 106, 0, 1);
-          }
-
-          .default-tag {
-            background: #fff;
-          }
-        }
-
-        .address-text {
-          color: #666666;
-          margin-top: 8px;
-        }
-      }
+  .invalid-list {
+    .title {
+      height: 16px;
+      line-height: 16px;
+      color: #999;
+      text-indent: 15px;
+      font-size: 12px;
+      margin-top: 20px;
     }
   }
 
@@ -299,19 +284,18 @@ export default {
     align-items: center;
     justify-content: center;
     padding-bottom: env(safe-area-inset-bottom);
-
-    div {
+    button {
       width: 351px;
+      padding: 0;
       height: 36px;
+      line-height: 36px;
       background: rgba(255, 106, 0, 1);
       border-radius: 18px;
       font-size: 16px;
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border: none;
     }
   }
 
@@ -320,7 +304,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     background: #fff;
-    padding: 0 14px 0 15px;
+    padding: 0 13.5px 0 15px;
     box-sizing: border-box;
     width: 100%;
   }

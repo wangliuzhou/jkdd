@@ -56,6 +56,12 @@ const routes = [
     meta: {
       needLogin: true
     },
+    props: route => ({
+      redirectUrl: decodeURIComponent(route.query.redirectUrl),
+      type: route.query.type,
+      skuIds: route.query.skuIds,
+      skuNums: route.query.skuNums
+    }),
     component: () => import("@/views/AddressList/index.vue")
   },
   {

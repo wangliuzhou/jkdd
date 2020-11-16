@@ -29,13 +29,17 @@
 </template>
 <script>
 export default {
-  props: ["addressInfo"],
+  props: ["addressInfo", "skuIds", "skuNums"],
   methods: {
     handleChooseAddress() {
       this.$push({
-        path: `/addressList?redirectUrl=${encodeURIComponent(
-          this.$route.fullPath
-        )}`
+        path: `/addressList`,
+        query: {
+          redirectUrl: encodeURIComponent(this.$route.fullPath),
+          type: 1,
+          skuIds: this.skuIds,
+          skuNums: this.skuNums
+        }
       });
     }
   }
