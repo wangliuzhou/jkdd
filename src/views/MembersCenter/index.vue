@@ -5,13 +5,13 @@
       <div class="user-card">
         <div
           class="bg-wrap"
-          :style="{ height: `${px2rem(statusBarHeight + 118)}` }"
+          :style="{ height: `${statusBarHeight + 118 + 'px'}` }"
         >
           <div class="member-card-bg-color"></div>
         </div>
         <div
           class="user-info"
-          :style="{ 'padding-top': `${px2rem(statusBarHeight + 8)}` }"
+          :style="{ 'padding-top': `${statusBarHeight + 8 + 'px'}` }"
         >
           <div class="user-avatar-box">
             <van-image
@@ -69,7 +69,6 @@ import { Toast } from "vant";
 import Cfg from "@/config/index";
 import account, { login } from "@/utils/account";
 import { CookieGet } from "@/utils/cookie";
-import { px2rem } from "@/utils/index";
 export default {
   components: { CustomNavigation, CouponsModal, CardList },
   data() {

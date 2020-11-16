@@ -5,7 +5,7 @@
       <div
         class="user-info-card"
         :style="{
-          height: `${px2rem(statusBarHeight + 187)}`
+          height: `${statusBarHeight + 187}px`
         }"
       >
         <div class="user-info">
@@ -36,14 +36,14 @@
           <div class="join-member">
             <IconFont
               type="iconhuiyuanxingbiao"
-              :fontStyle="`font-size:${px2rem(15)};color:#ffffff`"
+              fontStyle="font-size:15px;color:#ffffff"
             />
             <span class="text">{{
               isMmember === 2 ? "会员中心" : "成为会员"
             }}</span>
             <IconFont
               type="iconright"
-              :fontStyle="`font-size:${px2rem(11)};color:#ffffff`"
+              fontStyle="font-size:11px;color:#ffffff"
             />
           </div>
         </div>
@@ -66,9 +66,7 @@
   </div>-->
       <div class="order-card">
         <div class="header">
-          <div class="left-label">
-            我的订单
-          </div>
+          <div class="left-label">我的订单</div>
           <div class="right-go-all">
             <span
               class="text"
@@ -77,7 +75,7 @@
             >
             <IconFont
               type="iconright"
-              :fontStyle="`font-size:${px2rem(11)};color:#999999`"
+              fontStyle="font-size:11px;color:#999999"
             />
           </div>
         </div>
@@ -91,7 +89,7 @@
             <div
               v-if="item.num"
               class="order-num"
-              :style="{ padding: `0 ${item.num > 9 ? px2rem(2) : 0} ` }"
+              :style="{ padding: `0 ${item.num > 9 ? '2px' : 0} ` }"
             >
               {{ item.num > 99 ? "99+" : item.num }}
             </div>
@@ -110,7 +108,7 @@
           <IconFont
             :type="item.icon"
             :fontStyle="{
-              'font-size': item.fontSize || px2rem(15),
+              'font-size': item.fontSize || '15px',
               color: '#303133'
             }"
           />
@@ -118,7 +116,7 @@
             <div class="text">{{ item.label }}</div>
             <IconFont
               type="iconright"
-              :fontStyle="`font-size:${px2rem(11)};color:#999999`"
+              :fontStyle="`font-size:11px;color:#999999`"
             />
           </div>
           <button
@@ -139,7 +137,6 @@
 <script>
 import { Toast } from "vant";
 import { CookieGet } from "@/utils/cookie";
-import { px2rem } from "@/utils/index";
 // import IconFont from "@/components/IconFont";
 import Tabbar from "@/components/Tabbar";
 import CustomNavigation from "@/components/CustomNavigation";
