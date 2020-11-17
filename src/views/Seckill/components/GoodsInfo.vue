@@ -23,7 +23,10 @@
       </div>
       <div class="right-info">
         <template v-if="activityInfo.activityStatus == 2">
-          <div class="time-title xg" v-if="goodsDetail.saleLimit">
+          <div
+            class="time-title xg"
+            v-if="goodsDetail.saleLimit && goodsDetail.saleLimit > 0"
+          >
             限购{{ goodsDetail.saleLimit }}件
           </div>
           <div class="time-wrap">
