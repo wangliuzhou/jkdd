@@ -83,6 +83,8 @@ export default {
     }
   },
   mounted() {
+    console.log(789, this.id);
+
     this.loadData(this.id);
   },
   methods: {
