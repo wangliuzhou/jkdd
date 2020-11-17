@@ -51,7 +51,7 @@
           {{ goodsDetail.sellingPoint }}
         </div>
       </div>
-      <div class="ms-surplus">
+      <div class="ms-surplus" v-if="goodsDetail.seckillLeft > 0">
         <div class="ms-surplus-progress">
           <div class="ms-surplus-bar">
             <div class="progress" :style="progressStyle">
@@ -275,6 +275,7 @@ export default {
     display: flex;
     align-items: center;
     margin-top: 11px;
+    margin-left: 7.5px;
     .ms-surplus-progress {
       flex: auto;
       .ms-surplus-bar {

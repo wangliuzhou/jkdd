@@ -12,7 +12,7 @@
 
       <!-- <view class="discount-info">优惠</view> -->
 
-      <ChooseInfo />
+      <ChooseInfo v-if="goodsDetail.secKillStock > 0" />
 
       <!-- 商品详情 -->
       <GoodsDetail />
