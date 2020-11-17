@@ -3,6 +3,7 @@
     <MicroPage
       class="micro-page-component"
       :components="components"
+      :templateType="templateType"
       @handleReload="handleReload"
     />
     <Tabbar />
@@ -19,7 +20,8 @@ export default {
   },
   computed: {
     ...mapState({
-      components: state => state.pageIndex.components
+      components: state => state.pageIndex.components,
+      templateType: state => state.pageIndex.templateType
     })
   },
   mounted() {
