@@ -6,6 +6,7 @@
       paddingBottom: '1.73rem',
       background: 'none'
     }"
+    :close-on-click-overlay="false"
     @close="handleCloseSku"
   >
     <div class="goods-sku-wrap">
