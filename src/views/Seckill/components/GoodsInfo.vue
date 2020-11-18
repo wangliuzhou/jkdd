@@ -8,16 +8,8 @@
       />
       <div class="price-wrap">
         <span class="msj">秒杀价</span>
-        <span class="sell-price"
-          >¥{{
-            activityInfo.activityStatus == 3
-              ? goodsDetail.minPrice * 1
-              : goodsDetail.secKillPrice * 1
-          }}</span
-        >
-        <span
-          class="yj-price"
-          v-if="activityInfo.activityStatus != 3 && goodsDetail.minPrice * 1"
+        <span class="sell-price">¥{{ goodsDetail.secKillPrice * 1 }}</span>
+        <span class="yj-price" v-if="goodsDetail.minPrice * 1"
           >原价<span class="del">¥{{ goodsDetail.minPrice * 1 }}</span></span
         >
       </div>

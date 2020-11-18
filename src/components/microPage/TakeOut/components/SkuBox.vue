@@ -1,7 +1,7 @@
 <template>
   <Sku
     v-if="showSku"
-    :show="showSku"
+    :show.sync="showSku"
     :goodsDetail="goodsDetail"
     :chooseInfo="chooseInfo"
     @updateChooseInfo="handleUpdateChooseInfo"

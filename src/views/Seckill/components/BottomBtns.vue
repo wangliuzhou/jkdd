@@ -47,7 +47,7 @@ export default {
             let hour = parseInt((remainingTime / (60 * 60 * 1000)) % 24);
             let minu = parseInt((remainingTime / (60 * 1000)) % 60);
             let sec = parseInt((remainingTime / 1000) % 60);
-            return [day, hour, minu, sec].map(formatNumber);
+            return [day, day + hour, minu, sec].map(formatNumber);
           }
         }
       }

@@ -315,7 +315,8 @@ export default {
           ),
           actuallyPaid: orderInfo.actuallyPaid,
           fromCart,
-          userMessage
+          userMessage,
+          orderChannel: 1
         };
 
       //秒杀
