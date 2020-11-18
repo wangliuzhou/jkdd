@@ -74,7 +74,10 @@
             ></button>
           </template>
           <template v-else>
-            <button class="add-cart" @click.stop.prevent="handleAdd">
+            <button
+              class="add-cart"
+              @click.stop.prevent="handleChangeNum('add')"
+            >
               + 加入购物车
             </button>
           </template>
