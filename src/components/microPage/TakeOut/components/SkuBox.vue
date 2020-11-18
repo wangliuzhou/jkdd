@@ -49,10 +49,6 @@ export default {
     },
     // 获取商品详情 sku 信息
     loadData({ dealerProductOutId, count }) {
-      Toast.loading({
-        message: "加载中...",
-        forbidClick: true
-      });
       this.$fetchGet("/mobile/tenantProduct/selectProductDetailById", {
         storeId: Cfg.mainStoreId,
         dealerProductOutId
