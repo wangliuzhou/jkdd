@@ -79,7 +79,7 @@ export default {
     },
     //加入购物车
     addCart(onlinestoreSingleProductOuterId, count) {
-      this.$fetchPost("/order/mobile/tenantCart/insert", {
+      return this.$fetchPost("/order/mobile/tenantCart/insert", {
         storeOutId: Cfg.mainStoreId,
         onlinestoreSingleProductOuterId,
         count
