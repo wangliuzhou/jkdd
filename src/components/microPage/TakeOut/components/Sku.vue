@@ -315,7 +315,7 @@ export default {
       // 当前sku，在购物车里面的数量
       let num = sku.selectCount;
 
-      if (type === "reduce" && num > 1) {
+      if (type === "reduce") {
         num--;
       }
 
