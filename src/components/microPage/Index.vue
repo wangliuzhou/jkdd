@@ -100,7 +100,7 @@
         :item="item"
         :index="index"
         :key="item.pageComponentId"
-        @handleReload="handleReload"
+        @reload="handleReload"
       />
     </template>
     <!-- 外卖模版页面不显示logo -->

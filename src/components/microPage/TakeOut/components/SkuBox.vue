@@ -4,9 +4,9 @@
     :show.sync="showSku"
     :goodsDetail="goodsDetail"
     :chooseInfo="chooseInfo"
-    @updateChooseInfo="handleUpdateChooseInfo"
-    @confirm="handleConfirm"
-    @closeSku="handleCloseSku"
+    @update-choose-info="handleUpdateChooseInfo"
+    @close="handleCloseSku"
+    @add-cart="addCart"
   >
     <div v-if="isTabPage" style="height:1.333rem"></div>
   </Sku>
@@ -14,7 +14,8 @@
 <script>
 import { Toast } from "vant";
 import Cfg from "@/config/index";
-import Sku from "@/views/GoodsDetail/components/Sku";
+import Sku from "./Sku";
+import * as cartUtil from "@/utils/cart";
 export default {
   components: {
     Sku
@@ -29,34 +30,25 @@ export default {
     return {
       buyEvent: null,
       showSku: false,
-      goodsDetail: null,
+      goodsDetail: {},
       chooseInfo: {
         sku: null, //已选中的sku信息
-        selectSkuAttr: null, //选中的sku，map
-        num: 1, //数量
-        address: null, //选中的地址信息
-        freight: 0 //运费
+        selectSkuAttr: null //选中的sku，map
       }
     };
   },
   methods: {
-    initData({ e, dealerProductOutId, count }) {
-      // buyEvent是点击事件，包含点击的坐标和点击的商品详情
-      this.count = count;
+    initData({ dealerProductOutId, count }) {
       // 重置数据
-      this.buyEvent = e;
-      this.goodsDetail = null;
+      this.goodsDetail = {};
       this.chooseInfo = {
         sku: null, //已选中的sku信息
-        selectSkuAttr: null, //选中的sku，map
-        num: 1, //数量
-        address: null, //选中的地址信息
-        freight: 0 //运费
+        selectSkuAttr: null //选中的sku，map
       };
-      this.loadData({ dealerProductOutId });
+      this.loadData({ dealerProductOutId, count });
     },
     // 获取商品详情 sku 信息
-    loadData({ dealerProductOutId }) {
+    loadData({ dealerProductOutId, count }) {
       Toast.loading({
         message: "加载中...",
         forbidClick: true
@@ -67,14 +59,18 @@ export default {
       }).then(({ data }) => {
         Toast.clear();
         if (data && data.dealerProductJoinId) {
-          const { isMultiAttr, valueVoList } = data;
-          if (isMultiAttr === 1) {
+          const { valueVoList } = data;
+          if (valueVoList.length > 1) {
             // 有sku，弹窗
             this.goodsDetail = data;
             this.showSku = true;
           } else {
             //没有sku，直接加入购物车
-            this.addCart(valueVoList[0].singleProductOuterId, this.count);
+            this.addCart(valueVoList[0].singleProductOuterId, count).then(
+              () => {
+                this.$emit("select-sku-callback");
+              }
+            );
           }
         } else {
           Toast("没有找到指定商品信息");
@@ -93,22 +89,14 @@ export default {
           //   title: "添加成功",
           //   icon: "none",
           // });
-          // 购物车的缓存管理
-          // cartUtil.del(onlinestoreSingleProductOuterId);
+          //购物车的缓存管理
+          cartUtil.del(onlinestoreSingleProductOuterId);
           // 购物车动画
           // if (this.isTabPage) {
           //   const shoppingAnimate = this.selectComponent("#shoppingAnimate");
           //   if (shoppingAnimate) shoppingAnimate.start(this.data.buyEvent);
           // }
         }
-
-        this.$emit("handleSelectSkuCallback", {
-          goodsDetail: this.goodsDetail,
-          chooseInfo: this.chooseInfo,
-          count: this.count
-        });
-
-        this.showSku = false;
       });
     },
     //更新sku的选中信息
@@ -118,29 +106,7 @@ export default {
     //点击遮罩后，点击页面
     handleCloseSku() {
       this.showSku = false;
-      this.$emit("handleSelectSkuCallback");
-    },
-    //选择sku后，点击确定回调
-    handleConfirm() {
-      let {
-        chooseInfo: { sku, num },
-        goodsDetail: { valueVoList }
-      } = this;
-      //有sku
-      if (valueVoList && valueVoList.length > 1) {
-        sku = valueVoList[0];
-      }
-
-      if (!sku) {
-        return Toast("请选择商品规格");
-      }
-
-      //加入购物车
-      this.addCart(sku.singleProductOuterId, num);
-    },
-    //显示sku
-    handleOpenSku() {
-      this.showSku = true;
+      this.$emit("select-sku-callback");
     }
   }
 };

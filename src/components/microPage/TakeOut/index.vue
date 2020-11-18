@@ -162,7 +162,7 @@
     <SkuBox
       :ref="`skuBox-${item.fId}`"
       :isTabPage="isTabPage"
-      @handleSelectSkuCallback="handleSelectSkuCallback"
+      @select-sku-callback="handleSelectSkuCallback"
     />
 
     <EmptyTip v-if="noData" />
@@ -171,6 +171,7 @@
 <script>
 import { Toast } from "vant";
 import { getOffsetTop } from "@/utils/dom";
+import { throttle } from "@/utils/index";
 import EmptyTip from "./components/EmptyTip";
 import SkuBox from "./components/SkuBox";
 
@@ -265,7 +266,7 @@ export default {
         count: 1
       });
     },
-    handleReduceOrAdd({ e, count }) {
+    handleReduceOrAdd: throttle(function({ e, count }) {
       const { classItem, classIndex, item, index } = e;
       const { stockNum, releaseStatus, selectCount } = item;
 
@@ -285,7 +286,7 @@ export default {
       this.handleUpdateItem({ classItem, classIndex, item, index, count });
 
       this.handleShowSku({ e, classItem, classIndex, item, index, count });
-    },
+    }),
     handleUpdateItem({ classItem, classIndex, item, index, count }) {
       // 更新前端显示数量
       this.$emit("handleUpdateItem", {
@@ -315,12 +316,15 @@ export default {
         }
       });
     },
-    handleSelectSku({ classItem, classIndex, item, index }, e) {
+    handleSelectSku: throttle(function(
+      { classItem, classIndex, item, index },
+      e
+    ) {
       // 回调处理完才允许继续添加
       if (this._curItem) return;
       this.handleShowSku({ e, classItem, classIndex, item, index });
-    },
-    handleShowSku({ e, classItem, classIndex, item, index, count }) {
+    }),
+    handleShowSku({ classItem, classIndex, item, index, count }) {
       // 临时存储当前操作的商品，用于选择完sku之后回调使用
       this._curItem = {
         classItem,
@@ -331,22 +335,13 @@ export default {
 
       // 弹出选择sku组件
       this.$refs[`skuBox-${this.item.fId}`].initData({
-        e,
-        count,
-        dealerProductOutId: item.productOuterId
+        dealerProductOutId: item.productOuterId,
+        count
       });
     },
     // 加完购物车处理回调
-    handleSelectSkuCallback(e) {
-      // 关闭sku弹窗也会触发回调
-      if (e) {
-        let { chooseInfo, count } = e;
-        // this.handleUpdateItem({
-        //   ...this._curItem,
-        //   count: count || chooseInfo.num,
-        // });
-        this.$emit("handleReload");
-      }
+    handleSelectSkuCallback() {
+      this.$emit("reload");
       this._curItem = null;
     }
   }
