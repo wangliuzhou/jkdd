@@ -97,7 +97,6 @@ export default {
     },
     //更新sku的选中信息
     handleUpdateChooseInfo(chooseInfo) {
-      console.log(chooseInfo);
       this.chooseInfo = chooseInfo;
     },
     //点击遮罩后，点击页面
