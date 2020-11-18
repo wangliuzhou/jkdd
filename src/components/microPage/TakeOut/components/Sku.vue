@@ -336,10 +336,11 @@ export default {
       });
 
       // 加入购物车
-      this.$emit("add-cart", {
-        onlinestoreSingleProductOuterId: sku.singleProductOuterId,
-        count: type === "reduce" ? -1 : 1
-      });
+      this.$emit(
+        "add-cart",
+        sku.singleProductOuterId,
+        type === "reduce" ? -1 : 1
+      );
     }),
     handleCloseSku() {
       this.$emit("close");
