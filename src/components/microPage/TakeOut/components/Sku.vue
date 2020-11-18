@@ -73,6 +73,11 @@
               @click.stop.prevent="handleChangeNum('add')"
             ></button>
           </template>
+          <template v-else>
+            <button class="add-cart" @click.stop.prevent="handleAdd">
+              + 加入购物车
+            </button>
+          </template>
         </div>
       </div>
       <div class="close" @click.stop.prevent="handleCloseSku"></div>
