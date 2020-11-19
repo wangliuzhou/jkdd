@@ -5,7 +5,8 @@ export default {
   namespaced: true,
   state: {
     components: [],
-    templateType: null
+    templateType: null,
+    pageConfig: {}
   },
   mutations: {
     setComponents(state, payload) {
@@ -13,6 +14,9 @@ export default {
     },
     setTemplateType(state, payload) {
       state.templateType = payload;
+    },
+    setPageConfig(state, payload) {
+      state.pageConfig = payload;
     }
   },
   actions: {
@@ -28,6 +32,13 @@ export default {
             })
           );
           commit("setTemplateType", templateType);
+          if (
+            componentArray &&
+            componentArray[0] &&
+            componentArray[0].type == "config"
+          ) {
+            commit("setPageConfig", componentArray[0]);
+          }
           dispatch("global/setLoading", false, { root: true });
         }
       );
