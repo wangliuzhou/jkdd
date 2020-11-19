@@ -16,5 +16,7 @@ export const SysPage = {
   //个人中心
   2: "/userCenter",
   //分类页
-  3: "/classify"
+  3: "/classify",
+  //会员中心
+  4: "/membersCenter"
 };

@@ -8,6 +8,7 @@ export default function jumpLink(link) {
     case 0:
       // 0: '功能页面',
       linkJump = SysPage[linkId];
+      console.log(linkJump, linkId);
       if (!linkJump) return;
       router.push({
         path: linkJump
