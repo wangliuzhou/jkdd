@@ -5,7 +5,7 @@
       <div class="dpxx">店铺信息</div>
       <img
         class="xxjd-image"
-        style="margin-top:12rpx"
+        style="margin-top:0.16rem"
         :src="require('@/assets/images/bottomLogo/logo_bottom.png')"
         mode="widthFix"
       />

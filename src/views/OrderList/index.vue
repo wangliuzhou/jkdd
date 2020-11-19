@@ -1,29 +1,28 @@
 <template>
   <div class="order-list-wrap">
     <div class="order-list-tabs">
-      <div class="order-list-box" ref="box">
+      <div class="order-list-box">
         <div
           v-for="(item, index) in tabs"
           :key="item.name"
           class="order-list-tab"
           :class="{ 'tab-active': activeTabIndex === index }"
           @click="handleTabTap(index)"
-          :ref="`item${index}`"
         >
           {{ item.name }}
         </div>
       </div>
     </div>
-    <!-- finished-text="没有更多了" -->
+
     <van-list
       v-model="loading"
       error-text="请求失败，点击重新加载"
       offset="100"
       :finished="finished"
       :error.sync="error"
-      @load="getList"
       :immediate-check="false"
       style="heigth:100%"
+      @load="getList"
     >
       <div v-if="list.length" class="order-list">
         <div class="order-item" v-for="(item, index) in list" :key="index">
@@ -157,10 +156,7 @@ export default {
   created() {
     this.init();
   },
-  mounted() {
-    // const listBox = this.$refs["box"];
-    // const offset = listBox.offsetLeft;
-  },
+  mounted() {},
 
   methods: {
     /**
@@ -169,6 +165,7 @@ export default {
      * @param {*} 下拉触底触发请求,type=undefined
      */
     getList(type) {
+      this.loading = true;
       const { tabs, currentPage, activeTabIndex } = this;
       const statusType = tabs[activeTabIndex].id;
       this.$fetchGet("/order/mobile/tenantOrder/findOrderPageMiniProgram", {
@@ -205,6 +202,8 @@ export default {
 
     // 点击tab标签
     handleTabTap(index) {
+      console.log(222);
+
       index = Number(index);
       if (index !== this.activeTabIndex) {
         this.activeTabIndex = index;
@@ -301,9 +300,7 @@ export default {
             this.updateOrderStatus(orderOutId);
 
             setTimeout(() => {
-              this.$router.replace(
-                `/pages/payResult/index?price=${total_amount}`
-              );
+              this.$router.replace(`/payResult?price=${total_amount}`);
             }, 200);
           })
           .catch(() => {
@@ -318,18 +315,24 @@ export default {
     //判断并跳转到多包裹页面
     goLogisticsPackagePage(item) {
       const {
-        orderOutId,
+        orderOuterId,
         multiplePackage,
         tenantOrderProductShipmentNumbers
       } = item;
       const { expCode, shipmentNumber } = tenantOrderProductShipmentNumbers[0];
       if (multiplePackage) {
         //跳转到多包裹页
-        this.$push(`/pages/logisticsPackage/index?orderOutId=${orderOutId}`);
+        this.$push(`/logisticsPackage?orderOutId=${orderOuterId}`);
       } else {
         //跳转到订单物流页
+        console.log(777, item);
+
+        console.log(
+          `/orderLogistics?expCode=${expCode}&shipmentNumber=${shipmentNumber}&orderOutId=${orderOuterId}`
+        );
+
         this.$push(
-          `/pages/orderLogistics/index?expCode=${expCode}&shipmentNumber=${shipmentNumber}&orderOutId=${orderOutId}`
+          `/orderLogistics?expCode=${expCode}&shipmentNumber=${shipmentNumber}&orderOutId=${orderOuterId}`
         );
       }
     },

@@ -7,7 +7,7 @@
       />
       <div class="order-detail-status-content">
         <div class="left">
-          <IconFont type="iconfahuo" fontStyle="font-size:16px;" />
+          <IconFont type="iconfahuo" fontStyle="font-size:0.427rem" />
           <div class="order-status">{{ orderStatus[info.orderStatus] }}</div>
         </div>
 
@@ -18,14 +18,14 @@
     <div class="no-shipment" v-if="showNoShipment">
       <div class="order-detail-logistics">
         <div class="left">
-          <IconFont type="iconyunshuzhong" fontStyle="font-size:24px;" />
+          <IconFont type="iconyunshuzhong" fontStyle="font-size:0.64rem" />
         </div>
         <div class="center">
           <div class="content">暂无物流信息</div>
           <div class="time">{{ nowTime }}</div>
         </div>
         <div class="right">
-          <IconFont type="iconqianjin" fontStyle="font-size:15px;" />
+          <IconFont type="iconqianjin" fontStyle="font-size:0.4rem" />
         </div>
       </div>
     </div>
@@ -354,16 +354,25 @@ export default {
   methods: {
     //判断并跳转到多包裹页面
     goLogisticsPackagePage() {
-      const { info, id } = this;
-      const { tenantOrderProductDetails, multiplePackage } = info;
+      const {
+        info: { tenantOrderProductDetails, multiplePackage }
+      } = this;
+      const { id } = this.$route.query;
+      console.log(8989, tenantOrderProductDetails, multiplePackage);
+
       if (multiplePackage) {
         //跳转到多包裹页
-        this.$push(`/pages/logisticsPackage/index?orderOutId=${id}`);
+        this.$push(`/logisticsPackage?orderOutId=${id}`);
       } else {
         //跳转到订单物流页
         const { expCode, shipmentNumber } = tenantOrderProductDetails[0];
+        console.log(
+          3333,
+          `/orderLogistics?expCode=${expCode}&shipmentNumber=${shipmentNumber}&orderOutId=${id}`
+        );
+
         this.$push(
-          `/pages/orderLogistics/index?expCode=${expCode}&shipmentNumber=${shipmentNumber}&orderOutId=${id}`
+          `/orderLogistics?expCode=${expCode}&shipmentNumber=${shipmentNumber}&orderOutId=${id}`
         );
       }
     },
@@ -404,7 +413,7 @@ export default {
 
             setTimeout(() => {
               wx.redirectTo({
-                url: `/pages/payResult/index?price=${total_amount}`
+                url: `/payResult?price=${total_amount}`
               });
             }, 500);
           })

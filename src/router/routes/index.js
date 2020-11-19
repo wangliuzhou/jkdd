@@ -86,6 +86,14 @@ const routes = [
     component: () => import("@/views/OrderLogistics/index.vue")
   },
   {
+    path: "/logisticsPackage",
+    name: "LogisticsPackage",
+    meta: {
+      needLogin: true
+    },
+    component: () => import("@/views/LogisticsPackage/index.vue")
+  },
+  {
     path: "/pay/orderSettle",
     name: "OrderSettle",
     props: route => ({

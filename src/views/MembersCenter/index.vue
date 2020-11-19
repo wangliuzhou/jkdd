@@ -147,7 +147,7 @@ export default {
         return;
       }
       if (memberLevelInfoForce === 1) {
-        this.$push("/pages/joinMember/index");
+        this.$push("/joinMember");
       } else {
         this.getMemberCard();
       }

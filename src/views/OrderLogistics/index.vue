@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="order-logistics-wrap">
     <div class="order-logistics-top">
       <img
         class="order-logistics-bg"
@@ -25,44 +25,46 @@
     <div class="order-logistics-detail">
       <div class="order-logistics-detail-title">物流详情</div>
       <div class="order-logistics-list">
-        <div v-for="(item, index) in info.maps" :key="item.AcceptStation">
-          <div class="order-logistics-item">
-            <div :class="['order-logistics-content', { active: index === 0 }]">
-              <div class="pint">
-                <img
-                  v-if="item.Action === '1' && index !== 0"
-                  :src="require('@/assets/images/logistics/logistics1.png')"
-                  class="logistics-status-icon"
-                />
-                <img
-                  v-if="item.Action === '2' && index !== 0"
-                  :src="require('@/assets/images/logistics/logistics2.png')"
-                  class="logistics-status-icon"
-                />
-                <img
-                  v-if="item.Action === '201' && index !== 0"
-                  :src="require('@/assets/images/logistics/logistics201.png')"
-                  class="logistics-status-icon"
-                />
-                <img
-                  v-if="item.Action === '202' && index !== 0"
-                  :src="require('@/assets/images/logistics/logistics202.png')"
-                  class="logistics-status-icon"
-                />
-                <IconFont
-                  v-if="index === 0"
-                  type="iconyiqianshou"
-                  fontStyle="font-size:36rpx"
-                />
-              </div>
-              <div class="order-logistics-item-title" v-if="index === 0">
-                {{ getStatus }}
-              </div>
-              <div class="order-logistics-item-content">
-                {{ item.AcceptStation }}
-              </div>
-              <div class="order-logistics-item-time">{{ item.AcceptTime }}</div>
+        <div
+          class="order-logistics-item"
+          v-for="(item, index) in info.maps"
+          :key="item.AcceptStation"
+        >
+          <div :class="['order-logistics-content', { active: index === 0 }]">
+            <div class="pint">
+              <img
+                v-if="item.Action === '1' && index !== 0"
+                :src="require('@/assets/images/logistics/logistics1.png')"
+                class="logistics-status-icon"
+              />
+              <img
+                v-if="item.Action === '2' && index !== 0"
+                :src="require('@/assets/images/logistics/logistics2.png')"
+                class="logistics-status-icon"
+              />
+              <img
+                v-if="item.Action === '201' && index !== 0"
+                :src="require('@/assets/images/logistics/logistics201.png')"
+                class="logistics-status-icon"
+              />
+              <img
+                v-if="item.Action === '202' && index !== 0"
+                :src="require('@/assets/images/logistics/logistics202.png')"
+                class="logistics-status-icon"
+              />
+              <IconFont
+                v-if="index === 0"
+                type="iconyiqianshou"
+                fontStyle="font-size:0.49rem"
+              />
             </div>
+            <div class="order-logistics-item-title" v-if="index === 0">
+              {{ getStatus }}
+            </div>
+            <div class="order-logistics-item-content">
+              {{ item.AcceptStation }}
+            </div>
+            <div class="order-logistics-item-time">{{ item.AcceptTime }}</div>
           </div>
         </div>
       </div>
@@ -110,7 +112,6 @@ export default {
           orderOutId
         }
       );
-      console.log("物流信息", data);
       data.maps = data.maps.reverse();
       this.info = data;
       this.logisticsCode = shipmentNumber;
@@ -120,7 +121,7 @@ export default {
 </script>
 <style lang="less" scoped>
 /* @import url(); 引入css类 */
-page {
+.order-logistics-wrap {
   background: #f8f8f8;
   padding-bottom: env(safe-area-inset-bottom);
 }
@@ -197,6 +198,9 @@ page {
   background: white;
   border-radius: 8px;
   padding-top: 7.5px;
+  padding-right: 16px;
+  box-sizing: border-box;
+  text-align: justify;
   .order-logistics-detail-title {
     padding-left: 8px;
     color: #333333;

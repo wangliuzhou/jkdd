@@ -34,11 +34,11 @@
               }}</span>
             </template>
             <template v-if="couponItem.marketingCouponType == 2">
-              <span class="section"
-                >{{ couponItem.marketingCouponRandomStart }}-{{
+              <span class="section">
+                {{ couponItem.marketingCouponRandomStart }}-{{
                   couponItem.marketingCouponRandomEnd
-                }}</span
-              >
+                }}
+              </span>
             </template>
           </span>
         </div>
@@ -170,6 +170,9 @@ export default {
           font-size: 30px;
         }
         .decimal {
+        }
+        .section {
+          font-size: 30px;
         }
       }
     }
@@ -466,6 +469,9 @@ export default {
           font-size: 18px;
         }
         .decimal {
+        }
+        .section {
+          font-size: 30px;
         }
       }
     }

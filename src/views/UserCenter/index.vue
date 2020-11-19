@@ -55,7 +55,7 @@
       <div class="value">1800</div>
       <div class="label">积分</div>
     </div>
-    <div class="item" bindtap="goPage" data-link="/pages/coupons/index">
+    <div class="item" bindtap="goPage" data-link="/coupons">
       <div class="value">4</div>
       <div class="label">优惠券/码</div>
     </div>
@@ -162,31 +162,36 @@ export default {
           icon: paymentIcon,
           link: "/orderList",
           label: "待付款",
-          activeIndex: 1
+          activeIndex: 1,
+          num: 0
         },
         {
           icon: sendIcon,
           link: "/orderList",
           label: "待发货",
-          activeIndex: 2
+          activeIndex: 2,
+          num: 0
         },
         {
           icon: takeIcon,
           link: "/orderList",
           label: "待收货",
-          activeIndex: 3
+          activeIndex: 3,
+          num: 0
         },
         {
           icon: commentsIcon,
           link: "/orderList",
           label: "评价",
-          activeIndex: 4
+          activeIndex: 4,
+          num: 0
         },
         {
           icon: refundIcon,
           link: "/orderList",
           label: "退款/售后",
-          activeIndex: 5
+          activeIndex: 5,
+          num: 0
         }
       ],
       functionList: [
@@ -313,19 +318,18 @@ export default {
     },
     // 订单数量
     async getOrderNum() {
-      const { storeOuterId, orderList } = this;
+      const { storeOuterId } = this;
       const { data } = await this.$fetchGet(
         "/order/mobile/tenantOrder/findOrderCount",
         {
           storeOuterId
         }
       );
-      orderList[0].num = data["stayPayment"];
-      orderList[1].num = data["stayShipments"];
-      orderList[2].num = data["stayReceiving"];
-      orderList[3].num = data["evaluate"];
-      orderList[4].num = data["afterSale"];
-      this.orderList = orderList;
+      this.orderList[0].num = data["stayPayment"];
+      this.orderList[1].num = data["stayShipments"];
+      this.orderList[2].num = data["stayReceiving"];
+      this.orderList[3].num = data["evaluate"];
+      this.orderList[4].num = data["afterSale"];
     },
     // 登录回调
     loginCallback() {

@@ -39,7 +39,8 @@ import {
   Cell,
   Checkbox,
   Tab,
-  Tabs
+  Tabs,
+  Overlay
 } from "vant";
 
 // import * as fundebug from "fundebug-javascript";
@@ -94,6 +95,7 @@ Vue.use(Cell);
 Vue.use(Checkbox);
 Vue.use(Tab);
 Vue.use(Tabs);
+Vue.use(Overlay);
 
 FastClick.attach(document.body);
 
