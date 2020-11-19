@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="component-list" :style="containerStyle">
+    <div class="container" :style="containerStyle">
       <template v-for="(item, index) in components">
         <!-- 页面设置 -->
         <Config
@@ -180,7 +180,8 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.component-list {
+.container {
   font-size: 14px;
+  min-height: 100vh;
 }
 </style>
