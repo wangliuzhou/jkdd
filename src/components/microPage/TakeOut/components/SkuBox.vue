@@ -90,7 +90,7 @@ export default {
           // 购物车动画
           // if (this.isTabPage) {
           //   const shoppingAnimate = this.selectComponent("#shoppingAnimate");
-          //   if (shoppingAnimate) shoppingAnimate.start(this.data.buyEvent);
+          //   if (shoppingAnimate) shoppingAnimate.start(this.buyEvent);
           // }
         }
       });

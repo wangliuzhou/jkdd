@@ -9,7 +9,7 @@
       <div class="get-wx-address-right">
         <IconFont type="iconqianjin" fontStyle="font-size: 30rpx;color:#ccc" />
       </div>
-    </div> -->
+    </div>-->
     <div class="address-content">
       <div class="address-content-detail">
         <van-field
@@ -63,15 +63,9 @@
               <AddTag
                 :showAddTagInput="showAddTagInput"
                 @tapAddTagBtn="tapAddTagBtn"
+                @hanleClcikConfirmBtn="hanleClcikConfirmBtn"
               />
             </div>
-            <input
-              class="add-tag-input"
-              v-if="showAddTagInput"
-              v-model="userReceivingAddressLabelName"
-              placeholder="请输入标签"
-              @keyup.enter="onAddTagConfirm"
-            />
           </div>
         </div>
       </div>
@@ -136,7 +130,6 @@ export default {
       userAddressCity: "",
       userAddressDistrict: "",
       userAddressDetail: "",
-      userReceivingAddressLabelName: "",
       isDefault: false
     };
   },
@@ -161,13 +154,10 @@ export default {
     },
 
     // 输入tag文字,点击确定后
-    onAddTagConfirm() {
-      const { tagsList, userReceivingAddressLabelName } = this;
-      tagsList.push({ userReceivingAddressLabelName });
-      this.tagsList = tagsList;
+    hanleClcikConfirmBtn(tagValue) {
+      this.tagsList.push({ userReceivingAddressLabelName: tagValue });
       this.showAddTagInput = false;
-      this.choosedTagIndex = tagsList.length - 1;
-      this.userReceivingAddressLabelName = "";
+      this.choosedTagIndex = this.tagsList.length - 1;
     },
 
     // 点击保存并使用按钮
@@ -188,11 +178,14 @@ export default {
         isDefault: Number(isDefault),
         userAddressProvince: this.userAddressProvince,
         userAddressCity: this.userAddressCity,
-        userAddressDistrict: this.userAddressDistrict
+        userAddressDistrict: this.userAddressDistrict,
+        tenantUserReceivingAddressLabel: {}
       };
       if (choosedTagIndex > -1) {
-        const name = tagsList[choosedTagIndex].userReceivingAddressLabelName;
-        params.tenantUserReceivingAddressLabel.userReceivingAddressLabelName = name;
+        params.tenantUserReceivingAddressLabel.userReceivingAddressLabelName =
+          tagsList[choosedTagIndex]["userReceivingAddressLabelName"];
+      } else {
+        delete params.tenantUserReceivingAddressLabel;
       }
       // 编辑时候入参加上id
       if (this.$route.query.id) {
@@ -328,7 +321,7 @@ export default {
         }
       });
       this.tagsList = [...tagsList, ...data];
-      const choosedTagIndex = this.data.tagsList.findIndex(
+      const choosedTagIndex = this.tagsList.findIndex(
         it => it.userReceivingAddressLabelName === chooseName
       );
       this.choosedTagIndex = choosedTagIndex;

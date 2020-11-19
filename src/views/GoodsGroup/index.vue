@@ -138,7 +138,7 @@ export default {
       const api = "/mobile/tenantProduct/selectDealerProductBatch";
       const params = {
         dealerProductOutId: this.$route.query.productIds.split(","),
-        currentPage: this.data.currentPage,
+        currentPage: this.currentPage,
         pageSize: 10
       };
       this.$fetchPost(api, params)
