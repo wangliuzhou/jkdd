@@ -15,7 +15,7 @@
         calcActivityStatus === 1
           ? "距开始"
           : calcActivityStatus === 2
-          ? "进行中"
+          ? "距结束"
           : ""
       }}
     </div>
