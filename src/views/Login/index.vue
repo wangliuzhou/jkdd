@@ -3,14 +3,26 @@
     <h1>手机号快捷登录</h1>
     <div class="form">
       <div class="form-item">
-        <input type="tel" maxlength="11" placeholder="请输入手机号" />
+        <input
+          type="tel"
+          v-model="mobile"
+          maxlength="11"
+          placeholder="请输入手机号"
+        />
       </div>
       <div class="form-item">
-        <input type="tel" maxlength="4" placeholder="请输入验证码" />
+        <input
+          type="tel"
+          v-model="code"
+          maxlength="4"
+          placeholder="请输入验证码"
+        />
         <!-- 重新发送(58s） -->
-        <button class="getcode-btn" disabled>发送验证码</button>
+        <button class="getcode-btn" disabled @click="getCode">
+          发送验证码
+        </button>
       </div>
-      <button class="login-btn" disabled>确定</button>
+      <button class="login-btn" disabled @click="login">确定</button>
     </div>
   </div>
 </template>
@@ -30,12 +42,12 @@ export default {
   },
   data() {
     return {
-      userId: "294ZKOG2WMNGLL1ZJ31L",
-      storeId: "TSRORVZ17ZXD9",
-      accessToken: "93c51a983ca05d81b3acab5971df0fed86254bbc",
-      tokenTime: "1604807480963",
-      mobile: "15757185531",
-      code: "123456"
+      // userId: "294ZKOG2WMNGLL1ZJ31L",
+      // storeId: "TSRORVZ17ZXD9",
+      // accessToken: "93c51a983ca05d81b3acab5971df0fed86254bbc",
+      // tokenTime: "1604807480963",
+      // mobile: "15757185531",
+      // code: "123456"
     };
   },
   computed: {
@@ -50,6 +62,9 @@ export default {
     }
   },
   methods: {
+    getCode() {
+      console.log("获取验证码");
+    },
     login() {
       let { mobile, code, openidStr, redirectUrl, bindPhone } = this;
       let postUrl, postData;
