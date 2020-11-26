@@ -42,6 +42,8 @@ export default {
   },
   data() {
     return {
+      mobile: "",
+      code: ""
       // userId: "294ZKOG2WMNGLL1ZJ31L",
       // storeId: "TSRORVZ17ZXD9",
       // accessToken: "93c51a983ca05d81b3acab5971df0fed86254bbc",
