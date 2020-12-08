@@ -16,12 +16,14 @@
           label="收货人"
           placeholder="收货人姓名"
           v-model="userConsigneeName"
+          maxlength="20"
         />
         <van-field
           type="tel"
           label="手机号码"
           placeholder="收货人手机号"
           v-model="userConsigneePhone"
+          maxlength="20"
         />
         <van-field
           label="所在地区"
@@ -43,6 +45,7 @@
           v-model="userAddressDetail"
           label="详细地址"
           placeholder="街道、门牌号等"
+          maxlength="255"
         />
       </div>
       <div class="address-content-detail">

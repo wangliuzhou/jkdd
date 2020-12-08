@@ -67,8 +67,8 @@
                 <IconFont
                   type="icontishi"
                   fontStyle="font-size:0.32rem;color:#cccccc;margin-right:0.13rem;"
-                ></IconFont
-                >{{ item.disableRemark }}
+                ></IconFont>
+                {{ item.disableRemark }}
               </div>
             </div>
             <div class="goods-price">¥{{ item.retailPrice * 1 }}</div>
@@ -115,6 +115,7 @@
             <input
               placeholder="选填，请在此处添加您的留言"
               v-model="userMessage"
+              :maxlength="200"
             />
           </div>
         </div>

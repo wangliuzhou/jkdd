@@ -4,7 +4,11 @@
       <div class="content" @click.stop>
         <div class="title">添加标签</div>
         <div class="input-box">
-          <input v-model="inputValue" placeholder="请输入标签名" />
+          <input
+            v-model="inputValue"
+            placeholder="请输入标签名"
+            maxlength="20"
+          />
         </div>
         <div class="btn-box">
           <div class="cancel" @click="toggleAddstatus">取消</div>
