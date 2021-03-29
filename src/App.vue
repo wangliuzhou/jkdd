@@ -23,13 +23,9 @@ export default {
     })
   },
   methods: {
-    ...mapActions({
-      getBottomInfo: "bottomLogo/getBottomInfo"
-    })
+    ...mapActions({})
   },
-  created() {
-    this.getBottomInfo();
-  }
+  created() {}
 };
 </script>
 <style lang="less" scoped>

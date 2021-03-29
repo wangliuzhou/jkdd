@@ -4,17 +4,9 @@ import { fetchGet } from "@/config/request";
 export default {
   namespaced: true,
   state: {
-    components: [],
-    templateType: null,
     pageConfig: {}
   },
   mutations: {
-    setComponents(state, payload) {
-      state.components = payload;
-    },
-    setTemplateType(state, payload) {
-      state.templateType = payload;
-    },
     setPageConfig(state, payload) {
       state.pageConfig = payload;
     }
@@ -25,14 +17,7 @@ export default {
 
       fetchGet("/store/mobile/tenantPage/findMainPage").then(
         ({ data: { componentArray, templateType } }) => {
-          const components = componentArray.map(item => {
-            return JSON.parse(item.componentContent || {});
-          });
-          commit("setComponents", components);
-          commit("setTemplateType", templateType);
-          if (components && components[0] && components[0].type == "config") {
-            commit("setPageConfig", components[0]);
-          }
+          commit("setPageConfig", 33333);
           dispatch("global/setLoading", false, { root: true });
         }
       );

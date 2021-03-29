@@ -1,32 +1,13 @@
 import axios from "axios";
 import { Toast } from "vant";
-import { getUrl } from "@/config/url";
-import { login } from "@/utils/account";
-import store from "@/store/index";
-import cfg from "@/config/index";
-import { CookieGet } from "@/utils/cookie";
-import storesys from "@/utils/storesys";
-
-//生成请求头
-export const getRequestHeader = () => {
-  return {
-    // 店铺ID
-    "x-store-id": cfg.mainStoreId,
-    // 系统ID
-    "x-storesys-id": storesys.storesysId,
-    "x-user-id": CookieGet("userId"),
-    "x-access-token": CookieGet("accessToken"),
-    "x-token-time": CookieGet("tokenTime")
-  };
-};
+import { getUrl } from "@/config";
+import store from "@/store";
+import router from "@/router";
 
 // 请求前拦截
 axios.interceptors.request.use(
   config => {
-    let header = getRequestHeader();
-    for (let key in header) {
-      config.headers[key] = header[key];
-    }
+    config.token = "token";
     config.url = getUrl(config.url);
 
     config.cancelToken = new axios.CancelToken(cancel => {
@@ -47,28 +28,21 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   data => {
     let { data: { code } = {} } = data;
-    if (
-      code === 500001 ||
-      code === 500002 ||
-      code === 500003 ||
-      code === 500004 ||
-      code === 500005
-    ) {
+    if (code === 500001) {
       //跳转到登录页面前，取消其他所有网络请求
       cancelAllRequest();
-      login();
+      router.push("/login");
     }
     return data;
   },
   err => {
     if (axios.isCancel(err)) {
-      // 为了终结promise链 就是实际请求 不会走到.catch(rej=>{});这样就不会触发错误提示之类了。
+      // 页面跳转，上一个页面请求全部取消
+      // 这样return操作不会触发错误提示
       return new Promise(() => {});
     } else {
-      if (err.response.status === 504 || err.response.status === 404) {
+      if (err.response.status === 504) {
         console.error("服务器被吃了⊙﹏⊙∥");
-      } else if (err.response.status === 401) {
-        console.error("登录信息失效⊙﹏⊙∥");
       } else if (err.response.status === 500) {
         console.error("服务器开小差了⊙﹏⊙∥");
       }

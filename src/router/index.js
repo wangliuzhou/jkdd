@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import { wechatShareSaveCurpage, shakePage } from "@/utils/bugfix";
 import { needLogin, login } from "@/utils/account";
 import routes from "./routes/index";
 import { cancelAllRequest } from "@/config/request";
@@ -23,8 +22,6 @@ const router = new VueRouter({
 router.beforeEach(function(to, from, next) {
   //取消所有网络请求
   cancelAllRequest();
-  //处理微信分享bug
-  wechatShareSaveCurpage(to, from, next);
   //判断是否需要登录
   if (needLogin(to)) {
     login();
@@ -35,7 +32,9 @@ router.beforeEach(function(to, from, next) {
 });
 
 router.afterEach((to /*, from, next*/) => {
-  shakePage();
+  // 抖动一下，防止页面空白的bug
+  window.scrollBy(0, -1);
+  window.scrollBy(0, 1);
   if (to && to.meta && to.meta.title !== undefined) {
     document.title = to.meta.title;
   }

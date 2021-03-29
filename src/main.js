@@ -4,8 +4,6 @@ import store from "./store";
 import App from "./App.vue";
 // 懒加载
 import VueLazyload from "vue-lazyload";
-// 轮播图
-import VueAwesomeSwiper from "vue-awesome-swiper";
 // 粘贴板
 import VueClipboard from "vue-clipboard2";
 
@@ -33,7 +31,7 @@ import {
   Field,
   Area,
   List,
-  Image as VanImage,
+  Image,
   Button,
   SwipeCell,
   Cell,
@@ -43,17 +41,8 @@ import {
   Overlay
 } from "vant";
 
-// import * as fundebug from "fundebug-javascript";
-// import fundebugVue from "fundebug-vue";
-
-// fundebug.init({
-//   apikey: "11c1749d557dd3d3ab98a2c644ce800cf5c0a1bbf8ace35571558d97d9b0484f"
-// });
-// fundebugVue(fundebug, Vue);
-
 //全局样式
 import "normalize.css";
-import "swiper/css/swiper.css";
 import "@/assets/style/index.less";
 import "@/assets/iconfont/iconfont.less";
 
@@ -69,7 +58,6 @@ Vue.use(VueLazyload, {
   preLoad: 1.3,
   attempt: 1
 });
-Vue.use(VueAwesomeSwiper);
 Vue.use(mixins);
 Vue.use(request);
 // 复制到剪切板
@@ -88,7 +76,7 @@ Vue.use(SwipeItem);
 Vue.use(Field);
 Vue.use(Area);
 Vue.use(List);
-Vue.use(VanImage);
+Vue.use(Image);
 Vue.use(Button);
 Vue.use(SwipeCell);
 Vue.use(Cell);

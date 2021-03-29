@@ -28,10 +28,6 @@
 </template>
 <script>
 import { Toast } from "vant";
-import { CookieSet } from "@/utils/cookie";
-import { wechatLogin } from "@/utils/account";
-import { isWechat } from "@/utils/index";
-import Cfg from "@/config/index";
 
 export default {
   props: {
@@ -44,68 +40,20 @@ export default {
     return {
       mobile: "",
       code: ""
-      // userId: "294ZKOG2WMNGLL1ZJ31L",
-      // storeId: "TSRORVZ17ZXD9",
-      // accessToken: "93c51a983ca05d81b3acab5971df0fed86254bbc",
-      // tokenTime: "1604807480963",
-      // mobile: "15757185531",
-      // code: "123456"
     };
   },
   computed: {
     needWechatLogin() {
-      return !this.bindPhone && isWechat;
+      return true;
     }
   },
-  mounted() {
-    // 如果是微信环境自动登录
-    if (this.needWechatLogin) {
-      wechatLogin(this.redirectUrl);
-    }
-  },
+  mounted() {},
   methods: {
     getCode() {
       console.log("获取验证码");
     },
     login() {
-      let { mobile, code, openidStr, redirectUrl, bindPhone } = this;
-      let postUrl, postData;
-
-      if (bindPhone) {
-        postUrl = "/sysWechatThirdAuth/woaLoginBandMobile";
-        postData = {
-          mobile,
-          code,
-          openidStr,
-          storeOutId: Cfg.mainStoreId
-        };
-      } else {
-        postUrl = "/sysWechatThirdAuth/woaLoginByMobile";
-        postData = {
-          mobile,
-          code,
-          storeOutId: Cfg.mainStoreId
-        };
-      }
-
-      this.$fetchPost(postUrl, postData).then(
-        ({ data: { account, token, tokenTime } }) => {
-          CookieSet("userId", account.userUnionId);
-          CookieSet("userInfo", account);
-          CookieSet("accessToken", token);
-          CookieSet("tokenTime", tokenTime);
-
-          Toast("登录成功");
-
-          setTimeout(() => {
-            if (redirectUrl) {
-              this.$replace(redirectUrl);
-            } else {
-              this.$replace("/");
-            }
-          }, 800);
-        }
-      );
+      Toast("dddd");
     }
   }
 };

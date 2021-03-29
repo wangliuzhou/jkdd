@@ -1,31 +1,15 @@
 const { VUE_APP_API_ENV } = process.env;
+console.log("VUE_APP_API_ENV=", VUE_APP_API_ENV);
 
-const Config = {
-  base: {
-    appId: "wx1018d54aa9dbc9d7",
-    mainStoreId: "TSRORVZ17ZXD9",
-    loginRedirectUrl:
-      "http://saastest.xzintl.com/api/system/sysWechatThirdAuth/woaLoginCallBack",
-    shopOrigin: "http://shop_${storesysId}.m${test}.xzintl.com",
-    cashierOrigin: "http://cashier${test}.xzintl.com",
-    passportOrigin: "http://passport${test}.xzintl.com",
-    ossDomain: "http://static.xzintl.com/"
-  },
-  dev: {},
-  beta: {
-    appId: "wx1018d54aa9dbc9d7",
-    loginRedirectUrl:
-      "http://saastest.xzintl.com/api/system/sysWechatThirdAuth/woaLoginCallBack",
-    shopOrigin: "http://shop_${storesysId}.m${test}.xzintl.com",
-    cashierOrigin: "http://cashier${test}.xzintl.com",
-    passportOrigin: "http://passport${test}.xzintl.com"
-  },
-  pro: {
-    appId: "wx1018d54aa9dbc9d7",
-    loginRedirectUrl:
-      "http://saastest.xzintl.com/api/system/sysWechatThirdAuth/woaLoginCallBack",
-    ossDomain: "https://saasoss.xzintl.com/"
-  }
+// 有dev和prod两个环境
+const domainObj = {
+  dev: "https://dev-api",
+  prod: "https://prod-api"
 };
 
-export default Object.assign({}, Config.base, Config[VUE_APP_API_ENV || "pro"]);
+export const getUrl = url => {
+  if (/^https?:\/\//.test(url)) {
+    return url;
+  }
+  return domainObj[VUE_APP_API_ENV] + url;
+};
