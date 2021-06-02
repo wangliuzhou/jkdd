@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     onSubmit(values) {
-      console.log("submit", values);
+      console.log("submit==", values);
     },
     onConfirm(values) {
       this.area = values
