@@ -2,9 +2,7 @@
   <div class="add-complaint-page">
     <header-nav title="我要投诉">
       <template v-slot:right>
-        <van-button plain type="info" class="subscribe" size="small"
-          >订阅</van-button
-        >
+        <van-button plain type="info" class="subscribe" size="small">订阅</van-button>
       </template>
     </header-nav>
     <van-form @submit="onSubmit">
@@ -33,11 +31,7 @@
         @click="showArea = true"
       />
       <van-popup v-model="showArea" position="bottom">
-        <van-area
-          :area-list="areaList"
-          @confirm="onConfirm"
-          @cancel="showArea = false"
-        />
+        <van-area :area-list="areaList" @confirm="onConfirm" @cancel="showArea = false" />
       </van-popup>
 
       <van-field
@@ -88,16 +82,12 @@
         :rules="[{ required: true, message: '请输入验证码' }]"
       >
         <template #button>
-          <van-button size="small" type="primary" @click="sendSMS"
-            >发送验证码</van-button
-          >
+          <van-button size="small" type="primary" @click="sendSMS">发送验证码</van-button>
         </template>
       </van-field>
 
       <div style="margin: 16px;">
-        <van-button round block type="info" native-type="submit"
-          >提交</van-button
-        >
+        <van-button round block type="info" native-type="submit">提交</van-button>
       </div>
     </van-form>
   </div>
