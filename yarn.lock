@@ -931,6 +931,11 @@
   resolved "http://192.168.1.156:8081/repository/npm_group/@types/q/-/q-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
   integrity sha1-FZJUFOCtLNdlv+9YhC9+JqesyyQ=
 
+"@vant/area-data@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.nlark.com/@vant/area-data/download/@vant/area-data-1.1.1.tgz#b9acf8a804c0d60f721b6900680299422b006b1a"
+  integrity sha1-uaz4qATA1g9yG2kAaAKZQisAaxo=
+
 "@vant/icons@1.2.1":
   version "1.2.1"
   resolved "http://192.168.1.156:8081/repository/npm_group/@vant/icons/-/icons-1.2.1.tgz#309fecb97a4989866f045ce676b545c454701c8f"

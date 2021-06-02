@@ -5,6 +5,11 @@ const routes = [
     component: () => import("@/views/Index.vue")
   },
   {
+    path: "/addComplaint",
+    name: "AddComplaint",
+    component: () => import("@/views/AddComplaint/index.vue")
+  },
+  {
     path: "/test",
     name: "Test",
     component: () => import("@/views/Test.vue")
@@ -12,7 +17,9 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    meta: {},
+    meta: {
+      title: "登录"
+    },
     props: route => ({
       bindPhone: Boolean(route.query.bindPhone)
     }),

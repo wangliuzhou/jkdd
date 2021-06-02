@@ -18,6 +18,10 @@ import mixins from "@/mixins/index";
 import Components from "@/components/index";
 // vant组件
 import {
+  Form,
+  Uploader,
+  RadioGroup,
+  Radio,
   Toast,
   Switch,
   Loading,
@@ -63,6 +67,10 @@ Vue.use(request);
 // 复制到剪切板
 Vue.use(VueClipboard);
 //vant
+Vue.use(Form);
+Vue.use(Uploader);
+Vue.use(RadioGroup);
+Vue.use(Radio);
 Vue.use(Toast);
 Vue.use(Switch);
 Vue.use(Loading);

@@ -43,4 +43,7 @@ export default {
   top: 50%;
   transform: translate(-50%, -50%);
 }
+* {
+  touch-action: pan-y;
+}
 </style>
