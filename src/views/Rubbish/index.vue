@@ -23,6 +23,7 @@
         v-for="item in classifyList"
         :key="item.id"
         :style="'background:'+item.color"
+        @click="goRubbishComment(item.id)"
       >{{item.title}}</div>
     </div>
   </div>
@@ -77,6 +78,9 @@ export default {
   methods: {
     onSearch(val) {
       this.$push({ path: "/search", query: { keyword: this.keyword } });
+    },
+    goRubbishComment(id) {
+      this.$push({ path: "/rubbishComment", query: { id } });
     }
   }
 };

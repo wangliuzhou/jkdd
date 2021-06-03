@@ -29,6 +29,14 @@ const routes = [
     component: () => import("@/views/Rubbish/index.vue")
   },
   {
+    path: "/rubbishComment",
+    name: "RubbishComment",
+    props: route => ({
+      id: route.query.id
+    }),
+    component: () => import("@/views/RubbishComment/index.vue")
+  },
+  {
     path: "/search",
     name: "Search",
     props: route => ({
@@ -38,7 +46,8 @@ const routes = [
       title: '搜索'
     },
     component: () => import("@/views/Search/index.vue")
-  }
+  },
+
 ];
 
 export default routes;
