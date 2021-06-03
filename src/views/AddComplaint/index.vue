@@ -1,15 +1,11 @@
 <template>
   <div class="add-complaint-page">
-    <header-nav title="我要投诉">
-      <template v-slot:right>
-        <van-button plain type="info" class="subscribe" size="small">订阅</van-button>
-      </template>
-    </header-nav>
     <van-form @submit="onSubmit">
       <van-field
         v-model="username"
         name="name"
         label="姓名"
+        clearable
         placeholder="请输入"
         :rules="[{ required: true, message: '请输入姓名' }]"
       />
@@ -17,7 +13,9 @@
         v-model="mobile"
         type="number"
         name="mobile"
+        clearable
         label="手机号"
+        maxlength="11"
         placeholder="请输入"
         :rules="[{ required: true, message: '请输入手机号' }]"
       />
@@ -38,6 +36,7 @@
         v-model="toUser"
         name="toUser"
         label="投诉对象"
+        clearable
         placeholder="请输入"
         :rules="[{ required: true, message: '请输入投诉对象' }]"
       />
@@ -45,6 +44,7 @@
         v-model="title"
         name="title"
         label="标题"
+        clearable
         placeholder="请输入"
         :rules="[{ required: true, message: '请输入标题' }]"
       />
@@ -54,6 +54,7 @@
         autosize
         label="投诉内容"
         type="textarea"
+        clearable
         maxlength="500"
         placeholder="请输入留言"
         show-word-limit
@@ -86,26 +87,18 @@
         </template>
       </van-field>
 
-      <div style="margin: 16px;">
+      <div style="margin:16px;">
         <van-button round block type="info" native-type="submit">提交</van-button>
       </div>
     </van-form>
   </div>
 </template>
 <script>
-import HeaderNav from "@/components/HeaderNav";
 import { Toast } from "vant";
 import { areaList } from "@vant/area-data";
 export default {
-  props: {
-    storesysId: String,
-    redirectUrl: String,
-    bindPhone: Boolean,
-    openidStr: String
-  },
-  components: {
-    HeaderNav
-  },
+  props: {},
+  components: {},
   data() {
     return {
       areaList,
@@ -140,11 +133,7 @@ export default {
       }
     }
   },
-  computed: {
-    needWechatLogin() {
-      return true;
-    }
-  },
+  computed: {},
   mounted() {}
 };
 </script>

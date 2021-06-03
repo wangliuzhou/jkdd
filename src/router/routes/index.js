@@ -7,24 +7,37 @@ const routes = [
   {
     path: "/addComplaint",
     name: "AddComplaint",
+    meta: {
+      title: '我要投诉'
+    },
     component: () => import("@/views/AddComplaint/index.vue")
   },
   {
-    path: "/test",
-    name: "Test",
-    component: () => import("@/views/Test.vue")
+    path: "/queryDetail",
+    name: "QueryDetail",
+    meta: {
+      title: '查询详情'
+    },
+    component: () => import("@/views/QueryDetail/index.vue")
   },
   {
-    path: "/login",
-    name: "Login",
+    path: "/rubbish",
+    name: "Rubbish",
     meta: {
-      title: "登录"
+      title: '垃圾分类指南'
     },
+    component: () => import("@/views/Rubbish/index.vue")
+  },
+  {
+    path: "/search",
+    name: "Search",
     props: route => ({
-      bindPhone: Boolean(route.query.bindPhone)
+      keyword: route.query.keyword
     }),
-    component: () =>
-      import(/* webpackChunkName: "Login" */ "@/views/Login/index.vue")
+    meta: {
+      title: '搜索'
+    },
+    component: () => import("@/views/Search/index.vue")
   }
 ];
 

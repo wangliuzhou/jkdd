@@ -1,16 +1,12 @@
 <template>
-  <div class="page-index">
-    page-index
-  </div>
+  <div class="page-index">page-index</div>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
 export default {
   components: {},
   computed: {
-    ...mapState({
-      pageConfig: state => state.pageIndex.pageConfig
-    })
+    ...mapState({})
   },
   mounted() {},
   methods: {

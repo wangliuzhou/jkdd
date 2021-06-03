@@ -42,7 +42,8 @@ import {
   Checkbox,
   Tab,
   Tabs,
-  Overlay
+  Overlay,
+  Search
 } from "vant";
 
 //全局样式
@@ -92,6 +93,7 @@ Vue.use(Checkbox);
 Vue.use(Tab);
 Vue.use(Tabs);
 Vue.use(Overlay);
+Vue.use(Search);
 
 FastClick.attach(document.body);
 

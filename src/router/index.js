@@ -19,7 +19,7 @@ const router = new VueRouter({
   }
 });
 
-router.beforeEach(function(to, from, next) {
+router.beforeEach(function (to, from, next) {
   //取消所有网络请求
   cancelAllRequest();
   //判断是否需要登录
